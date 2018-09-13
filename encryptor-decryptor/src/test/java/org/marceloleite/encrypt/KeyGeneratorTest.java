@@ -3,7 +3,8 @@ package org.marceloleite.encrypt;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.marceloleite.encrypt.exception.KeyGeneratorRuntimeException;
+import org.marceloleite.libs.encrypt.KeyGenerator;
+import org.marceloleite.libs.encrypt.exception.KeyGeneratorException;
 
 
 public class KeyGeneratorTest {
@@ -21,7 +22,7 @@ public class KeyGeneratorTest {
 		Assert.assertNotNull(key);
 	}
 
-	@Test(expected = KeyGeneratorRuntimeException.class)
+	@Test(expected = KeyGeneratorException.class)
 	public void testGenerateKeyUnknownCryptographicAlgorithm() {
 		keyGenerator.generateKey("pijiovhnudfb");
 	}

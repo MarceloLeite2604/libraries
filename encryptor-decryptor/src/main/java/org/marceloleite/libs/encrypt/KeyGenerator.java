@@ -1,10 +1,10 @@
-package org.marceloleite.encrypt;
+package org.marceloleite.libs.encrypt;
 
 import java.security.NoSuchAlgorithmException;
 
 import javax.xml.bind.DatatypeConverter;
 
-import org.marceloleite.encrypt.exception.KeyGeneratorRuntimeException;
+import org.marceloleite.libs.encrypt.exception.KeyGeneratorException;
 
 public class KeyGenerator {
 	
@@ -18,7 +18,7 @@ public class KeyGenerator {
 			return DatatypeConverter.printBase64Binary(keygen.generateKey()
 					.getEncoded());
 		} catch (NoSuchAlgorithmException exception) {
-			throw new KeyGeneratorRuntimeException("Error while retrieving encryption algorythm.", exception);
+			throw new KeyGeneratorException("Error while retrieving encryption algorythm.", exception);
 		}
 	}
 

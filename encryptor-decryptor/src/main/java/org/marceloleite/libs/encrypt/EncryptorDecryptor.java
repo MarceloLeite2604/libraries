@@ -1,4 +1,4 @@
-package org.marceloleite.encrypt;
+package org.marceloleite.libs.encrypt;
 
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
@@ -15,12 +15,12 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 
-import org.marceloleite.encrypt.exception.DecryptionRuntimeException;
-import org.marceloleite.encrypt.exception.EncryptionRuntimeException;
+import org.marceloleite.libs.encrypt.exception.DecryptionException;
+import org.marceloleite.libs.encrypt.exception.EncryptionException;
 
 public final class EncryptorDecryptor {
 
-	private String keyEnvironmentVariableName;
+	private Optional<String> keyEnvironmentVariableName;
 
 	private String cryptographicAlgorythm;
 
@@ -57,7 +57,7 @@ public final class EncryptorDecryptor {
 			return DatatypeConverter.printBase64Binary(cryptedBytes);
 		} catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException
 				| BadPaddingException | InvalidAlgorithmParameterException exception) {
-			throw new EncryptionRuntimeException("Error while encrypting content.", exception);
+			throw new EncryptionException("Error while encrypting content.", exception);
 		}
 	}
 
@@ -73,7 +73,7 @@ public final class EncryptorDecryptor {
 			return new String(decryptedBytes);
 		} catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException
 				| BadPaddingException | InvalidAlgorithmParameterException exception) {
-			throw new DecryptionRuntimeException("Error while decrypting content.", exception);
+			throw new DecryptionException("Error while decrypting content.", exception);
 		}
 	}
 
@@ -94,15 +94,12 @@ public final class EncryptorDecryptor {
 
 	private String retrieveKey() {
 
-		if (keyEnvironmentVariableName == null) {
-			throw new IllegalStateException("Key environment variable name was not informed.");
-		}
+		String environmentVariableName = keyEnvironmentVariableName
+				.orElseThrow(() -> new IllegalStateException("Key environment variable name was not informed."));
 
-		String key = System.getenv(keyEnvironmentVariableName);
-		if (key == null) {
-			throw new IllegalStateException(
-					"Could not find encrypt key environment variable \"" + keyEnvironmentVariableName + "\".");
-		}
+		String key = Optional.of(System.getenv(environmentVariableName))
+				.orElseThrow(() -> new IllegalStateException(
+						"Could not find encrypt key environment variable \"" + environmentVariableName + "\"."));
 
 		if (key.isEmpty()) {
 			throw new IllegalStateException("The encrypt key is empty.");
@@ -117,16 +114,16 @@ public final class EncryptorDecryptor {
 			return DatatypeConverter.printBase64Binary(keygen.generateKey()
 					.getEncoded());
 		} catch (NoSuchAlgorithmException exception) {
-			throw new EncryptionRuntimeException("Error while retrieving encryption algorythm.", exception);
+			throw new EncryptionException("Error while retrieving encryption algorythm.", exception);
 		}
 	}
-	
+
 	public static Builder builder() {
 		return new Builder();
 	}
 
 	public static final class Builder {
-		private String keyEnvironmentVariableName;
+		private Optional<String> keyEnvironmentVariableName = Optional.empty();
 		private String cryptographicAlgorithm;
 		private String feedbackMode;
 		private String paddingScheme;
@@ -134,7 +131,7 @@ public final class EncryptorDecryptor {
 		private Builder() {
 		}
 
-		public Builder keyEnvironmentVariableName(String keyEnvironmentVariableName) {
+		public Builder keyEnvironmentVariableName(Optional<String> keyEnvironmentVariableName) {
 			this.keyEnvironmentVariableName = keyEnvironmentVariableName;
 			return this;
 		}

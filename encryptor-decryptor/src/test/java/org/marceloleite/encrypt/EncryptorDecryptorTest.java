@@ -3,6 +3,8 @@ package org.marceloleite.encrypt;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.marceloleite.libs.encrypt.EncryptorDecryptor;
+import org.marceloleite.libs.encrypt.KeyGenerator;
 
 public class EncryptorDecryptorTest {
 
