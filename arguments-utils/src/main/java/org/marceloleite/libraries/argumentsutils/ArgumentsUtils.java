@@ -8,6 +8,15 @@ import java.util.regex.Pattern;
 public class ArgumentsUtils {
 
 	public Optional<String> retrieveArgument(String[] args, String parameter) {
+		String argument = retrieveArgument(args, parameter, null);
+		if (argument == null) {
+			return Optional.empty();
+		} else {
+			return Optional.of(argument);
+		}
+	}
+
+	public String retrieveArgument(String[] args, String parameter, String defaultValue) {
 
 		String content = null;
 
@@ -16,19 +25,19 @@ public class ArgumentsUtils {
 		int index = arguments.indexOf(parameter);
 		if (index >= 0) {
 			if (index == arguments.size()) {
-				return Optional.empty();
+				return defaultValue;
 			}
 			content = arguments.get(index + 1);
 
 			if (Pattern.matches("-.", content)) {
-				return Optional.empty();
+				return defaultValue;
 			}
 		}
 
 		if (content != null) {
-			return Optional.of(content);
+			return content;
 		} else {
-			return Optional.empty();
+			return defaultValue;
 		}
 	}
 
