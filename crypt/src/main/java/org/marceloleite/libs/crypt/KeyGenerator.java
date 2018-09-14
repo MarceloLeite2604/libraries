@@ -8,7 +8,7 @@ import org.marceloleite.libs.crypt.exception.KeyGeneratorException;
 
 public class KeyGenerator {
 	
-	public String generateKey(String cryptographicAlgorithm) {
+	public String generate(String cryptographicAlgorithm) {
 		if ( cryptographicAlgorithm == null || cryptographicAlgorithm.isEmpty() ) {
 			throw new IllegalArgumentException("Cryptographic algorythm cannot be null.");
 		}

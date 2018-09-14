@@ -19,23 +19,23 @@ public class KeyGeneratorTest {
 
 	@Test
 	public void testGenerateKey() {
-		String key = keyGenerator.generateKey(CryptFixture.CRYPTOGRAPHIC_ALGORITHM);
+		String key = keyGenerator.generate(CryptFixture.CRYPTOGRAPHIC_ALGORITHM);
 		Assert.assertNotNull(key);
 	}
 
 	@Test(expected = KeyGeneratorException.class)
 	public void testGenerateKeyUnknownCryptographicAlgorithm() {
-		keyGenerator.generateKey("pijiovhnudfb");
+		keyGenerator.generate("pijiovhnudfb");
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testGenerateKeyEmptyCryptographicAlgorithm() {
-		keyGenerator.generateKey("");
+		keyGenerator.generate("");
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testGenerateKeyNullCryptographicAlgorithm() {
-		keyGenerator.generateKey(null);
+		keyGenerator.generate(null);
 	}
 
 }
