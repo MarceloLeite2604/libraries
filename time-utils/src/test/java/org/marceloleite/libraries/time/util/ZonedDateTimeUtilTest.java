@@ -93,15 +93,14 @@ public class ZonedDateTimeUtilTest {
 
 	@Test
 	public void testFormat() throws Exception {
-		//Arrange
+		// Arrange
 		String expectedFormattedZonedDateTime = "2018-09-26T15:52:59-03:00";
-		ZonedDateTime zonedDateTime = ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 15, 52, 59),
-				ZoneId.of("Etc/GMT+3")
-						.normalized());
-		
+		ZonedDateTime zonedDateTime = ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 15, 52, 59), ZoneId.of("Etc/GMT+3")
+				.normalized());
+
 		// Act
 		String actualFormattedZonedDateTime = ZonedDateTimeUtil.format(zonedDateTime);
-		
+
 		// Assert
 		assertEquals(expectedFormattedZonedDateTime, actualFormattedZonedDateTime);
 	}
@@ -125,11 +124,12 @@ public class ZonedDateTimeUtilTest {
 	public void testFormatAsEpochTime() throws Exception {
 		// Arrange
 		long expectedEpochTime = 1537945457L;
-		ZonedDateTime zonedDateTime = ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 16, 4, 17), ZoneId.of("Etc/GMT-9"));
-		
+		ZonedDateTime zonedDateTime = ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 16, 4, 17),
+				ZoneId.of("Etc/GMT-9"));
+
 		// Act
 		long actualEpochTime = ZonedDateTimeUtil.formatAsEpochTime(zonedDateTime);
-		
+
 		// Assert
 		assertEquals(expectedEpochTime, actualEpochTime);
 	}
@@ -137,14 +137,46 @@ public class ZonedDateTimeUtilTest {
 	@Test
 	public void testToDefaultZoneId() throws Exception {
 		// Arrange
-		ZonedDateTime zonedDateTime = ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 16, 4, 17), ZoneId.of("Etc/GMT-9"));
-		ZonedDateTime expectedZonedDateTime = ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 7, 4, 17), ZoneId.of("UTC"));
-		
+		ZonedDateTime zonedDateTime = ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 16, 4, 17),
+				ZoneId.of("Etc/GMT-9"));
+		ZonedDateTime expectedZonedDateTime = ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 7, 4, 17),
+				ZoneId.of("UTC"));
+
 		// Act
 		ZonedDateTime actualZonedDateTime = ZonedDateTimeUtil.toDefaultZoneId(zonedDateTime);
-		
+
 		// Assert
 		assertEquals(expectedZonedDateTime, actualZonedDateTime);
+	}
+
+	@Test
+	public void testFormatAsTimestamp() throws Exception {
+		// Arrange
+		String expectedTextDate = "2018-09-26T15:52:59.612-0300";
+		ZonedDateTime zoneDateTime = ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 15, 52, 59, 612000000),
+				ZoneId.of("Etc/GMT+3")
+						.normalized());
+
+		// Act
+		String actualTextDate = ZonedDateTimeUtil.formatAsTimestamp(zoneDateTime);
+
+		// Assert
+		assertEquals(expectedTextDate, actualTextDate);
+	}
+
+	@Test
+	public void testFormatFromWrittenTimestamp() throws Exception {
+		// Arrange
+		String textDate = "2018-09-26T15:52:59.612-0300";
+		ZonedDateTime expectedZoneDateTime = ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 15, 52, 59, 612000000),
+				ZoneId.of("Etc/GMT+3")
+						.normalized());
+
+		// Act
+		ZonedDateTime actualZonedDateTime = ZonedDateTimeUtil.convertFromWrittenTimestamp(textDate);
+
+		// Assert
+		assertEquals(expectedZoneDateTime, actualZonedDateTime);
 	}
 
 }

@@ -17,7 +17,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ZonedDateToEpochTimeDeserializerTest {
+public class ZonedDateToTimestampDeserializerTest {
 
 	@Mock
 	private JsonParser jsonParser;
@@ -25,26 +25,26 @@ public class ZonedDateToEpochTimeDeserializerTest {
 	@Mock
 	private DeserializationContext deserializationContext;
 
-	private ZonedDateTimeFromEpochDeserializer zonedDateTimeFromEpochDeserializer;
+	private ZonedDateTimeFromTimestampDeserializer zonedDateTimeFromTimestampDeserializer;
 
 	@Before
 	public void setUp() {
-		this.zonedDateTimeFromEpochDeserializer = new ZonedDateTimeFromEpochDeserializer();
+		this.zonedDateTimeFromTimestampDeserializer = new ZonedDateTimeFromTimestampDeserializer();
 	}
 
 	@Test
 	public void testDeserialize() throws Exception {
 		// Arrange
-		ZonedDateTime expectedLocalTime = ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 8, 12, 14),
+		ZonedDateTime expectedZonedDateTime = ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 8, 12, 14, 295000000),
 				ZonedDateTimeUtil.DEFAULT_ZONE_ID);
-		when(jsonParser.getValueAsLong()).thenReturn(1537949534L);
+		when(jsonParser.getValueAsString()).thenReturn("2018-09-26T08:12:14.295+0000");
 
 		// Act
-		ZonedDateTime actualLocalTime = zonedDateTimeFromEpochDeserializer.deserialize(jsonParser,
+		ZonedDateTime actualZonedDateTime = zonedDateTimeFromTimestampDeserializer.deserialize(jsonParser,
 				deserializationContext);
 
 		// Assert
-		assertEquals(expectedLocalTime, actualLocalTime);
+		assertEquals(expectedZonedDateTime, actualZonedDateTime);
 	}
 
 }

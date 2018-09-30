@@ -10,6 +10,8 @@ import org.marceloleite.libraries.time.TimeInterval;
 public final class ZonedDateTimeUtil {
 	
 	private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
+	
+	private static final DateTimeFormatter TIMESTAMP_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 
 	public static final ZoneId DEFAULT_ZONE_ID = ZoneId.of("UTC");
 
@@ -51,5 +53,17 @@ public final class ZonedDateTimeUtil {
 	
 	public static ZonedDateTime toDefaultZoneId(ZonedDateTime zonedDateTime) {
 		return zonedDateTime.withZoneSameInstant(DEFAULT_ZONE_ID);
+	}
+
+	public static String formatAsTimestamp(ZonedDateTime zonedDateTime) {
+		return TIMESTAMP_FORMATTER.format(zonedDateTime);
+	}
+
+	public static ZonedDateTime convertFromWrittenTimestamp(String string) {
+		ZonedDateTime zonedDateTime = ZonedDateTime.parse(string, TIMESTAMP_FORMATTER);
+		if (zonedDateTime.getZone().equals(ZoneId.of("Z"))) {
+			return ZonedDateTimeUtil.toDefaultZoneId(zonedDateTime);
+		}
+		return zonedDateTime;
 	}
 }
