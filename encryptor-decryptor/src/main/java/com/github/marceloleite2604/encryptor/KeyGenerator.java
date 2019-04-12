@@ -1,10 +1,10 @@
-package org.marceloleite.encrypt;
+package com.github.marceloleite2604.encryptor;
 
 import java.security.NoSuchAlgorithmException;
 
 import javax.xml.bind.DatatypeConverter;
 
-import org.marceloleite.encrypt.exception.KeyGeneratorRuntimeException;
+import com.github.marceloleite2604.encryptor.exception.KeyGeneratorRuntimeException;
 
 public class KeyGenerator {
 	

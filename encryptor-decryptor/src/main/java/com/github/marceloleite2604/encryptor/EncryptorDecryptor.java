@@ -1,4 +1,4 @@
-package org.marceloleite.encrypt;
+package com.github.marceloleite2604.encryptor;
 
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
@@ -15,8 +15,8 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 
-import org.marceloleite.encrypt.exception.DecryptionRuntimeException;
-import org.marceloleite.encrypt.exception.EncryptionRuntimeException;
+import com.github.marceloleite2604.encryptor.exception.DecryptionRuntimeException;
+import com.github.marceloleite2604.encryptor.exception.EncryptionRuntimeException;
 
 public final class EncryptorDecryptor {
 

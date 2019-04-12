@@ -1,9 +1,11 @@
-package org.marceloleite.encrypt;
+package com.github.marceloleite2604.encryptor;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
-import org.marceloleite.encrypt.exception.KeyGeneratorRuntimeException;
+
+import com.github.marceloleite2604.encryptor.KeyGenerator;
+import com.github.marceloleite2604.encryptor.exception.KeyGeneratorRuntimeException;
 
 
 public class KeyGeneratorTest {

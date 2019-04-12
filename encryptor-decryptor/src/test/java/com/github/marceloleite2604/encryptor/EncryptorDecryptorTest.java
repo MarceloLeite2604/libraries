@@ -1,8 +1,11 @@
-package org.marceloleite.encrypt;
+package com.github.marceloleite2604.encryptor;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import com.github.marceloleite2604.encryptor.EncryptorDecryptor;
+import com.github.marceloleite2604.encryptor.KeyGenerator;
 
 public class EncryptorDecryptorTest {
 

@@ -1,4 +1,4 @@
-package org.marceloleite.encrypt.exception;
+package com.github.marceloleite2604.encryptor.exception;
 
 public class EncryptionRuntimeException extends RuntimeException {
 
