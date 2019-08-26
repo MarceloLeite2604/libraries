@@ -1,4 +1,4 @@
 language: java
 script:
-  - cd encoder-decoder
+  - cd encryptor-decryptor
   - mvn clean test
