@@ -4,7 +4,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.github.marceloleite2604.encryptor.KeyGenerator;
 import com.github.marceloleite2604.encryptor.exception.KeyGeneratorRuntimeException;
 
 
