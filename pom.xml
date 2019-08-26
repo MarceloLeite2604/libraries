@@ -1,9 +1,8 @@
-<project 
-  xmlns="http://maven.apache.org/POM/4.0.0"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	
-  <modelVersion>4.0.0</modelVersion>
+
+	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.github.marceloleite2604</groupId>
 	<artifactId>libraries</artifactId>
@@ -16,14 +15,14 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <libraries.project.version>${project.version}</libraries.project.version>
+		<libraries.project.version>${project.version}</libraries.project.version>
 	</properties>
 
-  <modules>
-    <module>encryptor-decryptor</module>
-    <module>properties</module>
-    <module>utils</module>
-  </modules>
+	<modules>
+		<module>encryptor-decryptor</module>
+		<module>properties</module>
+		<module>utils</module>
+	</modules>
 
 	<build>
 		<plugins>
@@ -34,6 +33,34 @@
 				<configuration>
 					<release>11</release>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.4</version>
+				<executions>
+					<execution>
+						<id>prepare-agent</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.eluder.coveralls</groupId>
+				<artifactId>coveralls-maven-plugin</artifactId>
+				<version>4.3.0</version>
+				<configuration>
+					<repoToken>hZfLnP0OgkOyifKlrog1x9SNA3sMPbhDg</repoToken>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>javax.xml.bind</groupId>
+						<artifactId>jaxb-api</artifactId>
+						<version>2.3.1</version>
+					</dependency>
+				</dependencies>
 			</plugin>
 		</plugins>
 	</build>
