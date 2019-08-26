@@ -1,22 +1,21 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <parent>
+    <groupId>com.github.marceloleite2604</groupId>
+    <artifactId>libraries</artifactId>
+    <version>1.0</version>
+  </parent>
+
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>org.marceloleite</groupId>
 	<artifactId>utils</artifactId>
-	<version>1.0</version>
+  <version>1.0</version>
 	<packaging>jar</packaging>
 
 	<name>utils</name>
-	<url>http://maven.apache.org</url>
+  <description>A series of util methods.</description>
+	<url>https://github.com/MarceloLeite2064/libraries</url>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
-	</properties>
-
-	<dependencies>
-	</dependencies>
 </project>

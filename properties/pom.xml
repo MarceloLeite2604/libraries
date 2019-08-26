@@ -1,24 +1,21 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
+<project 
+  xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+  <parent>
+    <groupId>com.github.marceloleite2604</groupId>
+    <artifactId>libraries</artifactId>
+    <version>1.0</version>
+  </parent>
+
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.github.marceloleite2604</groupId>
 	<artifactId>properties</artifactId>
-	<version>1.0</version>
+  <version>1.0</version>
 	<packaging>jar</packaging>
 
 	<name>properties</name>
 	<description>Helps define and retrieve properties, variables, arguments, etc.</description>
 	<url>https://github.com/MarceloLeite2604</url>
-
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<maven.compiler.source>1.8</maven.compiler.source>
-		<maven.compiler.target>1.8</maven.compiler.target>
-	</properties>
-
-	<dependencies>
-	</dependencies>
-
 </project>

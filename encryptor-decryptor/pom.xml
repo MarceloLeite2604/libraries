@@ -1,20 +1,24 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
+<project 
+  xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.github.marceloleite2604</groupId>
+  <parent>
+    <groupId>com.github.marceloleite2604</groupId>
+    <artifactId>libraries</artifactId>
+    <version>1.0</version>
+  </parent>
+	
+  <modelVersion>4.0.0</modelVersion>
+
 	<artifactId>encryptor-decryptor</artifactId>
-	<version>3.0</version>
+  <version>3.0</version>
 	<packaging>jar</packaging>
 
 	<name>encryptor-decryptor</name>
 	<description>Helps encrypt and decrypt both binary and text content.</description>
-	<url>https://github.com/MarceloLeite2064</url>
+	<url>https://github.com/MarceloLeite2064/libraries</url>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-	</properties>
 
 	<dependencies>
 		<dependency>
@@ -30,17 +34,4 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
-	<build>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.8.0</version>
-				<configuration>
-					<release>11</release>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
 </project>
