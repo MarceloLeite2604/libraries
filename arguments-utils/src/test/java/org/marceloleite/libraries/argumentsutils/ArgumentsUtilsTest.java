@@ -37,12 +37,12 @@ public class ArgumentsUtilsTest {
 		// Assert
 		assertFalse(actualResult);
 	}
-	
+
 	@Test
 	public void retrieveArgumentExistantArgumentValue() {
 		// Assert
 		Optional<String> expectedResult = Optional.of(ArgumentsFixture.VALUE_ARGUMENT_A);
-		
+
 		// Act
 		Optional<String> actualResult = argumentsUtils.retrieveArgument(ArgumentsFixture.create(),
 				ArgumentsFixture.ARGUMENT_A);
@@ -50,12 +50,12 @@ public class ArgumentsUtilsTest {
 		// Assert
 		assertEquals(expectedResult, actualResult);
 	}
-	
+
 	@Test
 	public void retrieveArgumentInexistantArgumentValue() {
 		// Assert
 		Optional<String> expectedResult = Optional.empty();
-		
+
 		// Act
 		Optional<String> actualResult = argumentsUtils.retrieveArgument(ArgumentsFixture.create(),
 				ArgumentsFixture.INEXISTANT_ARGUMENT);
@@ -63,12 +63,12 @@ public class ArgumentsUtilsTest {
 		// Assert
 		assertEquals(expectedResult, actualResult);
 	}
-	
+
 	@Test
 	public void retrieveArgumentBooleanArgument() {
 		// Assert
 		Optional<String> expectedResult = Optional.empty();
-		
+
 		// Act
 		Optional<String> actualResult = argumentsUtils.retrieveArgument(ArgumentsFixture.create(),
 				ArgumentsFixture.ARGUMENT_B);
