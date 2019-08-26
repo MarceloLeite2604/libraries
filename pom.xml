@@ -18,9 +18,8 @@
 	</properties>
 
 	<modules>
-		<module>arguments-utils</module>
-		<module>crypt</module>
-		<module>time-utils</module>
+		<module>sled</module>
+		<module>util</module>
 	</modules>
 
 	<dependencies>

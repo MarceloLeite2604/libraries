@@ -1,0 +1,28 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+	<parent>
+		<groupId>com.github.marceloleite2604</groupId>
+		<artifactId>libraries</artifactId>
+		<version>0.1-SNAPSHOT</version>
+	</parent>
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>sled</artifactId>
+	<packaging>jar</packaging>
+
+	<name>sled</name>
+	<description>Sled stands for Simple Library for Encryption and Decryption. As the name says, it helps encrypt and decrypt both binary and text content.</description>
+	<url>https://github.com/MarceloLeite2064/libraries</url>
+
+	<dependencies>
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+			<version>[2,3)</version>
+		</dependency>
+	</dependencies>
+
+</project>

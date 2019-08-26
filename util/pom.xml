@@ -1,0 +1,35 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	
+	<parent>
+		<groupId>com.github.marceloleite2604</groupId>
+		<artifactId>libraries</artifactId>
+		<version>0.1-SNAPSHOT</version>
+	</parent>
+
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>util</artifactId>
+	<packaging>jar</packaging>
+
+	<name>util</name>
+	<url>https://github.com/MarceloLeite2064/libraries</url>
+	<description>A series of useful classes and methods which helps on minor tasks</description>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>[2.9.7,)</version>
+		</dependency>
+
+		<!-- Test -->
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>[3,4)</version>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+</project>
