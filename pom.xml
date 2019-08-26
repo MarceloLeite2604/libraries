@@ -6,7 +6,11 @@
 
 	<groupId>com.github.marceloleite2604</groupId>
 	<artifactId>libraries</artifactId>
+<<<<<<< HEAD
 	<version>0.1-SNAPSHOT</version>
+=======
+	<version>1.0</version>
+>>>>>>> 40d6cedafe32366117bdd9d975c4307510f6111d
 	<packaging>pom</packaging>
 
 	<name>libraries</name>
@@ -18,6 +22,7 @@
 	</properties>
 
 	<modules>
+<<<<<<< HEAD
 		<module>sled</module>
 		<module>util</module>
 	</modules>
@@ -31,6 +36,13 @@
 		</dependency>
 	</dependencies>
 
+=======
+		<module>encryptor-decryptor</module>
+		<module>properties</module>
+		<module>utils</module>
+	</modules>
+
+>>>>>>> 40d6cedafe32366117bdd9d975c4307510f6111d
 	<build>
 		<plugins>
 			<plugin>
