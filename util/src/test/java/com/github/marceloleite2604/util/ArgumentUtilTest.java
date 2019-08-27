@@ -1,4 +1,4 @@
-package com.github.marceloleite2604.util.argument;
+package com.github.marceloleite2604.util;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -9,6 +9,7 @@ import java.util.Optional;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.github.marceloleite2604.util.ArgumentUtil;
 import com.github.marceloleite2604.utils.fixture.ArgumentsFixture;
 
 public class ArgumentUtilTest {
