@@ -5,6 +5,7 @@ import static org.assertj.core.api.Assertions.fail;
 
 import java.io.File;
 import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Locale;
 
 import org.junit.After;
@@ -126,7 +127,7 @@ public class FileUtilTest {
 	@Test
 	public void testRetrieveTextContentFromFilePath() throws Exception {
 		// Arrange
-		Path filePath = Path.of(READ_TEXT_FILE_PATH);
+		Path filePath = Paths.get(READ_TEXT_FILE_PATH);
 
 		// Act
 		String content = fileUtil.retrieveTextContentFromFile(filePath);
@@ -138,7 +139,7 @@ public class FileUtilTest {
 	@Test
 	public void testRetrieveBinaryContentFromFilePath() throws Exception {
 		// Act
-		byte[] content = fileUtil.retrieveBinaryContentFromFile(Path.of(READ_BINARY_FILE_PATH));
+		byte[] content = fileUtil.retrieveBinaryContentFromFile(Paths.get(READ_BINARY_FILE_PATH));
 
 		// Assert
 		assertThat(content).isEqualTo(READ_BINARY_FILE_CONTENT);
@@ -148,7 +149,7 @@ public class FileUtilTest {
 	public void testRetrieveBinaryContentFromFilePathShouldThrowFileUtilExceptionWhenFileDoesNotExist()
 			throws Exception {
 		// Act
-		fileUtil.retrieveBinaryContentFromFile(Path.of(INEXISTENT_DIRECTORY_PATH));
+		fileUtil.retrieveBinaryContentFromFile(Paths.get(INEXISTENT_DIRECTORY_PATH));
 
 		// Assert
 		fail("Should have thrown an exception.");
@@ -176,7 +177,7 @@ public class FileUtilTest {
 	@Test
 	public void testWriteContentOnFilePathString() throws Exception {
 		// Act
-		fileUtil.writeContentOnFile(Path.of(WRITE_TEXT_FILE_PATH), WRITE_TEXT_FILE_CONTENT);
+		fileUtil.writeContentOnFile(Paths.get(WRITE_TEXT_FILE_PATH), WRITE_TEXT_FILE_CONTENT);
 		String content = fileUtil.retrieveTextContentFromFile(WRITE_TEXT_FILE_PATH);
 
 		// Assert
@@ -196,7 +197,7 @@ public class FileUtilTest {
 	@Test
 	public void testWriteContentOnFilePathByteArray() throws Exception {
 		// Act
-		fileUtil.writeContentOnFile(Path.of(WRITE_BINARY_FILE_PATH), WRITE_BINARY_FILE_CONTENT);
+		fileUtil.writeContentOnFile(Paths.get(WRITE_BINARY_FILE_PATH), WRITE_BINARY_FILE_CONTENT);
 		byte[] content = fileUtil.retrieveBinaryContentFromFile(WRITE_BINARY_FILE_PATH);
 
 		// Assert
@@ -224,7 +225,7 @@ public class FileUtilTest {
 		for (int index = 0; index < actualFilesSizes.length; index++) {
 
 			// Arrange
-			Path filePath = Path.of(SIZED_FILES_PATHS[index]);
+			Path filePath = Paths.get(SIZED_FILES_PATHS[index]);
 
 			// Act
 			actualFilesSizes[index] = fileUtil.retrieveFileSize(filePath);
@@ -295,7 +296,7 @@ public class FileUtilTest {
 		boolean expectedResult = true;
 
 		// Act
-		boolean actualResult = fileUtil.fileExists(Path.of(EXISTENT_DIRECTORY_PATH));
+		boolean actualResult = fileUtil.fileExists(Paths.get(EXISTENT_DIRECTORY_PATH));
 
 		// Assert
 		assertThat(actualResult).isEqualTo(expectedResult);
@@ -307,7 +308,7 @@ public class FileUtilTest {
 		boolean expectedResult = false;
 
 		// Act
-		boolean actualResult = fileUtil.fileExists(Path.of(INEXISTENT_DIRECTORY_PATH));
+		boolean actualResult = fileUtil.fileExists(Paths.get(INEXISTENT_DIRECTORY_PATH));
 
 		// Assert
 		assertThat(actualResult).isEqualTo(expectedResult);
@@ -334,7 +335,7 @@ public class FileUtilTest {
 	public void testThrowExceptionIfDirectoryDoesNotExistPathShouldThrowFileUtilExceptionWhenDirectoryDoesNotExist()
 			throws Exception {
 		// Act
-		fileUtil.throwExceptionIfDirectoryDoesNotExist(Path.of(INEXISTENT_DIRECTORY_PATH));
+		fileUtil.throwExceptionIfDirectoryDoesNotExist(Paths.get(INEXISTENT_DIRECTORY_PATH));
 
 		// Assert
 		fail("Should have thrown an exception.");
@@ -344,7 +345,7 @@ public class FileUtilTest {
 	public void testThrowExceptionIfDirecttoryDoesNotExistPathShouldContinueWhenDirectoryExists()
 			throws Exception {
 		// Act
-		fileUtil.throwExceptionIfDirectoryDoesNotExist(Path.of(EXISTENT_DIRECTORY_PATH));
+		fileUtil.throwExceptionIfDirectoryDoesNotExist(Paths.get(EXISTENT_DIRECTORY_PATH));
 	}
 
 	@Test(expected = FileUtilException.class)
@@ -368,7 +369,7 @@ public class FileUtilTest {
 	public void testThrowExceptionIfFileIsNotDirectoryPathShouldThrowFileUtilExceptionWhenFileIsNotDirectory()
 			throws Exception {
 		// Act
-		fileUtil.throwExceptionIfFileIsNotDirectory(Path.of(READ_TEXT_FILE_PATH));
+		fileUtil.throwExceptionIfFileIsNotDirectory(Paths.get(READ_TEXT_FILE_PATH));
 
 		// Assert
 		fail("Should have thrown an exception.");
@@ -378,7 +379,7 @@ public class FileUtilTest {
 	public void testThrowExceptionIfFileIsNotDirectoryPathShouldContinueWhenFileIsDirectory()
 			throws Exception {
 		// Act
-		fileUtil.throwExceptionIfFileIsNotDirectory(Path.of(EXISTENT_DIRECTORY_PATH));
+		fileUtil.throwExceptionIfFileIsNotDirectory(Paths.get(EXISTENT_DIRECTORY_PATH));
 	}
 
 	@Test
@@ -429,7 +430,7 @@ public class FileUtilTest {
 	public void testThrowExceptionIfFileDoesNotExistPathShouldThrowFileUtilExceptionWhenFileDoesNotExist()
 			throws Exception {
 		// Act
-		fileUtil.throwExceptionIfFileDoesNotExist(Path.of(INEXISTENT_DIRECTORY_PATH));
+		fileUtil.throwExceptionIfFileDoesNotExist(Paths.get(INEXISTENT_DIRECTORY_PATH));
 
 		// Assert
 		fail("Should have thrown an exception.");
@@ -439,7 +440,7 @@ public class FileUtilTest {
 	public void testThrowExceptionIfFileDoesNotExistPathShouldContinueWhenFileExists()
 			throws Exception {
 		// Act
-		fileUtil.throwExceptionIfFileDoesNotExist(Path.of(EXISTENT_DIRECTORY_PATH));
+		fileUtil.throwExceptionIfFileDoesNotExist(Paths.get(EXISTENT_DIRECTORY_PATH));
 	}
 
 	@Test(expected = FileUtilException.class)
@@ -460,7 +461,7 @@ public class FileUtilTest {
 	@Test(expected = FileUtilException.class)
 	public void testThrowExceptionIfFileIsDirectoryPathShouldThrowFileUtilExceptionWhenFileIsDirectory() throws Exception {
 		// Act
-		fileUtil.throwExceptionIfFileIsDirectory(Path.of(EXISTENT_DIRECTORY_PATH));
+		fileUtil.throwExceptionIfFileIsDirectory(Paths.get(EXISTENT_DIRECTORY_PATH));
 		
 		// Assert
 		fail("Should have thrown an exception.");
@@ -469,7 +470,7 @@ public class FileUtilTest {
 	@Test
 	public void testThrowExceptionIfFileIsDirectoryPathShouldContinueWhenFileIsNotDirectory() throws Exception {
 		// Act
-		fileUtil.throwExceptionIfFileIsDirectory(Path.of(READ_TEXT_FILE_PATH));
+		fileUtil.throwExceptionIfFileIsDirectory(Paths.get(READ_TEXT_FILE_PATH));
 	}
 
 }

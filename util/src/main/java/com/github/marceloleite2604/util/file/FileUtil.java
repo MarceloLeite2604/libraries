@@ -16,10 +16,13 @@ import java.nio.file.Paths;
 import java.util.stream.Collectors;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.ArrayUtils;
 
 import com.github.marceloleite2604.util.exception.FileUtilException;
 
 public class FileUtil {
+
+	private static final int BUFFER_SIZE = 1024;
 
 	private static final String[] UNITS = { "B", "kB", "MB", "GB", "TB", "PB", "EB" };
 
@@ -56,12 +59,26 @@ public class FileUtil {
 
 	private byte[] readBinaryContentFromFile(Path path) {
 		try (FileInputStream fileInputStream = new FileInputStream(path.toFile())) {
-			return fileInputStream.readAllBytes();
+
+			return readAllBytesFromInputStream(fileInputStream);
+
 		} catch (IOException exception) {
 			String message = String.format(FileUtilMessageTemplates.ERROR_READING_FILE_CONTENT,
 					path);
 			throw new FileUtilException(exception, message);
 		}
+	}
+
+	private byte[] readAllBytesFromInputStream(InputStream fileInputStream) throws IOException {
+		byte[] buffer = new byte[BUFFER_SIZE];
+		int length;
+		byte[] result = new byte[0];
+
+		while ((length = fileInputStream.read(buffer)) != -1) {
+			result = ArrayUtils.addAll(result, ArrayUtils.subarray(buffer, 0, length));
+		}
+
+		return result;
 	}
 
 	private BufferedReader createBufferedReader(Path path) throws IOException {
@@ -92,7 +109,7 @@ public class FileUtil {
 	}
 
 	public void writeContentOnFile(String path, String content) {
-		writeContentOnFile(Path.of(path), content);
+		writeContentOnFile(Paths.get(path), content);
 	}
 
 	public void writeContentOnFile(Path path, String content) {
@@ -109,7 +126,7 @@ public class FileUtil {
 	}
 
 	public void writeContentOnFile(String path, byte[] bytes) {
-		writeContentOnFile(Path.of(path), bytes);
+		writeContentOnFile(Paths.get(path), bytes);
 	}
 
 	public void writeContentOnFile(Path path, byte[] bytes) {
@@ -130,7 +147,7 @@ public class FileUtil {
 	}
 
 	public String retrieveFileSize(String path) {
-		return retrieveFileSize(Path.of(path));
+		return retrieveFileSize(Paths.get(path));
 	}
 
 	public String formatAsHumanReadableSize(long size) {
@@ -165,11 +182,11 @@ public class FileUtil {
 	}
 
 	public boolean fileExists(String filePath) {
-		return fileExists(Path.of(filePath));
+		return fileExists(Paths.get(filePath));
 	}
 
 	public void throwExceptionIfDirectoryDoesNotExist(String path) {
-		throwExceptionIfDirectoryDoesNotExist(Path.of(path));
+		throwExceptionIfDirectoryDoesNotExist(Paths.get(path));
 	}
 
 	public void throwExceptionIfDirectoryDoesNotExist(Path path) {
@@ -184,7 +201,7 @@ public class FileUtil {
 	}
 
 	public void throwExceptionIfFileIsNotDirectory(String path) {
-		throwExceptionIfFileIsNotDirectory(Path.of(path));
+		throwExceptionIfFileIsNotDirectory(Paths.get(path));
 	}
 
 	public void throwExceptionIfFileIsNotDirectory(Path path) {
@@ -197,7 +214,7 @@ public class FileUtil {
 	}
 
 	public void throwExceptionIfFileIsDirectory(String path) {
-		throwExceptionIfFileIsDirectory(Path.of(path));
+		throwExceptionIfFileIsDirectory(Paths.get(path));
 	}
 
 	public void throwExceptionIfFileIsDirectory(Path path) {
@@ -218,7 +235,7 @@ public class FileUtil {
 	}
 
 	public void throwExceptionIfFileDoesNotExist(String path) {
-		throwExceptionIfFileDoesNotExist(Path.of(path));
+		throwExceptionIfFileDoesNotExist(Paths.get(path));
 	}
 
 	public void throwExceptionIfFileDoesNotExist(Path path) {
