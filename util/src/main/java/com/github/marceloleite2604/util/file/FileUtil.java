@@ -30,8 +30,6 @@ public class FileUtil {
 	}
 
 	public String retrieveTextContentFromFile(Path path) {
-		throwExceptionIfFileDoesNotExist(path);
-		throwExceptionIfFileIsDirectory(path);
 		return readTextContentFromFile(path);
 	}
 
