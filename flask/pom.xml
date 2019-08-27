@@ -16,12 +16,20 @@
 	<name>flask</name>
 	<description>The file loader assistent kit (Flask) helps read text files from classpath.</description>
 	<url>https://github.com/MarceloLeite2064/libraries</url>
-	
+
 	<dependencies>
 		<dependency>
 			<groupId>com.github.marceloleite2604</groupId>
 			<artifactId>util</artifactId>
 			<version>0.1-SNAPSHOT</version>
+		</dependency>
+
+		<!-- Test -->
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<version>[3.13.2, 4)</version>
+			<scope>test</scope>
 		</dependency>
 	</dependencies>
 
