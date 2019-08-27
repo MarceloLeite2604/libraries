@@ -14,6 +14,8 @@ final class FileUtilMessageTemplates {
 
 	static final String FILE_IS_NOT_DIRECTORY = "File \"%s\" is not a directory.";
 
+	public static final String FILE_IS_A_DIRECTORY = "File \"%s\" is as directory.";
+
 	private FileUtilMessageTemplates() {
 	}
 }
