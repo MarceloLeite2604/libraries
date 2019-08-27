@@ -10,12 +10,11 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.github.marceloleite2604.util.time.ZonedDateTimeUtil;
-import com.github.marceloleite2604.util.time.deserializer.ZonedDateTimeFromTimestampDeserializer;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ZonedDateToTimestampDeserializerTest {

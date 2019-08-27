@@ -14,11 +14,10 @@ import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import com.github.marceloleite2604.util.time.serializer.ZonedDateTimeToEpochSerializer;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ZonedDateTimeToEpochSerializerTest {
