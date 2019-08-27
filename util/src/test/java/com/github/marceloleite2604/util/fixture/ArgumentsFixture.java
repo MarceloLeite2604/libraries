@@ -1,4 +1,4 @@
-package com.github.marceloleite2604.utils.fixture;
+package com.github.marceloleite2604.util.fixture;
 
 import java.util.Arrays;
 
