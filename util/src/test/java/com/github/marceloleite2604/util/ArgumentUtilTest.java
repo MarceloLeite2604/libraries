@@ -10,7 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.github.marceloleite2604.util.ArgumentUtil;
-import com.github.marceloleite2604.utils.fixture.ArgumentsFixture;
+import com.github.marceloleite2604.util.fixture.ArgumentsFixture;
 
 public class ArgumentUtilTest {
 
