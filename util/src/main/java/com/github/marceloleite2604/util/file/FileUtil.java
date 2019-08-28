@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.ArrayUtils;
 
-import com.github.marceloleite2604.util.exception.FileUtilException;
+import com.github.marceloleite2604.util.exception.FileUtilRuntimeException;
 
 public class FileUtil {
 
@@ -43,7 +43,7 @@ public class FileUtil {
 		} catch (IOException exception) {
 			String message = String.format(FileUtilMessageTemplates.ERROR_READING_FILE_CONTENT,
 					path);
-			throw new FileUtilException(exception, message);
+			throw new FileUtilRuntimeException(exception, message);
 		}
 	}
 
@@ -65,7 +65,7 @@ public class FileUtil {
 		} catch (IOException exception) {
 			String message = String.format(FileUtilMessageTemplates.ERROR_READING_FILE_CONTENT,
 					path);
-			throw new FileUtilException(exception, message);
+			throw new FileUtilRuntimeException(exception, message);
 		}
 	}
 
@@ -97,7 +97,7 @@ public class FileUtil {
 		InputStream inputStream = retrieveInputStreamFromClasspath(path.toString());
 		if (inputStream == null) {
 			String message = String.format(FileUtilMessageTemplates.FILE_DOES_NOT_EXIST, path);
-			throw new FileUtilException(message);
+			throw new FileUtilRuntimeException(message);
 		}
 		return inputStream;
 	}
@@ -121,7 +121,7 @@ public class FileUtil {
 		} catch (IOException exception) {
 			String message = String.format(FileUtilMessageTemplates.ERROR_WRITING_CONTENT_ON_FILE,
 					path);
-			throw new FileUtilException(exception, message);
+			throw new FileUtilRuntimeException(exception, message);
 		}
 	}
 
@@ -135,7 +135,7 @@ public class FileUtil {
 		} catch (IOException exception) {
 			String message = String.format(FileUtilMessageTemplates.ERROR_WRITING_CONTENT_ON_FILE,
 					path);
-			throw new FileUtilException(exception, message);
+			throw new FileUtilRuntimeException(exception, message);
 		}
 	}
 
@@ -171,7 +171,7 @@ public class FileUtil {
 			} catch (IOException exception) {
 				String message = String.format(FileUtilMessageTemplates.ERROR_CREATING_DIRECTORY,
 						directoryPath);
-				throw new FileUtilException(message);
+				throw new FileUtilRuntimeException(message);
 			}
 		}
 	}
@@ -196,7 +196,7 @@ public class FileUtil {
 
 		if (!directory.exists()) {
 			String message = String.format(FileUtilMessageTemplates.DIRECTORY_DOES_NOT_EXIST, path);
-			throw new FileUtilException(message);
+			throw new FileUtilRuntimeException(message);
 		}
 	}
 
@@ -209,7 +209,7 @@ public class FileUtil {
 
 		if (directory.isFile()) {
 			String message = String.format(FileUtilMessageTemplates.FILE_IS_NOT_DIRECTORY, path);
-			throw new FileUtilException(message);
+			throw new FileUtilRuntimeException(message);
 		}
 	}
 
@@ -222,7 +222,7 @@ public class FileUtil {
 
 		if (!directory.isFile()) {
 			String message = String.format(FileUtilMessageTemplates.FILE_IS_A_DIRECTORY, path);
-			throw new FileUtilException(message);
+			throw new FileUtilRuntimeException(message);
 		}
 	}
 
@@ -241,7 +241,7 @@ public class FileUtil {
 	public void throwExceptionIfFileDoesNotExist(Path path) {
 		if (!fileExists(path)) {
 			String message = String.format(FileUtilMessageTemplates.FILE_DOES_NOT_EXIST, path);
-			throw new FileUtilException(message);
+			throw new FileUtilRuntimeException(message);
 		}
 	}
 }
