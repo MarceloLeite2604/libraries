@@ -14,7 +14,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.github.marceloleite2604.util.exception.FileUtilException;
+import com.github.marceloleite2604.util.exception.FileUtilRuntimeException;
 
 public class FileUtilTest {
 
@@ -145,7 +145,7 @@ public class FileUtilTest {
 		assertThat(content).isEqualTo(READ_BINARY_FILE_CONTENT);
 	}
 
-	@Test(expected = FileUtilException.class)
+	@Test(expected = FileUtilRuntimeException.class)
 	public void testRetrieveBinaryContentFromFilePathShouldThrowFileUtilExceptionWhenFileDoesNotExist()
 			throws Exception {
 		// Act
@@ -314,7 +314,7 @@ public class FileUtilTest {
 		assertThat(actualResult).isEqualTo(expectedResult);
 	}
 
-	@Test(expected = FileUtilException.class)
+	@Test(expected = FileUtilRuntimeException.class)
 	public void testThrowExceptionIfDirectoryDoesNotExistStringShouldThrowFileUtilExceptionWhenDirectoryDoesNotExist()
 			throws Exception {
 		// Act
@@ -331,7 +331,7 @@ public class FileUtilTest {
 		fileUtil.throwExceptionIfDirectoryDoesNotExist(EXISTENT_DIRECTORY_PATH);
 	}
 
-	@Test(expected = FileUtilException.class)
+	@Test(expected = FileUtilRuntimeException.class)
 	public void testThrowExceptionIfDirectoryDoesNotExistPathShouldThrowFileUtilExceptionWhenDirectoryDoesNotExist()
 			throws Exception {
 		// Act
@@ -348,7 +348,7 @@ public class FileUtilTest {
 		fileUtil.throwExceptionIfDirectoryDoesNotExist(Paths.get(EXISTENT_DIRECTORY_PATH));
 	}
 
-	@Test(expected = FileUtilException.class)
+	@Test(expected = FileUtilRuntimeException.class)
 	public void testThrowExceptionIfFileIsNotDirectoryStringShouldThrowFileUtilExceptionWhenFileIsNotDirectory()
 			throws Exception {
 		// Act
@@ -365,7 +365,7 @@ public class FileUtilTest {
 		fileUtil.throwExceptionIfFileIsNotDirectory(EXISTENT_DIRECTORY_PATH);
 	}
 
-	@Test(expected = FileUtilException.class)
+	@Test(expected = FileUtilRuntimeException.class)
 	public void testThrowExceptionIfFileIsNotDirectoryPathShouldThrowFileUtilExceptionWhenFileIsNotDirectory()
 			throws Exception {
 		// Act
@@ -409,7 +409,7 @@ public class FileUtilTest {
 		assertThat(actualPath).isEqualTo(expectedPath);
 	}
 
-	@Test(expected = FileUtilException.class)
+	@Test(expected = FileUtilRuntimeException.class)
 	public void testThrowExceptionIfFileDoesNotExistStringShouldThrowFileUtilExceptionWhenFileDoesNotExist()
 			throws Exception {
 		// Act
@@ -426,7 +426,7 @@ public class FileUtilTest {
 		fileUtil.throwExceptionIfFileDoesNotExist(EXISTENT_DIRECTORY_PATH);
 	}
 
-	@Test(expected = FileUtilException.class)
+	@Test(expected = FileUtilRuntimeException.class)
 	public void testThrowExceptionIfFileDoesNotExistPathShouldThrowFileUtilExceptionWhenFileDoesNotExist()
 			throws Exception {
 		// Act
@@ -443,7 +443,7 @@ public class FileUtilTest {
 		fileUtil.throwExceptionIfFileDoesNotExist(Paths.get(EXISTENT_DIRECTORY_PATH));
 	}
 
-	@Test(expected = FileUtilException.class)
+	@Test(expected = FileUtilRuntimeException.class)
 	public void testThrowExceptionIfFileIsDirectoryStringShouldThrowFileUtilExceptionWhenFileIsDirectory() throws Exception {
 		// Act
 		fileUtil.throwExceptionIfFileIsDirectory(EXISTENT_DIRECTORY_PATH);
@@ -458,7 +458,7 @@ public class FileUtilTest {
 		fileUtil.throwExceptionIfFileIsDirectory(READ_TEXT_FILE_PATH);
 	}
 	
-	@Test(expected = FileUtilException.class)
+	@Test(expected = FileUtilRuntimeException.class)
 	public void testThrowExceptionIfFileIsDirectoryPathShouldThrowFileUtilExceptionWhenFileIsDirectory() throws Exception {
 		// Act
 		fileUtil.throwExceptionIfFileIsDirectory(Paths.get(EXISTENT_DIRECTORY_PATH));

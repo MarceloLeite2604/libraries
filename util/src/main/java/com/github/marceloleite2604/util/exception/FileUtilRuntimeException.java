@@ -1,14 +1,14 @@
 package com.github.marceloleite2604.util.exception;
 
-public class FileUtilException extends RuntimeException {
+public class FileUtilRuntimeException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 
-	public FileUtilException(Throwable cause, String message) {
+	public FileUtilRuntimeException(Throwable cause, String message) {
 		super(message, cause);
 	}
 
-	public FileUtilException(String message) {
+	public FileUtilRuntimeException(String message) {
 		super(message);
 	}
 
