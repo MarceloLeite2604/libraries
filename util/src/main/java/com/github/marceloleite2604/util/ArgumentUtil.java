@@ -1,4 +1,4 @@
-package com.github.marceloleite2604.util.argument;
+package com.github.marceloleite2604.util;
 
 import java.util.Arrays;
 import java.util.List;
