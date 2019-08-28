@@ -19,6 +19,7 @@
 	</properties>
 
 	<modules>
+    <module>blimp</module>
     <module>flask</module>
 		<module>sled</module>
 		<module>util</module>
