@@ -1,4 +1,4 @@
-package com.github.marceloleite2604.util.time.zoned.serialized;
+package com.github.marceloleite2604.util.time.zoned.serializer.timestamp;
 
 import java.io.IOException;
 import java.time.ZonedDateTime;
@@ -8,6 +8,22 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.github.marceloleite2604.util.time.zoned.ZonedDateTimeUtil;
 
+/**
+ * <p>
+ * A {@link StdDeserializer} extension which helps deserialization of
+ * {@link ZonedDateTime} objects from timestamp values.
+ * </p>
+ * <p>
+ * Its serialization equivalent can be found on
+ * {@link ZonedDateTimeFromTimestampSerializer} class.
+ * </p>
+ * 
+ * @see <a href="http://www.github.com/MarceloLeite2604/libraries" target=
+ *      "_top">GitHub project</a>
+ * 
+ * @author MarceloLeite2604
+ * 
+ */
 public class ZonedDateTimeFromTimestampDeserializer extends StdDeserializer<ZonedDateTime> {
 
 	private static final long serialVersionUID = 1L;

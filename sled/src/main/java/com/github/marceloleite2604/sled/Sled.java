@@ -14,6 +14,26 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 
+/**
+ * <p>
+ * Sled is Simple Library for Encryption and Decryption. It helps encrypt and
+ * decrypt texts using Java's most known transformations.
+ * </p>
+ * <p>
+ * The transformation is a composition of a cryptographic algorithm, a feedback
+ * mode and a padding mode. Also, a key is utilized for these transformations.
+ * Sled allows the key to be informed during the transformation request or
+ * during its initialization, which will make the same key be used whenever an
+ * transformation is requested. Lastly, it is also possible to inform an
+ * environment variable name from which Sled will retrieve the transformation
+ * key.
+ * </p>
+ * 
+ * @see <a href="http://www.github.com/MarceloLeite2604/libraries" target=
+ *      "_top">GitHub project</a>
+ * 
+ * @author MarceloLeite2604
+ */
 public class Sled {
 
 	private Optional<String> keyEnvironmentVariableName;

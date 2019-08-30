@@ -8,6 +8,22 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.github.marceloleite2604.util.time.local.LocalTimeUtil;
 
+/**
+ * <p>
+ * A {@link StdSerializer} extension which helps serialization of
+ * {@link LocalTime} objects to a predefined text format.
+ * </p>
+ * <p>
+ * Its deserialization equivalent can be found on {@link LocalTimeDeserializer}
+ * class.
+ * </p>
+ * 
+ * @see <a href="http://www.github.com/MarceloLeite2604/libraries" target=
+ *      "_top">GitHub project</a>
+ * 
+ * @author MarceloLeite2604
+ * 
+ */
 public class LocalTimeSerializer extends StdSerializer<LocalTime> {
 
 	private static final long serialVersionUID = 1L;

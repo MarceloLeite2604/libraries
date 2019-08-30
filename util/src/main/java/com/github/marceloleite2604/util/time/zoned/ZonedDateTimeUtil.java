@@ -7,6 +7,16 @@ import java.time.format.DateTimeFormatter;
 
 import com.github.marceloleite2604.util.time.TimeInterval;
 
+/**
+ * A series of handy methods which helps working with {@link ZonedDateTime}
+ * objects.
+ * 
+ * @see <a href="http://www.github.com/MarceloLeite2604/libraries" target=
+ *      "_top">GitHub project</a>
+ * 
+ * @author MarceloLeite2604
+ *
+ */
 public class ZonedDateTimeUtil {
 
 	private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ISO_OFFSET_DATE_TIME;

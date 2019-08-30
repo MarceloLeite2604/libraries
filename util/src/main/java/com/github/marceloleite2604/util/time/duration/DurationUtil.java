@@ -7,6 +7,15 @@ import java.util.Objects;
 
 import com.github.marceloleite2604.util.time.TimeUtilRuntimeException;
 
+/**
+ * A series of handy methods which helps working with {@link Duration} objects.
+ * 
+ * @see <a href="http://www.github.com/MarceloLeite2604/libraries" target=
+ *      "_top">GitHub project</a>
+ * 
+ * @author MarceloLeite2604
+ *
+ */
 public class DurationUtil {
 
 	private static final String NANO_UNIT = "nanosecond";

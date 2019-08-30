@@ -5,6 +5,16 @@ import java.time.ZonedDateTime;
 
 import com.github.marceloleite2604.util.time.zoned.ZonedDateTimeUtil;
 
+/**
+ * Contains a time interval which contains its start time, end time and
+ * duration.
+ * 
+ * @see <a href="http://www.github.com/MarceloLeite2604/libraries" target=
+ *      "_top">GitHub project</a>
+ * 
+ * @author MarceloLeite2604
+ *
+ */
 public class TimeInterval implements Comparable<TimeInterval> {
 
 	private static final ZonedDateTimeUtil ZONED_DATE_TIME_UTIL = new ZonedDateTimeUtil();

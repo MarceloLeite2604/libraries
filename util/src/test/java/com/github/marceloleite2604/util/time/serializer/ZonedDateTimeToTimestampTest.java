@@ -18,7 +18,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import com.github.marceloleite2604.util.time.zoned.serialized.ZonedDateTimeToTimestampSerializer;
+import com.github.marceloleite2604.util.time.zoned.serializer.timestamp.ZonedDateTimeToTimestampSerializer;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ZonedDateTimeToTimestampTest {

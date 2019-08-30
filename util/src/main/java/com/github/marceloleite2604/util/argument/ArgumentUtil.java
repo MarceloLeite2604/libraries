@@ -6,6 +6,15 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
+/**
+ * A series of handy methods which helps manipulating arguments.
+ * 
+ * @see <a href="http://www.github.com/MarceloLeite2604/libraries" target=
+ *      "_top">GitHub project</a>
+ * 
+ * @author MarceloLeite2604
+ *
+ */
 public class ArgumentUtil {
 
 	private static final String PARAMETER_NAME_REGEX = "-[^-\\s]+";

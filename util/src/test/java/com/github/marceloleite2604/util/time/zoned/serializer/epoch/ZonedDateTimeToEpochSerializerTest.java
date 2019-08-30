@@ -1,4 +1,4 @@
-package com.github.marceloleite2604.util.time.zoned.serialized;
+package com.github.marceloleite2604.util.time.zoned.serializer.epoch;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.times;
@@ -18,7 +18,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import com.github.marceloleite2604.util.time.zoned.serialized.ZonedDateTimeToEpochSerializer;
+import com.github.marceloleite2604.util.time.zoned.serializer.epoch.ZonedDateTimeToEpochSerializer;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ZonedDateTimeToEpochSerializerTest {

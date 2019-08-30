@@ -4,6 +4,15 @@ import java.time.Duration;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * A series of handy methods which helps working with {@link LocalTime} objects.
+ * 
+ * @see <a href="http://www.github.com/MarceloLeite2604/libraries" target=
+ *      "_top">GitHub project</a>
+ * 
+ * @author MarceloLeite2604
+ *
+ */
 public class LocalTimeUtil {
 
 	public static final int SECONDS_IN_A_DAY = 86400;

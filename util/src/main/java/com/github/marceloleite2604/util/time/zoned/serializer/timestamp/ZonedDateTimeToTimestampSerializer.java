@@ -1,4 +1,4 @@
-package com.github.marceloleite2604.util.time.zoned.serialized;
+package com.github.marceloleite2604.util.time.zoned.serializer.timestamp;
 
 import java.io.IOException;
 import java.time.ZonedDateTime;
