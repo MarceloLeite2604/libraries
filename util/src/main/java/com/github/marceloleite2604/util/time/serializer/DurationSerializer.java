@@ -12,7 +12,7 @@ public class DurationSerializer extends StdSerializer<Duration> {
 
 	private static final long serialVersionUID = 1L;
 
-	private final DurationUtil durationUtil;
+	private final transient DurationUtil durationUtil;
 
 	public DurationSerializer() {
 		super(Duration.class);
