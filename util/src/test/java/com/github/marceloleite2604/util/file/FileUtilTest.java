@@ -2,29 +2,51 @@ package com.github.marceloleite2604.util.file;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
+import static org.powermock.api.mockito.PowerMockito.mock;
+import static org.powermock.api.mockito.PowerMockito.when;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Locale;
 
+import org.apache.commons.io.FileUtils;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.Rule;
 import org.junit.Test;
+import org.mockito.ArgumentMatchers;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.agent.PowerMockAgent;
+import org.powermock.modules.junit4.rule.PowerMockRule;
 
 import com.github.marceloleite2604.util.exception.FileUtilRuntimeException;
 
+@PrepareForTest({ FileUtil.class, FileUtils.class, BufferedWriter.class, FileOutputStream.class })
 public class FileUtilTest {
 
-	private static final String TESTING_DIRECTORY = "src/test/resources/FileUtilTest".replace("/",
-			File.separator);
+	private static final String TESTING_DIRECTORY = ("src/test/resources/"
+			+ FileUtilTest.class.getSimpleName()).replace("/", File.separator);
 
 	private static final String READ_TEXT_FILE_PATH = TESTING_DIRECTORY + File.separator
 			+ "read-text-file.txt";
 
 	private static final String READ_TEXT_FILE_CONTENT = "This is a text file for reading tests.";
+	
+	private static final String INEXISTENT_FILE_PATH = TESTING_DIRECTORY + File.separator
+			+ "inexistent-file.txt";
+
+	private static final String CLASSPATH_TESTING_DIRECTORY = FileUtilTest.class.getSimpleName();
+
+	private static final String CLASSPATH_READ_TEXT_FILE_PATH = CLASSPATH_TESTING_DIRECTORY + File.separator
+			+ "read-text-file.txt";
 
 	private static final String READ_BINARY_FILE_PATH = TESTING_DIRECTORY + File.separator
 			+ "read-binary-file.bin";
@@ -61,12 +83,16 @@ public class FileUtilTest {
 	private static final String EXISTENT_DIRECTORY_PATH_WITH_SEPARATOR = EXISTENT_DIRECTORY_PATH
 			+ File.separator;
 
-	// private static final String INVALID_FILE_PATH = TESTING_DIRECTORY +
-	// File.separator + ":";
-
 	private static final Locale DEFAULT_LOCALE = Locale.getDefault();
 
 	private static final Locale TESTING_LOCALE = Locale.ENGLISH;
+
+	@Rule
+	public PowerMockRule rule = new PowerMockRule();
+
+	static {
+		PowerMockAgent.initializeIfNeeded();
+	}
 
 	private FileUtil fileUtil;
 
@@ -137,12 +163,77 @@ public class FileUtilTest {
 	}
 
 	@Test
+	public void testRetrieveTextContentFromFilePathShouldRetrieveFilesFromClasspath()
+			throws Exception {
+		// Arrange
+		File mockFile = mock(File.class);
+		Path mockPath = mock(Path.class);
+
+		when(mockPath.toFile()).thenReturn(mockFile);
+		when(mockFile.exists()).thenReturn(false);
+		when(mockPath.toString()).thenReturn(CLASSPATH_READ_TEXT_FILE_PATH);
+
+		// Act
+		String content = fileUtil.retrieveTextContentFromFile(mockPath);
+
+		// Assert
+		assertThat(content).isEqualTo(READ_TEXT_FILE_CONTENT);
+	}
+
+	@Test(expected = FileUtilRuntimeException.class)
+	public void testRetrieveTextContentFromFilePathShouldThrowFileUtilRuntimeExceptionWhenFileIsNotFound()
+			throws Exception {
+		// Arrange
+		Path filePath = Paths.get(INEXISTENT_FILE_PATH);
+
+		// Act
+		fileUtil.retrieveTextContentFromFile(filePath);
+
+		// Assert
+		fail("Should have thrown an exception.");
+	}
+
+	@Test(expected = FileUtilRuntimeException.class)
+	public void testRetrieveTextContentFromFilePathShouldThrowFileUtilRuntimeExceptionWhenIOExceptionIsCaught()
+			throws Exception {
+
+		// Arrange
+		Path filePath = Paths.get(FileUtilTest.READ_TEXT_FILE_PATH);
+
+		FileUtil spiedFileUtil = PowerMockito.spy(fileUtil);
+		PowerMockito.doThrow(new IOException())
+				.when(spiedFileUtil, "createBufferedReader", ArgumentMatchers.any(Path.class));
+
+		// Act
+		spiedFileUtil.retrieveTextContentFromFile(filePath);
+
+		// Assert
+		fail("Should have thrown an exception.");
+	}
+
+	@Test
 	public void testRetrieveBinaryContentFromFilePath() throws Exception {
 		// Act
 		byte[] content = fileUtil.retrieveBinaryContentFromFile(Paths.get(READ_BINARY_FILE_PATH));
 
 		// Assert
 		assertThat(content).isEqualTo(READ_BINARY_FILE_CONTENT);
+	}
+
+	@Test(expected = FileUtilRuntimeException.class)
+	public void testRetrieveBinaryContentFromFilePathShouldThrownFileUtilRuntimeExceptionWhenIOExceptionIsCaught()
+			throws Exception {
+		// Arrange
+		FileUtil spiedFileUtil = PowerMockito.spy(fileUtil);
+		PowerMockito.doThrow(new IOException())
+				.when(spiedFileUtil, "readAllBytesFromInputStream",
+						ArgumentMatchers.any(InputStream.class));
+
+		// Act
+		spiedFileUtil.retrieveBinaryContentFromFile(Paths.get(READ_BINARY_FILE_PATH));
+
+		// Assert
+		fail("Should have thrown an exception.");
 	}
 
 	@Test(expected = FileUtilRuntimeException.class)
@@ -184,6 +275,27 @@ public class FileUtilTest {
 		assertThat(content).isEqualTo(WRITE_TEXT_FILE_CONTENT);
 	}
 
+	@Test(expected = FileUtilRuntimeException.class)
+	public void testWriteContentOnFilePathStringShouldThrowFileUtilRuntimeExceptionWhenIOExceptionIsCaught()
+			throws Exception {
+		// Arrange
+		BufferedWriter mockBufferedWriter = PowerMockito.mock(BufferedWriter.class);
+
+		PowerMockito.whenNew(BufferedWriter.class)
+				.withAnyArguments()
+				.thenReturn(mockBufferedWriter);
+
+		PowerMockito.doThrow(new IOException())
+				.when(mockBufferedWriter)
+				.write(ArgumentMatchers.anyString());
+
+		// Act
+		fileUtil.writeContentOnFile(Paths.get(WRITE_TEXT_FILE_PATH), WRITE_TEXT_FILE_CONTENT);
+
+		// Assert
+		fail("Should have thrown an exception.");
+	}
+
 	@Test
 	public void testWriteContentOnFileStringByteArray() throws Exception {
 		// Act
@@ -202,6 +314,27 @@ public class FileUtilTest {
 
 		// Assert
 		assertThat(content).isEqualTo(WRITE_BINARY_FILE_CONTENT);
+	}
+	
+	@Test(expected = FileUtilRuntimeException.class)
+	public void testWriteContentOnFilePathByteArrayShouldThrowFileUtilRuntimeExceptionWhenIOExceptionIsCaught()
+			throws Exception {
+		// Arrange
+		FileOutputStream mockFileOutputStream = PowerMockito.mock(FileOutputStream.class);
+
+		PowerMockito.whenNew(FileOutputStream.class)
+				.withAnyArguments()
+				.thenReturn(mockFileOutputStream);
+
+		PowerMockito.doThrow(new IOException())
+				.when(mockFileOutputStream)
+				.write(ArgumentMatchers.any());
+
+		// Act
+		fileUtil.writeContentOnFile(Paths.get(WRITE_BINARY_FILE_PATH), WRITE_BINARY_FILE_CONTENT);
+
+		// Assert
+		fail("Should have thrown an exception.");
 	}
 
 	@Test
@@ -234,7 +367,7 @@ public class FileUtilTest {
 		// Assert
 		assertThat(actualFilesSizes).isEqualTo(SIZED_FILES_SIZES);
 	}
-	
+
 	@Test
 	public void testRetrieveFileSizeString() throws Exception {
 
@@ -254,7 +387,7 @@ public class FileUtilTest {
 	}
 
 	@Test
-	public void testCreateDirectoryIfDoesNotExist() throws Exception {
+	public void testCreateDirectoryIfDoesNotExistString() throws Exception {
 		// Arrange
 		File inexistentDirectory = new File(INEXISTENT_DIRECTORY_PATH);
 		assertThat(inexistentDirectory.exists()).isFalse();
@@ -264,6 +397,36 @@ public class FileUtilTest {
 
 		// Assert
 		assertThat(inexistentDirectory.exists()).isTrue();
+	}
+
+	@Test
+	public void testCreateDirectoryIfDoesNotExistPath() throws Exception {
+		// Arrange
+		File inexistentDirectory = new File(INEXISTENT_DIRECTORY_PATH);
+		assertThat(inexistentDirectory.exists()).isFalse();
+
+		// Act
+		fileUtil.createDirectoryIfDoesNotExist(Paths.get(INEXISTENT_DIRECTORY_PATH));
+
+		// Assert
+		assertThat(inexistentDirectory.exists()).isTrue();
+	}
+
+	@Test(expected = FileUtilRuntimeException.class)
+	public void testCreateDirectoryIfDoesNotExistShouldThrowFileUtilRuntimeExceptionWhenIOExceptionIsCaught()
+			throws Exception {
+		// Arrange
+		Path directoryPath = Paths.get(INEXISTENT_DIRECTORY_PATH);
+		PowerMockito.spy(FileUtils.class);
+		PowerMockito.doThrow(new IOException())
+				.when(FileUtils.class);
+		FileUtils.forceMkdir(directoryPath.toFile());
+
+		// Act
+		fileUtil.createDirectoryIfDoesNotExist(directoryPath);
+
+		// Assert
+		fail("Should have thrown an exception.");
 	}
 
 	@Test
@@ -444,33 +607,36 @@ public class FileUtilTest {
 	}
 
 	@Test(expected = FileUtilRuntimeException.class)
-	public void testThrowExceptionIfFileIsDirectoryStringShouldThrowFileUtilExceptionWhenFileIsDirectory() throws Exception {
+	public void testThrowExceptionIfFileIsDirectoryStringShouldThrowFileUtilExceptionWhenFileIsDirectory()
+			throws Exception {
 		// Act
 		fileUtil.throwExceptionIfFileIsDirectory(EXISTENT_DIRECTORY_PATH);
-		
+
 		// Assert
 		fail("Should have thrown an exception.");
 	}
-	
+
 	@Test
-	public void testThrowExceptionIfFileIsDirectoryStringShouldContinueWhenFileIsNotDirectory() throws Exception {
+	public void testThrowExceptionIfFileIsDirectoryStringShouldContinueWhenFileIsNotDirectory()
+			throws Exception {
 		// Act
 		fileUtil.throwExceptionIfFileIsDirectory(READ_TEXT_FILE_PATH);
 	}
-	
+
 	@Test(expected = FileUtilRuntimeException.class)
-	public void testThrowExceptionIfFileIsDirectoryPathShouldThrowFileUtilExceptionWhenFileIsDirectory() throws Exception {
+	public void testThrowExceptionIfFileIsDirectoryPathShouldThrowFileUtilExceptionWhenFileIsDirectory()
+			throws Exception {
 		// Act
 		fileUtil.throwExceptionIfFileIsDirectory(Paths.get(EXISTENT_DIRECTORY_PATH));
-		
+
 		// Assert
 		fail("Should have thrown an exception.");
 	}
-	
+
 	@Test
-	public void testThrowExceptionIfFileIsDirectoryPathShouldContinueWhenFileIsNotDirectory() throws Exception {
+	public void testThrowExceptionIfFileIsDirectoryPathShouldContinueWhenFileIsNotDirectory()
+			throws Exception {
 		// Act
 		fileUtil.throwExceptionIfFileIsDirectory(Paths.get(READ_TEXT_FILE_PATH));
 	}
-
 }
