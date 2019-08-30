@@ -45,10 +45,27 @@ public class Sled {
 		this.transformation = cryptographicAlgorithm + "/" + feedbackMode + "/" + paddingScheme;
 	}
 
-	public String encrypt(String content) {
-		return encrypt(content, retrieveKey());
+	/**
+	 * Encrypts a text either using the key informed as parameter or stored on the
+	 * environment variable informed during this object instantiation.
+	 * 
+	 * @param text
+	 *            Text to be encrypted.
+	 * @return The content of {@code text} parameter encrypted.
+	 */
+	public String encrypt(String text) {
+		return encrypt(text, retrieveKey());
 	}
 
+	/**
+	 * Encrypts a text using the key informed .
+	 * 
+	 * @param text
+	 *            Text to be encrypted.
+	 * @param key
+	 *            Key to use during the encryption.
+	 * @return The content of {@code text} parameter encrypted.
+	 */
 	public String encrypt(String content, String key) {
 		try {
 			byte[] keyBytes = DatatypeConverter.parseBase64Binary(key);
@@ -61,10 +78,27 @@ public class Sled {
 		}
 	}
 
+	/**
+	 * Decrypts a content either using the key informed as parameter or stored on
+	 * the environment variable informed during this object instantiation.
+	 * 
+	 * @param content
+	 *            The content to be decrypted.
+	 * @return The content of {@code text} parameter decrypted.
+	 */
 	public String decrypt(String content) {
 		return decrypt(content, retrieveKey());
 	}
 
+	/**
+	 * Decrypts a content using the key informed .
+	 * 
+	 * @param content
+	 *            Content to be decrypted.
+	 * @param key
+	 *            Key to use during the decryption.
+	 * @return The content of {@code content} parameter decrypted.
+	 */
 	public String decrypt(String content, String key) {
 		try {
 			byte[] encryptedBytes = DatatypeConverter.parseBase64Binary(content);
