@@ -1,11 +1,14 @@
-package com.github.marceloleite2604.util;
+package com.github.marceloleite2604.util.argument;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.regex.Pattern;
 
 public class ArgumentUtil {
+
+	private static final String PARAMETER_NAME_REGEX = "-[^-\\s]+";
 
 	/**
 	 * Retrieves the value of an optional argument.
@@ -41,27 +44,34 @@ public class ArgumentUtil {
 	 */
 	public String retrieveArgument(String[] arguments, String name, String defaultValue) {
 
-		String content = null;
+		if (Objects.isNull(name)) {
+			throw new ArgumentUtilRuntimeException(
+					ArgumentUtilMessageTemplates.PARAMETER_NAME_CANNOT_BE_NULL);
+		}
+
+		if (Objects.isNull(arguments)) {
+			return defaultValue;
+		}
 
 		List<String> argumentsList = Arrays.asList(arguments);
 
 		int index = argumentsList.indexOf(name);
-		if (index >= 0) {
-			if (index == argumentsList.size()) {
-				return defaultValue;
-			}
-			content = argumentsList.get(index + 1);
 
-			if (Pattern.matches("-.", content)) {
-				return defaultValue;
-			}
-		}
-
-		if (content != null) {
-			return content;
-		} else {
+		if (index < 0) {
 			return defaultValue;
 		}
+
+		if (index == argumentsList.size() - 1) {
+			return arguments[index];
+		}
+
+		String nextValue = arguments[index + 1];
+
+		if (Pattern.matches(PARAMETER_NAME_REGEX, nextValue)) {
+			return arguments[index];
+		}
+
+		return arguments[index + 1];
 	}
 
 	/**
