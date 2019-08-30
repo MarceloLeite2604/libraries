@@ -16,6 +16,20 @@
 	<name>sled</name>
 	<description>Sled stands for Simple Library for Encryption and Decryption. As the name says, it helps encrypt and decrypt both binary and text content.</description>
 	<url>https://github.com/MarceloLeite2064/libraries</url>
+	
+	<properties>
+		<surefire.argLine.default>-Djdk.attach.allowAttachSelf=true -noverify</surefire.argLine.default>
+		<surefire.argLine>${surefire.argLine.default}</surefire.argLine>
+	</properties>
+	
+	<profiles>
+		<profile>
+			<id>java-9</id>
+			<properties>
+				<surefire.argLine>${surefire.argLine.default} --illegal-access=permit --add-opens java.base/jdk.internal.loader=ALL-UNNAMED</surefire.argLine>
+			</properties>
+		</profile>
+	</profiles>
 
 	<dependencies>
 		<dependency>
@@ -61,7 +75,7 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.22.2</version>
 				<configuration>
-					<argLine>-Xms128m -Xmx128m -Djdk.attach.allowAttachSelf=true -noverify --illegal-access=permit --add-opens java.base/jdk.internal.loader=ALL-UNNAMED</argLine>
+					<argLine>${surefire.argLine}</argLine>
 				</configuration>
 			</plugin>
 		</plugins>

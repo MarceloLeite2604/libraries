@@ -16,6 +16,20 @@
 	<name>util</name>
 	<url>https://github.com/MarceloLeite2064/libraries</url>
 	<description>A series of useful classes and methods which helps on minor tasks</description>
+	
+	<properties>
+		<surefire.argLine.default>-Djdk.attach.allowAttachSelf=true -noverify</surefire.argLine.default>
+		<surefire.argLine>${surefire.argLine.default}</surefire.argLine>
+	</properties>
+	
+	<profiles>
+		<profile>
+			<id>java-9</id>
+			<properties>
+				<surefire.argLine>${surefire.argLine.default} --illegal-access=permit --add-opens java.base/jdk.internal.loader=ALL-UNNAMED</surefire.argLine>
+			</properties>
+		</profile>
+	</profiles>
 
 	<dependencies>
 
@@ -77,7 +91,7 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.22.2</version>
 				<configuration>
-					<argLine>-Xms128m -Xmx128m -Djdk.attach.allowAttachSelf=true -noverify --illegal-access=permit --add-opens java.base/jdk.internal.loader=ALL-UNNAMED</argLine>
+					<argLine>${surefire.argLine}</argLine>
 				</configuration>
 			</plugin>
 		</plugins>
