@@ -53,8 +53,8 @@ public class FileUtil {
 	 *            Path to the file to be read.
 	 * @return The file text content.
 	 */
-	public String retrieveTextContentFromFile(Path path) {
-		return readTextContentFromFile(path);
+	public String retrieveTextContentFromFile(Path filePath) {
+		return readTextContentFromFile(filePath);
 	}
 
 	private String readTextContentFromFile(Path path) {
@@ -86,10 +86,10 @@ public class FileUtil {
 	 *            Path to the file to be read.
 	 * @return The file binary content.
 	 */
-	public byte[] retrieveBinaryContentFromFile(Path path) {
-		throwExceptionIfFileDoesNotExist(path);
-		throwExceptionIfFileIsDirectory(path);
-		return readBinaryContentFromFile(path);
+	public byte[] retrieveBinaryContentFromFile(Path filePath) {
+		throwExceptionIfFileDoesNotExist(filePath);
+		throwExceptionIfFileIsDirectory(filePath);
+		return readBinaryContentFromFile(filePath);
 	}
 
 	private byte[] readBinaryContentFromFile(Path path) {
@@ -181,7 +181,7 @@ public class FileUtil {
 	 * 
 	 * @param filePath
 	 *            Path to the file to write the content.
-	 * @param content
+	 * @param bytes
 	 *            Bytes to be written.
 	 */
 	public void writeContentOnFile(String filePath, byte[] bytes) {
@@ -193,7 +193,7 @@ public class FileUtil {
 	 * 
 	 * @param filePath
 	 *            Path to the file to write the content.
-	 * @param content
+	 * @param bytes
 	 *            Bytes to be written.
 	 */
 	public void writeContentOnFile(Path filePath, byte[] bytes) {
@@ -213,8 +213,8 @@ public class FileUtil {
 	 *            Path to the file which the size must be retrieved.
 	 * @return The file size in bytes.
 	 */
-	public long retrieveFileSize(String path) {
-		return retrieveFileSize(Paths.get(path));
+	public long retrieveFileSize(String filePath) {
+		return retrieveFileSize(Paths.get(filePath));
 	}
 
 	/**
