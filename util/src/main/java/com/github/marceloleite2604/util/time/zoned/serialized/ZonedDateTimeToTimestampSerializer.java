@@ -1,4 +1,4 @@
-package com.github.marceloleite2604.util.time.serializer;
+package com.github.marceloleite2604.util.time.zoned.serialized;
 
 import java.io.IOException;
 import java.time.ZonedDateTime;
@@ -6,19 +6,22 @@ import java.time.ZonedDateTime;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
-import com.github.marceloleite2604.util.time.ZonedDateTimeUtil;
+import com.github.marceloleite2604.util.time.zoned.ZonedDateTimeUtil;
 
 public class ZonedDateTimeToTimestampSerializer extends StdSerializer<ZonedDateTime> {
+
+	private static final long serialVersionUID = 1L;
+
+	private final transient ZonedDateTimeUtil zonedDateTimeUtil;
 	
 	public ZonedDateTimeToTimestampSerializer() {
 		super(ZonedDateTime.class);
+		this.zonedDateTimeUtil = new ZonedDateTimeUtil();
 	}
-
-	private static final long serialVersionUID = 1L;
 
 	@Override
 	public void serialize(ZonedDateTime zonedDateTime, JsonGenerator generator, SerializerProvider provider)
 			throws IOException {
-		generator.writeString(ZonedDateTimeUtil.formatAsTimestamp(zonedDateTime));
+		generator.writeString(zonedDateTimeUtil.toStringAsTimestamp(zonedDateTime));
 	}
 }

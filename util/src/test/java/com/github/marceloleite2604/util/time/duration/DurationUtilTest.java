@@ -1,4 +1,4 @@
-package com.github.marceloleite2604.util.time;
+package com.github.marceloleite2604.util.time.duration;
 
 import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.assertEquals;
@@ -7,6 +7,10 @@ import java.time.Duration;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import com.github.marceloleite2604.util.time.TimeUtilRuntimeException;
+
+import com.github.marceloleite2604.util.time.duration.DurationUtil;
 
 public class DurationUtilTest {
 

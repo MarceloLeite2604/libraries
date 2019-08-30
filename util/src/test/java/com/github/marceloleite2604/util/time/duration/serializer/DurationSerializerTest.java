@@ -1,10 +1,10 @@
-package com.github.marceloleite2604.util.time.serializer;
+package com.github.marceloleite2604.util.time.duration.serializer;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
-import java.time.LocalTime;
+import java.time.Duration;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -16,9 +16,10 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
+import com.github.marceloleite2604.util.time.duration.serializer.DurationSerializer;
 
 @RunWith(MockitoJUnitRunner.class)
-public class LocalTimeSerializerTest {
+public class DurationSerializerTest {
 	
 	@Mock
 	private JsonGenerator jsonGenerator;
@@ -27,27 +28,27 @@ public class LocalTimeSerializerTest {
 	private SerializerProvider serializerProvider;
 	
 	@Captor
-	private ArgumentCaptor<String> argumentCaptor;
+	private ArgumentCaptor<Double> argumentCaptor;
 	
-	private LocalTimeSerializer localTimeSerializer;
+	private DurationSerializer durationSerializer;
 	
 	@Before
 	public void setUp() {
-		this.localTimeSerializer = new LocalTimeSerializer();
+		this.durationSerializer = new DurationSerializer();
 	}
 
 	@Test
 	public void testSerialize() throws Exception {
 		// Arrange
-		String exptectedText = "23:17:39";
-		LocalTime localTime = LocalTime.of(23, 17, 39);
+		double expectedSeconds = 3600.0;
+		Duration duration = Duration.ofSeconds(3600L);
 		
 		// Act
-		localTimeSerializer.serialize(localTime, jsonGenerator, serializerProvider);
+		durationSerializer.serialize(duration, jsonGenerator, serializerProvider);
 		
 		// Assert
-		verify(jsonGenerator, times(1)).writeString(argumentCaptor.capture());
-		assertEquals(exptectedText, argumentCaptor.getValue());
+		verify(jsonGenerator, times(1)).writeNumber(argumentCaptor.capture());
+		assertEquals(expectedSeconds, argumentCaptor.getValue().doubleValue(), 0.1);
 	}
 
 }

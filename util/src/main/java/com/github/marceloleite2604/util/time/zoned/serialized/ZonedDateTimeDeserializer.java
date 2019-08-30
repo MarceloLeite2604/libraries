@@ -1,4 +1,4 @@
-package com.github.marceloleite2604.util.time.deserializer;
+package com.github.marceloleite2604.util.time.zoned.serialized;
 
 import java.io.IOException;
 import java.time.ZonedDateTime;
@@ -6,19 +6,22 @@ import java.time.ZonedDateTime;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import com.github.marceloleite2604.util.time.ZonedDateTimeUtil;
+import com.github.marceloleite2604.util.time.zoned.ZonedDateTimeUtil;
 
-public class ZonedDateTimeFromEpochDeserializer extends StdDeserializer<ZonedDateTime> {
+public class ZonedDateTimeDeserializer extends StdDeserializer<ZonedDateTime> {
 
 	private static final long serialVersionUID = 1L;
-
-	public ZonedDateTimeFromEpochDeserializer() {
+	
+	private final transient ZonedDateTimeUtil zonedDateTimeUtil;
+	
+	public ZonedDateTimeDeserializer() {
 		super(ZonedDateTime.class);
+		this.zonedDateTimeUtil = new ZonedDateTimeUtil();
 	}
 
 	@Override
 	public ZonedDateTime deserialize(JsonParser jsonParser, DeserializationContext context) throws IOException {
-		return ZonedDateTimeUtil.convertFromEpochTime(jsonParser.getValueAsLong());
+		return zonedDateTimeUtil.parse(jsonParser.getText());
 	}
 
 }

@@ -1,4 +1,4 @@
-package com.github.marceloleite2604.util.time;
+package com.github.marceloleite2604.util.time.local;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -7,11 +7,19 @@ import static org.junit.Assert.assertTrue;
 import java.time.Duration;
 import java.time.LocalTime;
 
+import org.junit.Before;
 import org.junit.Test;
 
-import com.github.marceloleite2604.util.time.LocalTimeUtil;
+import com.github.marceloleite2604.util.time.local.LocalTimeUtil;
 
 public class LocalTimeUtilTest {
+
+	private LocalTimeUtil localTimeUtil;
+
+	@Before
+	public void setUp() {
+		this.localTimeUtil = new LocalTimeUtil();
+	}
 
 	@Test
 	public void testIsBetweenInsideLimits() throws Exception {
@@ -21,9 +29,9 @@ public class LocalTimeUtilTest {
 		Duration duration = Duration.ofHours(4);
 
 		// Act and assert
-		assertTrue(LocalTimeUtil.isBetween(timeToCheck, startTime, duration));
+		assertTrue(localTimeUtil.isBetween(timeToCheck, startTime, duration));
 	}
-	
+
 	@Test
 	public void testIsBetweenOutsideLimits() throws Exception {
 		// Arrange
@@ -32,9 +40,9 @@ public class LocalTimeUtilTest {
 		Duration duration = Duration.ofMinutes(1);
 
 		// Act and assert
-		assertFalse(LocalTimeUtil.isBetween(timeToCheck, startTime, duration));
+		assertFalse(localTimeUtil.isBetween(timeToCheck, startTime, duration));
 	}
-	
+
 	@Test
 	public void testIsBetweenUpperLimitExclusive() throws Exception {
 		// Arrange
@@ -43,9 +51,9 @@ public class LocalTimeUtilTest {
 		Duration duration = Duration.ofHours(4);
 
 		// Act and assert
-		assertFalse(LocalTimeUtil.isBetween(timeToCheck, startTime, duration));
+		assertFalse(localTimeUtil.isBetween(timeToCheck, startTime, duration));
 	}
-	
+
 	@Test
 	public void testIsBetweenLowerLimitInclusive() throws Exception {
 		// Arrange
@@ -54,7 +62,7 @@ public class LocalTimeUtilTest {
 		Duration duration = Duration.ofHours(1);
 
 		// Act and assert
-		assertTrue(LocalTimeUtil.isBetween(timeToCheck, startTime, duration));
+		assertTrue(localTimeUtil.isBetween(timeToCheck, startTime, duration));
 	}
 
 	@Test
@@ -64,20 +72,20 @@ public class LocalTimeUtilTest {
 		LocalTime expectedLocalTime = LocalTime.of(17, 58);
 
 		// Act
-		LocalTime actualLocalTime = LocalTimeUtil.parse(timeText);
+		LocalTime actualLocalTime = localTimeUtil.parse(timeText);
 
 		// Assert
 		assertEquals(expectedLocalTime, actualLocalTime);
 	}
 
 	@Test
-	public void testFormat() throws Exception {
+	public void testToString() throws Exception {
 		// Arrange
 		LocalTime localTime = LocalTime.of(6, 47, 13);
 		String expectedFormattedText = "06:47:13";
 
 		// Act
-		String actualFormattedText = LocalTimeUtil.format(localTime);
+		String actualFormattedText = localTimeUtil.toString(localTime);
 
 		// Assert
 		assertEquals(expectedFormattedText, actualFormattedText);

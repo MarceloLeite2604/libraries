@@ -1,4 +1,4 @@
-package com.github.marceloleite2604.util.time.serializer;
+package com.github.marceloleite2604.util.time.zoned.serialized;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.times;
@@ -18,9 +18,10 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
+import com.github.marceloleite2604.util.time.zoned.serialized.ZonedDateTimeToEpochSerializer;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ZonedDateTimeSerializerTest {
+public class ZonedDateTimeToEpochSerializerTest {
 
 	@Mock
 	private JsonGenerator jsonGenerator;
@@ -29,27 +30,27 @@ public class ZonedDateTimeSerializerTest {
 	private SerializerProvider serializerProvider;
 
 	@Captor
-	private ArgumentCaptor<String> argumentCaptor;
+	private ArgumentCaptor<Long> argumentCaptor;
 
-	private ZonedDateTimeSerializer zonedDateTimeSerializer;
+	private ZonedDateTimeToEpochSerializer zonedDateTimeToEpochSerializer;
 
 	@Before
 	public void setUp() {
-		this.zonedDateTimeSerializer = new ZonedDateTimeSerializer();
+		this.zonedDateTimeToEpochSerializer = new ZonedDateTimeToEpochSerializer();
 	}
 
 	@Test
 	public void testSerialize() throws Exception {
 		// Arrange
-		String exptectedText = "2018-09-26T08:40:06+05:00";
+		long expectedValue = 1537933206L;
 		ZonedDateTime zonedTime = ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 8, 40, 6, 0), ZoneId.of("Etc/GMT-5"));
 
 		// Act
-		zonedDateTimeSerializer.serialize(zonedTime, jsonGenerator, serializerProvider);
+		zonedDateTimeToEpochSerializer.serialize(zonedTime, jsonGenerator, serializerProvider);
 
 		// Assert
-		verify(jsonGenerator, times(1)).writeString(argumentCaptor.capture());
-		assertEquals(exptectedText, argumentCaptor.getValue());
+		verify(jsonGenerator, times(1)).writeNumber(argumentCaptor.capture());
+		assertEquals(expectedValue, argumentCaptor.getValue().longValue());
 	}
 
 }

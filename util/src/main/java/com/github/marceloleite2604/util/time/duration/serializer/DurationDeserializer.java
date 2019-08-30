@@ -1,4 +1,4 @@
-package com.github.marceloleite2604.util.time.deserializer;
+package com.github.marceloleite2604.util.time.duration.serializer;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -6,7 +6,7 @@ import java.time.Duration;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import com.github.marceloleite2604.util.time.DurationUtil;
+import com.github.marceloleite2604.util.time.duration.DurationUtil;
 
 public class DurationDeserializer extends StdDeserializer<Duration> {
 

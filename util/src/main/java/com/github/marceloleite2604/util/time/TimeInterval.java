@@ -3,7 +3,11 @@ package com.github.marceloleite2604.util.time;
 import java.time.Duration;
 import java.time.ZonedDateTime;
 
+import com.github.marceloleite2604.util.time.zoned.ZonedDateTimeUtil;
+
 public class TimeInterval implements Comparable<TimeInterval> {
+
+	private static final ZonedDateTimeUtil ZONED_DATE_TIME_UTIL = new ZonedDateTimeUtil();
 
 	private ZonedDateTime start;
 
@@ -46,7 +50,7 @@ public class TimeInterval implements Comparable<TimeInterval> {
 
 	@Override
 	public String toString() {
-		return ZonedDateTimeUtil.format(start) + " to " + ZonedDateTimeUtil.format(end);
+		return ZONED_DATE_TIME_UTIL.toString(start) + " to " + ZONED_DATE_TIME_UTIL.toString(end);
 	}
 
 	@Override

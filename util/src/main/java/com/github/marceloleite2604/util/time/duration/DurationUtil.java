@@ -1,9 +1,11 @@
-package com.github.marceloleite2604.util.time;
+package com.github.marceloleite2604.util.time.duration;
 
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import com.github.marceloleite2604.util.time.TimeUtilRuntimeException;
 
 public class DurationUtil {
 
@@ -35,7 +37,7 @@ public class DurationUtil {
 	public String writeAsText(Duration duration) {
 
 		if (Objects.isNull(duration)) {
-			throw new TimeUtilRuntimeException(TimeUtilMessageTemplates.DURATION_CANNOT_BE_NULL);
+			throw new TimeUtilRuntimeException(DurationMessageTemplates.DURATION_CANNOT_BE_NULL);
 		}
 
 		long total;
@@ -90,7 +92,7 @@ public class DurationUtil {
 	public double formatAsSeconds(Duration duration) {
 
 		if (Objects.isNull(duration)) {
-			throw new TimeUtilRuntimeException(TimeUtilMessageTemplates.DURATION_CANNOT_BE_NULL);
+			throw new TimeUtilRuntimeException(DurationMessageTemplates.DURATION_CANNOT_BE_NULL);
 		}
 
 		double seconds = 0.0;
