@@ -32,63 +32,60 @@ import com.github.marceloleite2604.util.exception.FileUtilRuntimeException;
 @PrepareForTest({ FileUtil.class, FileUtils.class, BufferedWriter.class, FileOutputStream.class })
 public class FileUtilTest {
 
-	static final String TESTING_DIRECTORY = ("src/test/resources/"
+	private static final String TESTING_DIRECTORY = ("src/test/resources/"
 			+ FileUtilTest.class.getSimpleName()).replace("/", File.separator);
 
-	static final String READ_TEXT_FILE_PATH = TESTING_DIRECTORY + File.separator
+	private static final String READ_TEXT_FILE_PATH = TESTING_DIRECTORY + File.separator
 			+ "read-text-file.txt";
 
-	static final String READ_TEXT_FILE_CONTENT = "This is a text file for reading tests.";
+	private static final String READ_TEXT_FILE_CONTENT = "This is a text file for reading tests.";
 	
-	static final String INEXISTENT_FILE_PATH = TESTING_DIRECTORY + File.separator
+	private static final String INEXISTENT_FILE_PATH = TESTING_DIRECTORY + File.separator
 			+ "inexistent-file.txt";
 
-	static final String CLASSPATH_TESTING_DIRECTORY = FileUtilTest.class.getSimpleName();
+	private static final String CLASSPATH_TESTING_DIRECTORY = FileUtilTest.class.getSimpleName();
 
-	static final String CLASSPATH_READ_TEXT_FILE_PATH = CLASSPATH_TESTING_DIRECTORY + File.separator
+	private static final String CLASSPATH_READ_TEXT_FILE_PATH = CLASSPATH_TESTING_DIRECTORY + File.separator
 			+ "read-text-file.txt";
 
-	static final String READ_BINARY_FILE_PATH = TESTING_DIRECTORY + File.separator
+	private static final String READ_BINARY_FILE_PATH = TESTING_DIRECTORY + File.separator
 			+ "read-binary-file.bin";
 
-	static final byte[] READ_BINARY_FILE_CONTENT = { (byte) 0x4e, (byte) 0x6e, (byte) 0x98,
+	private static final byte[] READ_BINARY_FILE_CONTENT = { (byte) 0x4e, (byte) 0x6e, (byte) 0x98,
 			(byte) 0x26, (byte) 0x57, (byte) 0xc0, (byte) 0x29, (byte) 0x1d, (byte) 0x8c,
 			(byte) 0xe9, (byte) 0x52, (byte) 0xbc, (byte) 0x53, (byte) 0xb7, (byte) 0xd9,
 			(byte) 0x0d };
 
-	static final String WRITE_TEXT_FILE_PATH = TESTING_DIRECTORY + File.separator
+	private static final String WRITE_TEXT_FILE_PATH = TESTING_DIRECTORY + File.separator
 			+ "write-text-file.txt";
 
-	static final String WRITE_TEXT_FILE_CONTENT = "This is a text file for writing test.";
+	private static final String WRITE_TEXT_FILE_CONTENT = "This is a text file for writing test.";
 
-	static final String WRITE_BINARY_FILE_PATH = TESTING_DIRECTORY + File.separator
+	private static final String WRITE_BINARY_FILE_PATH = TESTING_DIRECTORY + File.separator
 			+ "write-binary-file.bin";
 
-	static final byte[] WRITE_BINARY_FILE_CONTENT = { (byte) 0x63, (byte) 0x14, (byte) 0xf2,
+	private static final byte[] WRITE_BINARY_FILE_CONTENT = { (byte) 0x63, (byte) 0x14, (byte) 0xf2,
 			(byte) 0x2e, (byte) 0xac, (byte) 0x01 };
 
-	static final String[] SIZED_FILES_PATHS = {
+	private static final String[] SIZED_FILES_PATHS = {
 			TESTING_DIRECTORY + File.separator + "12-bytes-file.bin",
 			TESTING_DIRECTORY + File.separator + "5-kilobytes-file.bin",
 			TESTING_DIRECTORY + File.separator + "12-point-34-kilobytes-file.bin" };
 
-	static final String[] SIZED_FILES_SIZES = { "12.0 B", "5.0 kB", "12.3 kB" };
+	private static final String[] SIZED_FILES_SIZES = { "12.0 B", "5.0 kB", "12.3 kB" };
 
-	static final String EXISTENT_DIRECTORY_PATH = TESTING_DIRECTORY + File.separator
+	private static final String EXISTENT_DIRECTORY_PATH = TESTING_DIRECTORY + File.separator
 			+ "existent-directory";
 
-	static final String INEXISTENT_DIRECTORY_PATH = TESTING_DIRECTORY + File.separator
+	private static final String INEXISTENT_DIRECTORY_PATH = TESTING_DIRECTORY + File.separator
 			+ "inexistent-directory";
 
-	static final String EXISTENT_DIRECTORY_PATH_WITH_SEPARATOR = EXISTENT_DIRECTORY_PATH
+	private static final String EXISTENT_DIRECTORY_PATH_WITH_SEPARATOR = EXISTENT_DIRECTORY_PATH
 			+ File.separator;
 
-	// private static final String INVALID_FILE_PATH = TESTING_DIRECTORY +
-	// File.separator + ":";
+	private static final Locale DEFAULT_LOCALE = Locale.getDefault();
 
-	static final Locale DEFAULT_LOCALE = Locale.getDefault();
-
-	static final Locale TESTING_LOCALE = Locale.ENGLISH;
+	private static final Locale TESTING_LOCALE = Locale.ENGLISH;
 
 	@Rule
 	public PowerMockRule rule = new PowerMockRule();
