@@ -15,7 +15,7 @@ import com.github.marceloleite2604.util.time.zoned.ZonedDateTimeUtil;
  * </p>
  * <p>
  * Its serialization equivalent can be found on
- * {@link ZonedDateTimeFromEpochSerializer} class.
+ * {@link ZonedDateTimeToEpochSerializer} class.
  * </p>
  * 
  * @see <a href="http://www.github.com/MarceloLeite2604/libraries" target=

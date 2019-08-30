@@ -15,7 +15,7 @@ import com.github.marceloleite2604.util.time.zoned.ZonedDateTimeUtil;
  * </p>
  * <p>
  * Its deserialization equivalent can be found on
- * {@link ZonedDateTimeToEpochDeserializer} class.
+ * {@link ZonedDateTimeFromEpochDeserializer} class.
  * </p>
  * 
  * @see <a href="http://www.github.com/MarceloLeite2604/libraries" target=
