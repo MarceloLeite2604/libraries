@@ -162,9 +162,11 @@ public class FileUtil {
 	}
 
 	public void createDirectoryIfDoesNotExist(String directoryPath) {
-		File directory = Paths.get(directoryPath)
-				.toFile();
+		createDirectoryIfDoesNotExist(Paths.get(directoryPath));
+	}
 
+	public void createDirectoryIfDoesNotExist(Path directoryPath) {
+		File directory = directoryPath.toFile();
 		if (!directory.exists()) {
 			try {
 				FileUtils.forceMkdir(directory);

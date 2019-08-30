@@ -14,13 +14,11 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 
-import com.github.marceloleite2604.sled.exception.SledException;
-
-public final class Sled {
+public class Sled {
 
 	private Optional<String> keyEnvironmentVariableName;
 
-	private String cryptographicAlgorythm;
+	private String cryptographicAlgorithm;
 
 	private String feedbackMode;
 
@@ -32,16 +30,19 @@ public final class Sled {
 
 		this.keyEnvironmentVariableName = builder.keyEnvironmentVariableName;
 
-		this.cryptographicAlgorythm = Optional.ofNullable(builder.cryptographicAlgorithm)
-				.orElseThrow(() -> new IllegalArgumentException("Cryptographic algorithm cannot be null."));
+		this.cryptographicAlgorithm = Optional.ofNullable(builder.cryptographicAlgorithm)
+				.orElseThrow(() -> new SledRuntimeException(
+						SledMessageTemplates.CRYPTOGRAPHIC_ALGORITHM_CANNOT_BE_NULL));
 
 		this.feedbackMode = Optional.ofNullable(builder.feedbackMode)
-				.orElseThrow(() -> new IllegalArgumentException("Feedback mode cannot be null."));
+				.orElseThrow(() -> new SledRuntimeException(
+						SledMessageTemplates.FEEDBACK_MODE_CANNOT_BE_NULL));
 
 		this.paddingScheme = Optional.ofNullable(builder.paddingScheme)
-				.orElseThrow(() -> new IllegalArgumentException("Paddding scheme cannot be null."));
+				.orElseThrow(() -> new SledRuntimeException(
+						SledMessageTemplates.PADDING_SCHEME_CANNOT_BE_NULL));
 
-		this.transformation = cryptographicAlgorythm + "/" + feedbackMode + "/" + paddingScheme;
+		this.transformation = cryptographicAlgorithm + "/" + feedbackMode + "/" + paddingScheme;
 	}
 
 	public String encrypt(String content) {
@@ -53,9 +54,10 @@ public final class Sled {
 			byte[] keyBytes = DatatypeConverter.parseBase64Binary(key);
 			byte[] cryptedBytes = encryptDecrypt(content.getBytes(), keyBytes, Cipher.ENCRYPT_MODE);
 			return DatatypeConverter.printBase64Binary(cryptedBytes);
-		} catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException
-				| BadPaddingException | InvalidAlgorithmParameterException exception) {
-			throw new SledException("Error while encrypting content.", exception);
+		} catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException
+				| IllegalBlockSizeException | BadPaddingException
+				| InvalidAlgorithmParameterException exception) {
+			throw new SledRuntimeException("Error while encrypting content.", exception);
 		}
 	}
 
@@ -69,22 +71,24 @@ public final class Sled {
 			byte[] keyBytes = DatatypeConverter.parseBase64Binary(key);
 			byte[] decryptedBytes = encryptDecrypt(encryptedBytes, keyBytes, Cipher.DECRYPT_MODE);
 			return new String(decryptedBytes);
-		} catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException
-				| BadPaddingException | InvalidAlgorithmParameterException exception) {
-			throw new SledException("Error while decrypting content.", exception);
+		} catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException
+				| IllegalBlockSizeException | BadPaddingException
+				| InvalidAlgorithmParameterException exception) {
+			throw new SledRuntimeException("Error while decrypting content.", exception);
 		}
 	}
 
 	private byte[] encryptDecrypt(byte[] content, byte[] key, int opMode)
-			throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException, IllegalBlockSizeException,
-			BadPaddingException, InvalidAlgorithmParameterException {
-		SecretKey secretKey = new SecretKeySpec(key, cryptographicAlgorythm);
+			throws InvalidKeyException, NoSuchAlgorithmException, NoSuchPaddingException,
+			IllegalBlockSizeException, BadPaddingException, InvalidAlgorithmParameterException {
+		SecretKey secretKey = new SecretKeySpec(key, cryptographicAlgorithm);
 		Cipher cipher = createCipher(secretKey, opMode);
 		return cipher.doFinal(content);
 	}
 
-	private Cipher createCipher(final SecretKey secretKey, int opMode) throws NoSuchAlgorithmException,
-			NoSuchPaddingException, InvalidKeyException, InvalidAlgorithmParameterException {
+	private Cipher createCipher(final SecretKey secretKey, int opMode)
+			throws NoSuchAlgorithmException, NoSuchPaddingException, InvalidKeyException,
+			InvalidAlgorithmParameterException {
 		Cipher cipher = Cipher.getInstance(transformation);
 		cipher.init(opMode, secretKey, new IvParameterSpec(new byte[8]));
 		return cipher;
@@ -93,14 +97,18 @@ public final class Sled {
 	private String retrieveKey() {
 
 		String environmentVariableName = keyEnvironmentVariableName
-				.orElseThrow(() -> new IllegalStateException("Key environment variable name was not informed."));
-
-		String key = Optional.of(System.getenv(environmentVariableName))
-				.orElseThrow(() -> new IllegalStateException(
-						"Could not find encrypt key environment variable \"" + environmentVariableName + "\"."));
+				.orElseThrow(() -> new SledRuntimeException(
+						SledMessageTemplates.KEY_ENVIRONMENT_VARIABLE_WAS_NOT_INFORMED));
+		String key = Optional.ofNullable(System.getenv(environmentVariableName))
+				.orElseThrow(() -> {
+					String message = String.format(
+							SledMessageTemplates.COULD_NOT_FIND_ENCRYPT_KEY_ENVIRONMENT_VARIABLE,
+							environmentVariableName);
+					return new SledRuntimeException(message);
+				});
 
 		if (key.isEmpty()) {
-			throw new IllegalStateException("The encrypt key is empty.");
+			throw new SledRuntimeException(SledMessageTemplates.ENCRYPT_KEY_IS_EMPTY);
 		}
 
 		return key;
@@ -119,13 +127,13 @@ public final class Sled {
 		private Builder() {
 		}
 
-		public Builder keyEnvironmentVariableName(Optional<String> keyEnvironmentVariableName) {
-			this.keyEnvironmentVariableName = keyEnvironmentVariableName;
+		public Builder keyEnvironmentVariableName(String keyEnvironmentVariableName) {
+			this.keyEnvironmentVariableName = Optional.ofNullable(keyEnvironmentVariableName);
 			return this;
 		}
 
-		public Builder cryptographicAlgorythm(String cryptographicAlgorythm) {
-			this.cryptographicAlgorithm = cryptographicAlgorythm;
+		public Builder cryptographicAlgorithm(String cryptographicAlgorithm) {
+			this.cryptographicAlgorithm = cryptographicAlgorithm;
 			return this;
 		}
 

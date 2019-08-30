@@ -36,24 +36,12 @@ public class TimeInterval implements Comparable<TimeInterval> {
 		return start;
 	}
 
-	public void setStart(ZonedDateTime start) {
-		this.start = start;
-	}
-
 	public ZonedDateTime getEnd() {
 		return end;
 	}
 
-	public void setEnd(ZonedDateTime end) {
-		this.end = end;
-	}
-
 	public Duration getDuration() {
 		return duration;
-	}
-
-	public void setDuration(Duration duration) {
-		this.duration = duration;
 	}
 
 	@Override
@@ -82,13 +70,15 @@ public class TimeInterval implements Comparable<TimeInterval> {
 		if (end == null) {
 			if (other.end != null)
 				return false;
-		} else if (!end.equals(other.end))
+		} else if (!end.equals(other.end)) {
 			return false;
+		}
 		if (start == null) {
 			if (other.start != null)
 				return false;
-		} else if (!start.equals(other.start))
+		} else if (!start.equals(other.start)) {
 			return false;
+		}
 		return true;
 	}
 

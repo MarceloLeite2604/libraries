@@ -1,15 +1,13 @@
-package com.github.marceloleite2604.sled;
+package com.github.marceloleite2604.sled.key;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.github.marceloleite2604.sled.KeyGenerator;
-import com.github.marceloleite2604.sled.exception.KeyGeneratorException;
-import com.github.marceloleite2604.sled.fixture.SledFixture;
-
 
 public class KeyGeneratorTest {
+	
+	public static final String CRYPTOGRAPHIC_ALGORITHM = "DESede";
 
 	private KeyGenerator keyGenerator;
 
@@ -20,11 +18,11 @@ public class KeyGeneratorTest {
 
 	@Test
 	public void testGenerateKey() {
-		String key = keyGenerator.generate(SledFixture.CRYPTOGRAPHIC_ALGORITHM);
+		String key = keyGenerator.generate(CRYPTOGRAPHIC_ALGORITHM);
 		Assert.assertNotNull(key);
 	}
 
-	@Test(expected = KeyGeneratorException.class)
+	@Test(expected = KeyGeneratorRuntimeException.class)
 	public void testGenerateKeyUnknownCryptographicAlgorithm() {
 		keyGenerator.generate("pijiovhnudfb");
 	}
