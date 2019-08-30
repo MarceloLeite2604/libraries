@@ -1,4 +1,4 @@
-package com.github.marceloleite2604.util.exception;
+package com.github.marceloleite2604.util.file;
 
 public class FileUtilRuntimeException extends RuntimeException {
 

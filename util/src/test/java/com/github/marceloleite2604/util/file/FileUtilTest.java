@@ -27,8 +27,6 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.agent.PowerMockAgent;
 import org.powermock.modules.junit4.rule.PowerMockRule;
 
-import com.github.marceloleite2604.util.exception.FileUtilRuntimeException;
-
 @PrepareForTest({ FileUtil.class, FileUtils.class, BufferedWriter.class, FileOutputStream.class })
 public class FileUtilTest {
 
@@ -39,14 +37,14 @@ public class FileUtilTest {
 			+ "read-text-file.txt";
 
 	private static final String READ_TEXT_FILE_CONTENT = "This is a text file for reading tests.";
-	
+
 	private static final String INEXISTENT_FILE_PATH = TESTING_DIRECTORY + File.separator
 			+ "inexistent-file.txt";
 
 	private static final String CLASSPATH_TESTING_DIRECTORY = FileUtilTest.class.getSimpleName();
 
-	private static final String CLASSPATH_READ_TEXT_FILE_PATH = CLASSPATH_TESTING_DIRECTORY + File.separator
-			+ "read-text-file.txt";
+	private static final String CLASSPATH_READ_TEXT_FILE_PATH = CLASSPATH_TESTING_DIRECTORY
+			+ File.separator + "read-text-file.txt";
 
 	private static final String READ_BINARY_FILE_PATH = TESTING_DIRECTORY + File.separator
 			+ "read-binary-file.bin";
@@ -72,7 +70,9 @@ public class FileUtilTest {
 			TESTING_DIRECTORY + File.separator + "5-kilobytes-file.bin",
 			TESTING_DIRECTORY + File.separator + "12-point-34-kilobytes-file.bin" };
 
-	private static final String[] SIZED_FILES_SIZES = { "12.0 B", "5.0 kB", "12.3 kB" };
+	private static final String[] SIZED_FILES_SIZES_STRING = { "12.0 B", "5.0 kB", "12.3 kB" };
+
+	private static final long[] SIZED_FILES_SIZES_LONG = { 12L, 5120, 12634 };
 
 	private static final String EXISTENT_DIRECTORY_PATH = TESTING_DIRECTORY + File.separator
 			+ "existent-directory";
@@ -212,6 +212,15 @@ public class FileUtilTest {
 	}
 
 	@Test
+	public void testRetrieveBinaryContentFromFileString() throws Exception {
+		// Act
+		byte[] content = fileUtil.retrieveBinaryContentFromFile(READ_BINARY_FILE_PATH);
+
+		// Assert
+		assertThat(content).isEqualTo(READ_BINARY_FILE_CONTENT);
+	}
+
+	@Test
 	public void testRetrieveBinaryContentFromFilePath() throws Exception {
 		// Act
 		byte[] content = fileUtil.retrieveBinaryContentFromFile(Paths.get(READ_BINARY_FILE_PATH));
@@ -244,15 +253,6 @@ public class FileUtilTest {
 
 		// Assert
 		fail("Should have thrown an exception.");
-	}
-
-	@Test
-	public void testRetrieveBinaryContentFromFileString() throws Exception {
-		// Act
-		byte[] content = fileUtil.retrieveBinaryContentFromFile(READ_BINARY_FILE_PATH);
-
-		// Assert
-		assertThat(content).isEqualTo(READ_BINARY_FILE_CONTENT);
 	}
 
 	@Test
@@ -315,7 +315,7 @@ public class FileUtilTest {
 		// Assert
 		assertThat(content).isEqualTo(WRITE_BINARY_FILE_CONTENT);
 	}
-	
+
 	@Test(expected = FileUtilRuntimeException.class)
 	public void testWriteContentOnFilePathByteArrayShouldThrowFileUtilRuntimeExceptionWhenIOExceptionIsCaught()
 			throws Exception {
@@ -338,40 +338,9 @@ public class FileUtilTest {
 	}
 
 	@Test
-	public void testFormatAsHumanReadableSize() throws Exception {
-		// Arrange
-		long size = 46694L;
-		String expectedHumanReadableSize = "45.6 kB";
-
-		// Act
-		String actualHumanReadableSize = fileUtil.formatAsHumanReadableSize(size);
-
-		// Assert
-		assertThat(actualHumanReadableSize).isEqualTo(expectedHumanReadableSize);
-	}
-
-	@Test
-	public void testRetrieveFileSizePath() throws Exception {
-
-		String[] actualFilesSizes = new String[SIZED_FILES_PATHS.length];
-
-		for (int index = 0; index < actualFilesSizes.length; index++) {
-
-			// Arrange
-			Path filePath = Paths.get(SIZED_FILES_PATHS[index]);
-
-			// Act
-			actualFilesSizes[index] = fileUtil.retrieveFileSize(filePath);
-		}
-
-		// Assert
-		assertThat(actualFilesSizes).isEqualTo(SIZED_FILES_SIZES);
-	}
-
-	@Test
 	public void testRetrieveFileSizeString() throws Exception {
 
-		String[] actualFilesSizes = new String[SIZED_FILES_PATHS.length];
+		long[] actualFilesSizes = new long[SIZED_FILES_PATHS.length];
 
 		for (int index = 0; index < actualFilesSizes.length; index++) {
 
@@ -383,7 +352,59 @@ public class FileUtilTest {
 		}
 
 		// Assert
-		assertThat(actualFilesSizes).isEqualTo(SIZED_FILES_SIZES);
+		assertThat(actualFilesSizes).isEqualTo(SIZED_FILES_SIZES_LONG);
+	}
+
+	@Test
+	public void testRetrieveFileSizePath() throws Exception {
+
+		long[] actualFilesSizes = new long[SIZED_FILES_PATHS.length];
+
+		for (int index = 0; index < actualFilesSizes.length; index++) {
+
+			// Arrange
+			Path filePath = Paths.get(SIZED_FILES_PATHS[index]);
+
+			// Act
+			actualFilesSizes[index] = fileUtil.retrieveFileSize(filePath);
+		}
+
+		// Assert
+		assertThat(actualFilesSizes).isEqualTo(SIZED_FILES_SIZES_LONG);
+	}
+
+	@Test
+	public void testRetrieveFileSizeFormattedAsTextString() throws Exception {
+		String[] actualFilesSizes = new String[SIZED_FILES_PATHS.length];
+
+		for (int index = 0; index < actualFilesSizes.length; index++) {
+
+			// Arrange
+			String filePath = SIZED_FILES_PATHS[index];
+
+			// Act
+			actualFilesSizes[index] = fileUtil.retrieveFileSizeFormattedAsText(filePath);
+		}
+
+		// Assert
+		assertThat(actualFilesSizes).isEqualTo(SIZED_FILES_SIZES_STRING);
+	}
+
+	@Test
+	public void testRetrieveFileSizeFormattedAsTextPath() throws Exception {
+		String[] actualFilesSizes = new String[SIZED_FILES_PATHS.length];
+
+		for (int index = 0; index < actualFilesSizes.length; index++) {
+
+			// Arrange
+			Path filePath = Paths.get(SIZED_FILES_PATHS[index]);
+
+			// Act
+			actualFilesSizes[index] = fileUtil.retrieveFileSizeFormattedAsText(filePath);
+		}
+
+		// Assert
+		assertThat(actualFilesSizes).isEqualTo(SIZED_FILES_SIZES_STRING);
 	}
 
 	@Test
@@ -478,6 +499,40 @@ public class FileUtilTest {
 	}
 
 	@Test(expected = FileUtilRuntimeException.class)
+	public void testThrowExceptionIfFileDoesNotExistStringShouldThrowFileUtilExceptionWhenFileDoesNotExist()
+			throws Exception {
+		// Act
+		fileUtil.throwExceptionIfFileDoesNotExist(INEXISTENT_DIRECTORY_PATH);
+
+		// Assert
+		fail("Should have thrown an exception.");
+	}
+
+	@Test
+	public void testThrowExceptionIfFileDoesNotExistStringShouldContinueWhenFileExists()
+			throws Exception {
+		// Act
+		fileUtil.throwExceptionIfFileDoesNotExist(EXISTENT_DIRECTORY_PATH);
+	}
+
+	@Test(expected = FileUtilRuntimeException.class)
+	public void testThrowExceptionIfFileDoesNotExistPathShouldThrowFileUtilExceptionWhenFileDoesNotExist()
+			throws Exception {
+		// Act
+		fileUtil.throwExceptionIfFileDoesNotExist(Paths.get(INEXISTENT_DIRECTORY_PATH));
+
+		// Assert
+		fail("Should have thrown an exception.");
+	}
+
+	@Test
+	public void testThrowExceptionIfFileDoesNotExistPathShouldContinueWhenFileExists()
+			throws Exception {
+		// Act
+		fileUtil.throwExceptionIfFileDoesNotExist(Paths.get(EXISTENT_DIRECTORY_PATH));
+	}
+
+	@Test(expected = FileUtilRuntimeException.class)
 	public void testThrowExceptionIfDirectoryDoesNotExistStringShouldThrowFileUtilExceptionWhenDirectoryDoesNotExist()
 			throws Exception {
 		// Act
@@ -545,67 +600,6 @@ public class FileUtilTest {
 		fileUtil.throwExceptionIfFileIsNotDirectory(Paths.get(EXISTENT_DIRECTORY_PATH));
 	}
 
-	@Test
-	public void testAppendSeparatorIfNecessaryShouldAppendSeparatorWhenPathDoesEndWithSeparator()
-			throws Exception {
-		// Arrange
-		String expectedPath = EXISTENT_DIRECTORY_PATH_WITH_SEPARATOR;
-
-		// Act
-		String actualPath = fileUtil.appendSeparatorIfNecessary(EXISTENT_DIRECTORY_PATH);
-
-		// Assert
-		assertThat(actualPath).isEqualTo(expectedPath);
-	}
-
-	@Test
-	public void testAppendSeparatorIfNecessaryShouldNotReturnSameContentWhenPathEndsWithSeparator()
-			throws Exception {
-		// Arrange
-		String expectedPath = EXISTENT_DIRECTORY_PATH_WITH_SEPARATOR;
-
-		// Act
-		String actualPath = fileUtil
-				.appendSeparatorIfNecessary(EXISTENT_DIRECTORY_PATH_WITH_SEPARATOR);
-
-		// Assert
-		assertThat(actualPath).isEqualTo(expectedPath);
-	}
-
-	@Test(expected = FileUtilRuntimeException.class)
-	public void testThrowExceptionIfFileDoesNotExistStringShouldThrowFileUtilExceptionWhenFileDoesNotExist()
-			throws Exception {
-		// Act
-		fileUtil.throwExceptionIfFileDoesNotExist(INEXISTENT_DIRECTORY_PATH);
-
-		// Assert
-		fail("Should have thrown an exception.");
-	}
-
-	@Test
-	public void testThrowExceptionIfFileDoesNotExistStringShouldContinueWhenFileExists()
-			throws Exception {
-		// Act
-		fileUtil.throwExceptionIfFileDoesNotExist(EXISTENT_DIRECTORY_PATH);
-	}
-
-	@Test(expected = FileUtilRuntimeException.class)
-	public void testThrowExceptionIfFileDoesNotExistPathShouldThrowFileUtilExceptionWhenFileDoesNotExist()
-			throws Exception {
-		// Act
-		fileUtil.throwExceptionIfFileDoesNotExist(Paths.get(INEXISTENT_DIRECTORY_PATH));
-
-		// Assert
-		fail("Should have thrown an exception.");
-	}
-
-	@Test
-	public void testThrowExceptionIfFileDoesNotExistPathShouldContinueWhenFileExists()
-			throws Exception {
-		// Act
-		fileUtil.throwExceptionIfFileDoesNotExist(Paths.get(EXISTENT_DIRECTORY_PATH));
-	}
-
 	@Test(expected = FileUtilRuntimeException.class)
 	public void testThrowExceptionIfFileIsDirectoryStringShouldThrowFileUtilExceptionWhenFileIsDirectory()
 			throws Exception {
@@ -638,5 +632,32 @@ public class FileUtilTest {
 			throws Exception {
 		// Act
 		fileUtil.throwExceptionIfFileIsDirectory(Paths.get(READ_TEXT_FILE_PATH));
+	}
+
+	@Test
+	public void testAppendSeparatorIfNecessaryShouldAppendSeparatorWhenPathDoesEndWithSeparator()
+			throws Exception {
+		// Arrange
+		String expectedPath = EXISTENT_DIRECTORY_PATH_WITH_SEPARATOR;
+
+		// Act
+		String actualPath = fileUtil.appendSeparatorIfNecessary(EXISTENT_DIRECTORY_PATH);
+
+		// Assert
+		assertThat(actualPath).isEqualTo(expectedPath);
+	}
+
+	@Test
+	public void testAppendSeparatorIfNecessaryShouldNotReturnSameContentWhenPathEndsWithSeparator()
+			throws Exception {
+		// Arrange
+		String expectedPath = EXISTENT_DIRECTORY_PATH_WITH_SEPARATOR;
+
+		// Act
+		String actualPath = fileUtil
+				.appendSeparatorIfNecessary(EXISTENT_DIRECTORY_PATH_WITH_SEPARATOR);
+
+		// Assert
+		assertThat(actualPath).isEqualTo(expectedPath);
 	}
 }
