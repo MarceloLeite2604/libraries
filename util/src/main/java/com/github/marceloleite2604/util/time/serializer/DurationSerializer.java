@@ -12,14 +12,17 @@ public class DurationSerializer extends StdSerializer<Duration> {
 
 	private static final long serialVersionUID = 1L;
 
+	private final DurationUtil durationUtil;
+
 	public DurationSerializer() {
 		super(Duration.class);
+		this.durationUtil = new DurationUtil();
 	}
 
 	@Override
-	public void serialize(Duration duration, JsonGenerator jsonGenerator, SerializerProvider serializer)
-			throws IOException {
-		jsonGenerator.writeNumber(DurationUtil.formatAsSeconds(duration));
+	public void serialize(Duration duration, JsonGenerator jsonGenerator,
+			SerializerProvider serializer) throws IOException {
+		jsonGenerator.writeNumber(durationUtil.formatAsSeconds(duration));
 	}
 
 }

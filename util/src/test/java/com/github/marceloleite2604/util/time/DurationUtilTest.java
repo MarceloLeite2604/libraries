@@ -1,17 +1,24 @@
 package com.github.marceloleite2604.util.time;
 
+import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.assertEquals;
 
 import java.time.Duration;
 
+import org.junit.Before;
 import org.junit.Test;
-
-import com.github.marceloleite2604.util.time.DurationUtil;
 
 public class DurationUtilTest {
 
+	private DurationUtil durationUtil;
+
+	@Before
+	public void setUp() {
+		this.durationUtil = new DurationUtil();
+	}
+
 	@Test
-	public void testFormatAsSpelledNumber() throws Exception {
+	public void testWriteAsText() throws Exception {
 		// Arrange
 		String expectedSpelledNumber = "7 days, 5 hours, 32 minutes, 9 seconds and 230596 nanoseconds";
 		Duration duration = Duration.ofDays(7)
@@ -21,14 +28,26 @@ public class DurationUtilTest {
 				.plusNanos(230596);
 
 		// Act
-		String actualSpelledNumber = DurationUtil.formatAsSpelledNumber(duration);
+		String actualSpelledNumber = durationUtil.writeAsText(duration);
 
 		// Assert
 		assertEquals(expectedSpelledNumber, actualSpelledNumber);
 	}
 
+	@Test(expected = TimeUtilRuntimeException.class)
+	public void testWriteAsTextShouldThrowTimeUtilRuntimeException() throws Exception {
+		// Arrange
+		Duration duration = null;
+
+		// Act
+		durationUtil.writeAsText(duration);
+
+		// Assert
+		fail("Should have thrown an exception.");
+	}
+
 	@Test
-	public void testFormatAsSpelledNumberSingularUnits() throws Exception {
+	public void testWriteAsTextSingularUnits() throws Exception {
 		// Arrange
 		String expectedSpelledNumber = "1 day, 1 hour, 1 minute, 1 second and 1 nanosecond";
 		Duration duration = Duration.ofDays(1)
@@ -38,7 +57,7 @@ public class DurationUtilTest {
 				.plusNanos(1);
 
 		// Act
-		String actualSpelledNumber = DurationUtil.formatAsSpelledNumber(duration);
+		String actualSpelledNumber = durationUtil.writeAsText(duration);
 
 		// Assert
 		assertEquals(expectedSpelledNumber, actualSpelledNumber);
@@ -55,10 +74,23 @@ public class DurationUtilTest {
 				.plusNanos(368329561L);
 
 		// Act
-		Double actualSeconds = DurationUtil.formatAsSeconds(duration);
+		Double actualSeconds = durationUtil.formatAsSeconds(duration);
 
 		// Assert
 		assertEquals(expectedSeconds, actualSeconds, 0.000000001);
+	}
+
+	@Test(expected = TimeUtilRuntimeException.class)
+	public void testFormatAsSecondsShouldThrowDurationUtilRuntimeExceptionWhenDurationIsNull()
+			throws Exception {
+		// Arrange
+		Duration duration = null;
+
+		// Act
+		durationUtil.formatAsSeconds(duration);
+
+		// Assert
+		fail("Should have thrown an exception.");
 	}
 
 	@Test
@@ -72,7 +104,7 @@ public class DurationUtilTest {
 		double seconds = 27380521.364788055;
 
 		// Act
-		Duration actualDuration = DurationUtil.parseFromSeconds(seconds);
+		Duration actualDuration = durationUtil.parseFromSeconds(seconds);
 
 		// Assert
 		assertEquals(expectedDuration.getSeconds(), actualDuration.getSeconds());
