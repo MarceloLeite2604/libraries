@@ -16,7 +16,7 @@
 	<name>blimp</name>
 	<description>The Basic Library for Internationalized Messages Pursuit (Blimp) helps retrieving internationalized messages from properties files.</description>
 	<url>https://github.com/MarceloLeite2064/libraries</url>
-
+	
 	<dependencies>
 		<dependency>
 			<groupId>com.github.marceloleite2604</groupId>
@@ -24,7 +24,6 @@
 			<version>0.1-SNAPSHOT</version>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/org.springframework/spring-context -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>

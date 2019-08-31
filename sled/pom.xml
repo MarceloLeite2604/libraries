@@ -16,17 +16,19 @@
 	<name>sled</name>
 	<description>Sled stands for Simple Library for Encryption and Decryption. As the name says, it helps encrypt and decrypt both binary and text content.</description>
 	<url>https://github.com/MarceloLeite2064/libraries</url>
-	
+
 	<properties>
 		<surefire.argLine.default>-Djdk.attach.allowAttachSelf=true -noverify</surefire.argLine.default>
 		<surefire.argLine>${surefire.argLine.default}</surefire.argLine>
 	</properties>
-	
+
 	<profiles>
 		<profile>
 			<id>java-9</id>
 			<properties>
-				<surefire.argLine>${surefire.argLine.default} --illegal-access=permit --add-opens java.base/jdk.internal.loader=ALL-UNNAMED</surefire.argLine>
+				<surefire.argLine>${surefire.argLine.default}
+					--illegal-access=permit --add-opens
+					java.base/jdk.internal.loader=ALL-UNNAMED</surefire.argLine>
 			</properties>
 		</profile>
 	</profiles>
@@ -45,7 +47,7 @@
 			<version>[3.13.2, 4)</version>
 			<scope>test</scope>
 		</dependency>
-
+<!-- <site.stagingDirectory>${project.parent.basedir}/docs/${project.name}</site.stagingDirectory> -->
 		<dependency>
 			<groupId>org.powermock</groupId>
 			<artifactId>powermock-api-mockito2</artifactId>
@@ -67,7 +69,7 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	
+
 	<build>
 		<plugins>
 			<plugin>
