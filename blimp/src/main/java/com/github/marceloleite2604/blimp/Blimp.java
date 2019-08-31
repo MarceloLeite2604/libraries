@@ -201,7 +201,7 @@ public class Blimp {
 	 *            {@link Message} object which contains the message code.
 	 * @param singularParameters
 	 *            Parameters to be used when a singular message will be elaborated.
-	 * @param singularParameters
+	 * @param pluralParameters
 	 *            Parameters to be used when a plural message will be elaborated.
 	 * @return The message retrieved filled with the parameters informed.
 	 */
@@ -221,14 +221,14 @@ public class Blimp {
 	 *            The message code to be retrieved.
 	 * @param singularParameters
 	 *            Parameters to be used when a singular message will be elaborated.
-	 * @param singularParameters
+	 * @param pluralParameters
 	 *            Parameters to be used when a plural message will be elaborated.
 	 * @return The message retrieved filled with the parameters informed.
 	 */
-	public String getSingularOrPluralMessage(boolean singular, String codePrefix,
+	public String getSingularOrPluralMessage(boolean singular, String messageCode,
 			List<Object> singularParameters, List<Object> pluralParameters) {
 
-		String code = codePrefix.concat(singular ? SINGULAR_SUFFIX : PLURAL_SUFFIX);
+		String code = messageCode.concat(singular ? SINGULAR_SUFFIX : PLURAL_SUFFIX);
 
 		List<Object> parametersList = singular ? singularParameters : pluralParameters;
 

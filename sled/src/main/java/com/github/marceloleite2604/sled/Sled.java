@@ -86,10 +86,10 @@ public class Sled {
 	 *            Key to use during the encryption.
 	 * @return The content of {@code text} parameter encrypted.
 	 */
-	public String encrypt(String content, String key) {
+	public String encrypt(String text, String key) {
 		try {
 			byte[] keyBytes = DatatypeConverter.parseBase64Binary(key);
-			byte[] cryptedBytes = encryptDecrypt(content.getBytes(), keyBytes, Cipher.ENCRYPT_MODE);
+			byte[] cryptedBytes = encryptDecrypt(text.getBytes(), keyBytes, Cipher.ENCRYPT_MODE);
 			return DatatypeConverter.printBase64Binary(cryptedBytes);
 		} catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException
 				| IllegalBlockSizeException | BadPaddingException
