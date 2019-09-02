@@ -16,17 +16,19 @@
 	<name>sled</name>
 	<description>Sled stands for Simple Library for Encryption and Decryption. As the name says, it helps encrypt and decrypt both binary and text content.</description>
 	<url>https://github.com/MarceloLeite2064/libraries</url>
-	
+
 	<properties>
 		<surefire.argLine.default>-Djdk.attach.allowAttachSelf=true -noverify</surefire.argLine.default>
 		<surefire.argLine>${surefire.argLine.default}</surefire.argLine>
 	</properties>
-	
+
 	<profiles>
 		<profile>
 			<id>java-9</id>
 			<properties>
-				<surefire.argLine>${surefire.argLine.default} --illegal-access=permit --add-opens java.base/jdk.internal.loader=ALL-UNNAMED</surefire.argLine>
+				<surefire.argLine>${surefire.argLine.default}
+					--illegal-access=permit --add-opens
+					java.base/jdk.internal.loader=ALL-UNNAMED</surefire.argLine>
 			</properties>
 		</profile>
 	</profiles>
@@ -67,7 +69,7 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	
+
 	<build>
 		<plugins>
 			<plugin>
@@ -77,6 +79,23 @@
 				<configuration>
 					<argLine>${surefire.argLine}</argLine>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.1.0</version>
+				<executions>
+					<execution>
+						<id>copy-to-docs-directory</id>
+						<phase>site-deploy</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<skip>true</skip>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

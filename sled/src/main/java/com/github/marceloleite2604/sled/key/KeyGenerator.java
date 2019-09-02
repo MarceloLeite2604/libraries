@@ -4,14 +4,20 @@ import java.security.NoSuchAlgorithmException;
 
 import javax.xml.bind.DatatypeConverter;
 
-import com.github.marceloleite2604.sled.SledMessageTemplates;
-
 public class KeyGenerator {
 
+	/**
+	 * Generates a key for the cryptographic algorithm informed.
+	 * 
+	 * @param cryptographicAlgorithm
+	 *            The cryptographic algorithm for which a key should be generated.
+	 * @return A key to use for encrypt and decrypt content for the cryptographic
+	 *         algorithm informed.
+	 */
 	public String generate(String cryptographicAlgorithm) {
 		if (cryptographicAlgorithm == null || cryptographicAlgorithm.isEmpty()) {
 			throw new IllegalArgumentException(
-					SledMessageTemplates.CRYPTOGRAPHIC_ALGORITHM_CANNOT_BE_NULL);
+					KeyGeneratorMessageTemplates.CRYPTOGRAPHIC_ALGORITHM_CANNOT_BE_NULL);
 		}
 
 		try {
@@ -21,7 +27,7 @@ public class KeyGenerator {
 					.getEncoded());
 		} catch (NoSuchAlgorithmException exception) {
 			throw new KeyGeneratorRuntimeException(
-					SledMessageTemplates.ERROR_RETRIEVING_ENCRYPTION_ALGORIHTM, exception);
+					KeyGeneratorMessageTemplates.ERROR_RETRIEVING_ENCRYPTION_ALGORIHTM, exception);
 		}
 	}
 
