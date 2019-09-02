@@ -14,6 +14,26 @@ import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 
+/**
+ * <p>
+ * Sled is Simple Library for Encryption and Decryption. It helps encrypt and
+ * decrypt texts using Java's most known transformations.
+ * </p>
+ * <p>
+ * The transformation is a composition of a cryptographic algorithm, a feedback
+ * mode and a padding mode. Also, a key is utilized for these transformations.
+ * Sled allows the key to be informed during the transformation request or
+ * during its initialization, which will make the same key be used whenever an
+ * transformation is requested. Lastly, it is also possible to inform an
+ * environment variable name from which Sled will retrieve the transformation
+ * key.
+ * </p>
+ * 
+ * @see <a href="http://www.github.com/MarceloLeite2604/libraries" target=
+ *      "_top">GitHub project</a>
+ * 
+ * @author MarceloLeite2604
+ */
 public class Sled {
 
 	private Optional<String> keyEnvironmentVariableName;
@@ -45,14 +65,31 @@ public class Sled {
 		this.transformation = cryptographicAlgorithm + "/" + feedbackMode + "/" + paddingScheme;
 	}
 
-	public String encrypt(String content) {
-		return encrypt(content, retrieveKey());
+	/**
+	 * Encrypts a text either using the key informed as parameter or stored on the
+	 * environment variable informed during this object instantiation.
+	 * 
+	 * @param text
+	 *            Text to be encrypted.
+	 * @return The content of {@code text} parameter encrypted.
+	 */
+	public String encrypt(String text) {
+		return encrypt(text, retrieveKey());
 	}
 
-	public String encrypt(String content, String key) {
+	/**
+	 * Encrypts a text using the key informed .
+	 * 
+	 * @param text
+	 *            Text to be encrypted.
+	 * @param key
+	 *            Key to use during the encryption.
+	 * @return The content of {@code text} parameter encrypted.
+	 */
+	public String encrypt(String text, String key) {
 		try {
 			byte[] keyBytes = DatatypeConverter.parseBase64Binary(key);
-			byte[] cryptedBytes = encryptDecrypt(content.getBytes(), keyBytes, Cipher.ENCRYPT_MODE);
+			byte[] cryptedBytes = encryptDecrypt(text.getBytes(), keyBytes, Cipher.ENCRYPT_MODE);
 			return DatatypeConverter.printBase64Binary(cryptedBytes);
 		} catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException
 				| IllegalBlockSizeException | BadPaddingException
@@ -61,10 +98,27 @@ public class Sled {
 		}
 	}
 
+	/**
+	 * Decrypts a content either using the key informed as parameter or stored on
+	 * the environment variable informed during this object instantiation.
+	 * 
+	 * @param content
+	 *            The content to be decrypted.
+	 * @return The content of {@code text} parameter decrypted.
+	 */
 	public String decrypt(String content) {
 		return decrypt(content, retrieveKey());
 	}
 
+	/**
+	 * Decrypts a content using the key informed .
+	 * 
+	 * @param content
+	 *            Content to be decrypted.
+	 * @param key
+	 *            Key to use during the decryption.
+	 * @return The content of {@code content} parameter decrypted.
+	 */
 	public String decrypt(String content, String key) {
 		try {
 			byte[] encryptedBytes = DatatypeConverter.parseBase64Binary(content);

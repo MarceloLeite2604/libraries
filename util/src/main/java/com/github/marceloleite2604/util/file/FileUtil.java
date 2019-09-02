@@ -18,8 +18,15 @@ import java.util.stream.Collectors;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.ArrayUtils;
 
-import com.github.marceloleite2604.util.exception.FileUtilRuntimeException;
-
+/**
+ * A series of handy methods which helps working with files.
+ * 
+ * @see <a href="http://www.github.com/MarceloLeite2604/libraries" target=
+ *      "_top">GitHub project</a>
+ * 
+ * @author MarceloLeite2604
+ *
+ */
 public class FileUtil {
 
 	private static final int BUFFER_SIZE = 1024;
@@ -28,12 +35,26 @@ public class FileUtil {
 
 	private static final int BYTE_BLOCK_SIZE = 1024;
 
+	/**
+	 * Retrieves text content from a file.
+	 * 
+	 * @param filePath
+	 *            Path to the file to be read.
+	 * @return The file text content.
+	 */
 	public String retrieveTextContentFromFile(String filePath) {
 		return retrieveTextContentFromFile(Paths.get(filePath));
 	}
 
-	public String retrieveTextContentFromFile(Path path) {
-		return readTextContentFromFile(path);
+	/**
+	 * Retrieves text content from a file.
+	 * 
+	 * @param filePath
+	 *            Path to the file to be read.
+	 * @return The file text content.
+	 */
+	public String retrieveTextContentFromFile(Path filePath) {
+		return readTextContentFromFile(filePath);
 	}
 
 	private String readTextContentFromFile(Path path) {
@@ -47,14 +68,28 @@ public class FileUtil {
 		}
 	}
 
+	/**
+	 * Retrieves the binary content from a file.
+	 * 
+	 * @param filePath
+	 *            Path to the file to be read.
+	 * @return The file binary content.
+	 */
 	public byte[] retrieveBinaryContentFromFile(String filePath) {
 		return retrieveBinaryContentFromFile(Paths.get(filePath));
 	}
 
-	public byte[] retrieveBinaryContentFromFile(Path path) {
-		throwExceptionIfFileDoesNotExist(path);
-		throwExceptionIfFileIsDirectory(path);
-		return readBinaryContentFromFile(path);
+	/**
+	 * Retrieves the binary content from a file.
+	 * 
+	 * @param filePath
+	 *            Path to the file to be read.
+	 * @return The file binary content.
+	 */
+	public byte[] retrieveBinaryContentFromFile(Path filePath) {
+		throwExceptionIfFileDoesNotExist(filePath);
+		throwExceptionIfFileIsDirectory(filePath);
+		return readBinaryContentFromFile(filePath);
 	}
 
 	private byte[] readBinaryContentFromFile(Path path) {
@@ -108,49 +143,118 @@ public class FileUtil {
 				.getResourceAsStream(path);
 	}
 
-	public void writeContentOnFile(String path, String content) {
-		writeContentOnFile(Paths.get(path), content);
+	/**
+	 * Writes a text content on a file.
+	 * 
+	 * @param filePath
+	 *            Path to the file to write text.
+	 * @param content
+	 *            The text to be written.
+	 */
+	public void writeContentOnFile(String filePath, String content) {
+		writeContentOnFile(Paths.get(filePath), content);
 	}
 
-	public void writeContentOnFile(Path path, String content) {
-		try (FileOutputStream fileOutputStream = new FileOutputStream(path.toFile());
+	/**
+	 * Writes a text content on a file.
+	 * 
+	 * @param filePath
+	 *            Path to the file to write text.
+	 * @param content
+	 *            The text to be written.
+	 */
+	public void writeContentOnFile(Path filePath, String content) {
+		try (FileOutputStream fileOutputStream = new FileOutputStream(filePath.toFile());
 				OutputStreamWriter outputStreamWriter = new OutputStreamWriter(fileOutputStream,
 						StandardCharsets.UTF_8);
 				BufferedWriter bufferedWriter = new BufferedWriter(outputStreamWriter)) {
 			bufferedWriter.write(content);
 		} catch (IOException exception) {
 			String message = String.format(FileUtilMessageTemplates.ERROR_WRITING_CONTENT_ON_FILE,
-					path);
+					filePath);
 			throw new FileUtilRuntimeException(exception, message);
 		}
 	}
 
-	public void writeContentOnFile(String path, byte[] bytes) {
-		writeContentOnFile(Paths.get(path), bytes);
+	/**
+	 * Writes a binary content on a file.
+	 * 
+	 * @param filePath
+	 *            Path to the file to write the content.
+	 * @param bytes
+	 *            Bytes to be written.
+	 */
+	public void writeContentOnFile(String filePath, byte[] bytes) {
+		writeContentOnFile(Paths.get(filePath), bytes);
 	}
 
-	public void writeContentOnFile(Path path, byte[] bytes) {
-		try (FileOutputStream fileOutputStream = new FileOutputStream(path.toFile())) {
+	/**
+	 * Writes a binary content on a file.
+	 * 
+	 * @param filePath
+	 *            Path to the file to write the content.
+	 * @param bytes
+	 *            Bytes to be written.
+	 */
+	public void writeContentOnFile(Path filePath, byte[] bytes) {
+		try (FileOutputStream fileOutputStream = new FileOutputStream(filePath.toFile())) {
 			fileOutputStream.write(bytes);
 		} catch (IOException exception) {
 			String message = String.format(FileUtilMessageTemplates.ERROR_WRITING_CONTENT_ON_FILE,
-					path);
+					filePath);
 			throw new FileUtilRuntimeException(exception, message);
 		}
 	}
 
-	public String retrieveFileSize(Path path) {
-		long fileSizeBytes = path.toFile()
-				.length();
+	/**
+	 * Retrieves the size of a file (in bytes).
+	 * 
+	 * @param filePath
+	 *            Path to the file which the size must be retrieved.
+	 * @return The file size in bytes.
+	 */
+	public long retrieveFileSize(String filePath) {
+		return retrieveFileSize(Paths.get(filePath));
+	}
 
+	/**
+	 * Retrieves the size of a file (in bytes).
+	 * 
+	 * @param filePath
+	 *            Path to the file which the size must be retrieved.
+	 * @return The file size in bytes.
+	 */
+	public long retrieveFileSize(Path filePath) {
+		return filePath.toFile()
+				.length();
+	}
+
+	/**
+	 * Retrieved the size of a file formatted as text.
+	 * 
+	 * @param filePath
+	 *            Path to the file which the size must be retrieved.
+	 * @return A text informing the file size using the most considerable size unit
+	 *         (kB, MB, GB, etc.).
+	 */
+	public String retrieveFileSizeFormattedAsText(String filePath) {
+		return retrieveFileSizeFormattedAsText(Paths.get(filePath));
+	}
+
+	/**
+	 * Retrieved the size of a file formatted as text.
+	 * 
+	 * @param path
+	 *            Path to the file which the size must be retrieved.
+	 * @return A text informing the file size using the most considerable size unit
+	 *         (kB, MB, GB, etc.).
+	 */
+	public String retrieveFileSizeFormattedAsText(Path path) {
+		long fileSizeBytes = retrieveFileSize(path);
 		return formatAsHumanReadableSize(fileSizeBytes);
 	}
 
-	public String retrieveFileSize(String path) {
-		return retrieveFileSize(Paths.get(path));
-	}
-
-	public String formatAsHumanReadableSize(long size) {
+	private String formatAsHumanReadableSize(long size) {
 		int logSizeBaseBlock = (int) log(size, BYTE_BLOCK_SIZE);
 
 		return String.format("%.1f %s", size / Math.pow(BYTE_BLOCK_SIZE, logSizeBaseBlock),
@@ -161,10 +265,22 @@ public class FileUtil {
 		return Math.log(value) / Math.log(base);
 	}
 
+	/**
+	 * Creates a directory.
+	 * 
+	 * @param directoryPath
+	 *            Path of the directory to be created.
+	 */
 	public void createDirectoryIfDoesNotExist(String directoryPath) {
 		createDirectoryIfDoesNotExist(Paths.get(directoryPath));
 	}
 
+	/**
+	 * Creates a directory.
+	 * 
+	 * @param directoryPath
+	 *            Path of the directory to be created.
+	 */
 	public void createDirectoryIfDoesNotExist(Path directoryPath) {
 		File directory = directoryPath.toFile();
 		if (!directory.exists()) {
@@ -178,72 +294,153 @@ public class FileUtil {
 		}
 	}
 
-	public boolean fileExists(Path path) {
-		return path.toFile()
-				.exists();
-	}
-
+	/**
+	 * Checks if a file exists.
+	 * 
+	 * @param filePath
+	 *            Path to the file.
+	 * @return {@code true} if file exists, {@code false} otherwise.
+	 */
 	public boolean fileExists(String filePath) {
 		return fileExists(Paths.get(filePath));
 	}
 
-	public void throwExceptionIfDirectoryDoesNotExist(String path) {
-		throwExceptionIfDirectoryDoesNotExist(Paths.get(path));
+	/**
+	 * Checks if a file exists.
+	 * 
+	 * @param filePath
+	 *            Path to the file.
+	 * @return {@code true} if file exists, {@code false} otherwise.
+	 */
+	public boolean fileExists(Path filePath) {
+		return filePath.toFile()
+				.exists();
 	}
 
-	public void throwExceptionIfDirectoryDoesNotExist(Path path) {
-		throwExceptionIfFileIsNotDirectory(path);
+	/**
+	 * Throws a {@link FileUtilRuntimeException} if the specified file does not
+	 * exist.
+	 * 
+	 * @param filePath
+	 *            Path to the directory which should be checked.
+	 */
+	public void throwExceptionIfFileDoesNotExist(String filePath) {
+		throwExceptionIfFileDoesNotExist(Paths.get(filePath));
+	}
 
-		File directory = path.toFile();
+	/**
+	 * Throws a {@link FileUtilRuntimeException} if the specified file does not
+	 * exist.
+	 * 
+	 * @param filePath
+	 *            Path to the directory which should be checked.
+	 */
+	public void throwExceptionIfFileDoesNotExist(Path filePath) {
+		if (!fileExists(filePath)) {
+			String message = String.format(FileUtilMessageTemplates.FILE_DOES_NOT_EXIST, filePath);
+			throw new FileUtilRuntimeException(message);
+		}
+	}
+
+	/**
+	 * Throws a {@link FileUtilRuntimeException} if the specified directory does not
+	 * exist.
+	 * 
+	 * @param directoryPath
+	 *            Path to the directory which should be checked.
+	 */
+	public void throwExceptionIfDirectoryDoesNotExist(String directoryPath) {
+		throwExceptionIfDirectoryDoesNotExist(Paths.get(directoryPath));
+	}
+
+	/**
+	 * Throws a {@link FileUtilRuntimeException} if the specified directory does not
+	 * exist.
+	 * 
+	 * @param directoryPath
+	 *            Path to the directory which should be checked.
+	 */
+	public void throwExceptionIfDirectoryDoesNotExist(Path directoryPath) {
+		throwExceptionIfFileIsNotDirectory(directoryPath);
+
+		File directory = directoryPath.toFile();
 
 		if (!directory.exists()) {
-			String message = String.format(FileUtilMessageTemplates.DIRECTORY_DOES_NOT_EXIST, path);
+			String message = String.format(FileUtilMessageTemplates.DIRECTORY_DOES_NOT_EXIST,
+					directoryPath);
 			throw new FileUtilRuntimeException(message);
 		}
 	}
 
-	public void throwExceptionIfFileIsNotDirectory(String path) {
-		throwExceptionIfFileIsNotDirectory(Paths.get(path));
+	/**
+	 * Throws a {@link FileUtilRuntimeException} if the specified file is not a
+	 * directory.
+	 * 
+	 * @param filePath
+	 *            Path to the file which should be checked.
+	 */
+	public void throwExceptionIfFileIsNotDirectory(String filePath) {
+		throwExceptionIfFileIsNotDirectory(Paths.get(filePath));
 	}
 
-	public void throwExceptionIfFileIsNotDirectory(Path path) {
-		File directory = path.toFile();
+	/**
+	 * Throws a {@link FileUtilRuntimeException} if the specified file is not a
+	 * directory.
+	 * 
+	 * @param filePath
+	 *            Path to the file which should be checked.
+	 */
+	public void throwExceptionIfFileIsNotDirectory(Path filePath) {
+		File directory = filePath.toFile();
 
 		if (directory.isFile()) {
-			String message = String.format(FileUtilMessageTemplates.FILE_IS_NOT_DIRECTORY, path);
+			String message = String.format(FileUtilMessageTemplates.FILE_IS_NOT_DIRECTORY,
+					filePath);
 			throw new FileUtilRuntimeException(message);
 		}
 	}
 
-	public void throwExceptionIfFileIsDirectory(String path) {
-		throwExceptionIfFileIsDirectory(Paths.get(path));
+	/**
+	 * Throws a {@link FileUtilRuntimeException} if the specified file is a
+	 * directory.
+	 * 
+	 * @param filePath
+	 *            Path to the file which should be checked.
+	 */
+	public void throwExceptionIfFileIsDirectory(String filePath) {
+		throwExceptionIfFileIsDirectory(Paths.get(filePath));
 	}
 
-	public void throwExceptionIfFileIsDirectory(Path path) {
-		File directory = path.toFile();
+	/**
+	 * Throws a {@link FileUtilRuntimeException} if the specified file is a
+	 * directory.
+	 * 
+	 * @param filePath
+	 *            Path to the file which should be checked.
+	 */
+	public void throwExceptionIfFileIsDirectory(Path filePath) {
+		File directory = filePath.toFile();
 
 		if (!directory.isFile()) {
-			String message = String.format(FileUtilMessageTemplates.FILE_IS_A_DIRECTORY, path);
+			String message = String.format(FileUtilMessageTemplates.FILE_IS_A_DIRECTORY, filePath);
 			throw new FileUtilRuntimeException(message);
 		}
 	}
 
+	/**
+	 * Appends the {@link File#separator} a the text if it does not have it already.
+	 * 
+	 * @param text
+	 *            Text to append the {@link File#separator}
+	 * @return The content of the {@code text} parameter, plus the
+	 *         {@link File#separator} character appended if it does not have it
+	 *         already.
+	 */
 	public String appendSeparatorIfNecessary(String text) {
 		if (!text.endsWith(File.separator)) {
 			return text.concat(File.separator);
 		}
 
 		return text;
-	}
-
-	public void throwExceptionIfFileDoesNotExist(String path) {
-		throwExceptionIfFileDoesNotExist(Paths.get(path));
-	}
-
-	public void throwExceptionIfFileDoesNotExist(Path path) {
-		if (!fileExists(path)) {
-			String message = String.format(FileUtilMessageTemplates.FILE_DOES_NOT_EXIST, path);
-			throw new FileUtilRuntimeException(message);
-		}
 	}
 }
