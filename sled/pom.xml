@@ -47,7 +47,7 @@
 			<version>[3.13.2, 4)</version>
 			<scope>test</scope>
 		</dependency>
-<!-- <site.stagingDirectory>${project.parent.basedir}/docs/${project.name}</site.stagingDirectory> -->
+
 		<dependency>
 			<groupId>org.powermock</groupId>
 			<artifactId>powermock-api-mockito2</artifactId>
@@ -79,6 +79,23 @@
 				<configuration>
 					<argLine>${surefire.argLine}</argLine>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>3.1.0</version>
+				<executions>
+					<execution>
+						<id>copy-to-docs-directory</id>
+						<phase>site-deploy</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<skip>true</skip>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
