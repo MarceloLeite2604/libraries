@@ -11,3 +11,7 @@ A handful of personal libraries which helps me on my projects development.
 - [Flask](/flask) - Simplifies text files' content retrieval.
 - [Sled](/sled) - Encrypts and decrypts both text and binary content.
 - [Util](/util) - A series of useful classes and methods which helps on minor tasks.
+
+## Documentation
+
+Please check `README.md` file of each library for more information. For more technical information please check the [API documentation](https://marceloleite2604.github.io/libraries/apidocs/).
