@@ -7,5 +7,7 @@ A handful of personal libraries which helps me on my projects development.
 
 ## Current libraries
 
-- [Sled](/sled)
-- [Util](/util)
+- [Blimp](/blimp) - Helps retrieve internationalized messages. 
+- [Flask](/flask) - Simplifies text files' content retrieval.
+- [Sled](/sled) - Encrypts and decrypts both text and binary content.
+- [Util](/util) - A series of useful classes and methods which helps on minor tasks.
