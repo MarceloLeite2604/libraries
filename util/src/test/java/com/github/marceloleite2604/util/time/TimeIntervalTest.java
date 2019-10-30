@@ -10,155 +10,138 @@ import org.junit.Test;
 
 public class TimeIntervalTest {
 
-	@Test
-	public void testTimeIntervalZonedDateTimeZonedDateTime() throws Exception {
-		// Arrange
-		ZonedDateTime start = ZonedDateTime.of(2019, 8, 1, 0, 0, 0, 0, ZoneId.systemDefault());
-		ZonedDateTime end = ZonedDateTime.of(2019, 8, 2, 12, 30, 15, 200000,
-				ZoneId.systemDefault());
-		Duration expectedDuration = Duration.ofDays(1)
-				.plusHours(12)
-				.plusMinutes(30)
-				.plusSeconds(15)
-				.plusNanos(200000);
+  @Test
+  public void testTimeIntervalZonedDateTimeZonedDateTime() throws Exception {
+    // Arrange
+    ZonedDateTime start = ZonedDateTime.of(2019, 8, 1, 0, 0, 0, 0, ZoneId.systemDefault());
+    ZonedDateTime end = ZonedDateTime.of(2019, 8, 2, 12, 30, 15, 200000, ZoneId.systemDefault());
+    Duration expectedDuration =
+        Duration.ofDays(1).plusHours(12).plusMinutes(30).plusSeconds(15).plusNanos(200000);
 
-		TimeInterval timeInterval = new TimeInterval(start, end);
+    TimeInterval timeInterval = new TimeInterval(start, end);
 
-		// Act
-		Duration actualDuration = timeInterval.getDuration();
+    // Act
+    Duration actualDuration = timeInterval.getDuration();
 
-		// Assert
-		assertThat(actualDuration).isEqualTo(expectedDuration);
-	}
+    // Assert
+    assertThat(actualDuration).isEqualTo(expectedDuration);
+  }
 
-	@Test
-	public void testTimeIntervalZonedDateTimeDuration() throws Exception {
-		// Arrange
-		ZonedDateTime start = ZonedDateTime.of(2019, 8, 1, 0, 0, 0, 0, ZoneId.systemDefault());
-		Duration duration = Duration.ofDays(1)
-				.plusHours(6)
-				.plusMinutes(20)
-				.plusSeconds(40)
-				.plusNanos(40000);
+  @Test
+  public void testTimeIntervalZonedDateTimeDuration() throws Exception {
+    // Arrange
+    ZonedDateTime start = ZonedDateTime.of(2019, 8, 1, 0, 0, 0, 0, ZoneId.systemDefault());
+    Duration duration =
+        Duration.ofDays(1).plusHours(6).plusMinutes(20).plusSeconds(40).plusNanos(40000);
 
-		ZonedDateTime expectedEnd = ZonedDateTime.of(2019, 8, 2, 6, 20, 40, 40000,
-				ZoneId.systemDefault());
+    ZonedDateTime expectedEnd =
+        ZonedDateTime.of(2019, 8, 2, 6, 20, 40, 40000, ZoneId.systemDefault());
 
-		TimeInterval timeInterval = new TimeInterval(start, duration);
+    TimeInterval timeInterval = new TimeInterval(start, duration);
 
-		// Act
-		ZonedDateTime actualEnd = timeInterval.getEnd();
+    // Act
+    ZonedDateTime actualEnd = timeInterval.getEnd();
 
-		// Assert
-		assertThat(actualEnd).isEqualTo(expectedEnd);
-	}
+    // Assert
+    assertThat(actualEnd).isEqualTo(expectedEnd);
+  }
 
-	@Test
-	public void testTimeIntervalDurationZonedDateTime() throws Exception {
-		// Arrange
+  @Test
+  public void testTimeIntervalDurationZonedDateTime() throws Exception {
+    // Arrange
 
-		Duration duration = Duration.ofDays(1)
-				.plusHours(6)
-				.plusMinutes(20)
-				.plusSeconds(40)
-				.plusNanos(40000);
+    Duration duration =
+        Duration.ofDays(1).plusHours(6).plusMinutes(20).plusSeconds(40).plusNanos(40000);
 
-		ZonedDateTime end = ZonedDateTime.of(2019, 5, 7, 6, 20, 40, 40000, ZoneId.systemDefault());
+    ZonedDateTime end = ZonedDateTime.of(2019, 5, 7, 6, 20, 40, 40000, ZoneId.systemDefault());
 
-		ZonedDateTime expectedStart = ZonedDateTime.of(2019, 5, 6, 0, 0, 0, 0,
-				ZoneId.systemDefault());
+    ZonedDateTime expectedStart = ZonedDateTime.of(2019, 5, 6, 0, 0, 0, 0, ZoneId.systemDefault());
 
-		TimeInterval timeInterval = new TimeInterval(duration, end);
+    TimeInterval timeInterval = new TimeInterval(duration, end);
 
-		// Act
-		ZonedDateTime actualStart = timeInterval.getStart();
+    // Act
+    ZonedDateTime actualStart = timeInterval.getStart();
 
-		// Assert
-		assertThat(actualStart).isEqualTo(expectedStart);
-	}
+    // Assert
+    assertThat(actualStart).isEqualTo(expectedStart);
+  }
 
-	@Test
-	public void testCompareToShouldReturnNegativeValueWhenFirstTimeStartsBeforeSecondTime() throws Exception {
-		// Arrange
-		ZonedDateTime firstTimeIntervalStart = ZonedDateTime.of(2019, 9, 1, 12, 40, 0, 0,
-				ZoneId.systemDefault());
-		ZonedDateTime firstTimeIntervalEnd = ZonedDateTime.of(2019, 9, 2, 3, 0, 0, 0,
-				ZoneId.systemDefault());
+  @Test
+  public void testCompareToShouldReturnNegativeValueWhenFirstTimeStartsBeforeSecondTime()
+      throws Exception {
+    // Arrange
+    ZonedDateTime firstTimeIntervalStart =
+        ZonedDateTime.of(2019, 9, 1, 12, 40, 0, 0, ZoneId.systemDefault());
+    ZonedDateTime firstTimeIntervalEnd =
+        ZonedDateTime.of(2019, 9, 2, 3, 0, 0, 0, ZoneId.systemDefault());
 
-		ZonedDateTime secondTimeIntervalStart = ZonedDateTime.of(2019, 9, 1, 12, 40, 0, 100,
-				ZoneId.systemDefault());
+    ZonedDateTime secondTimeIntervalStart =
+        ZonedDateTime.of(2019, 9, 1, 12, 40, 0, 100, ZoneId.systemDefault());
 
-		Duration secondTimeIntervalDuration = Duration.ofDays(2)
-				.plusHours(2)
-				.plusMinutes(14)
-				.plusSeconds(30);
+    Duration secondTimeIntervalDuration =
+        Duration.ofDays(2).plusHours(2).plusMinutes(14).plusSeconds(30);
 
-		TimeInterval firstTimeInterval = new TimeInterval(firstTimeIntervalStart,
-				firstTimeIntervalEnd);
+    TimeInterval firstTimeInterval = new TimeInterval(firstTimeIntervalStart, firstTimeIntervalEnd);
 
-		TimeInterval secondTimeInterval = new TimeInterval(secondTimeIntervalStart,
-				secondTimeIntervalDuration);
+    TimeInterval secondTimeInterval =
+        new TimeInterval(secondTimeIntervalStart, secondTimeIntervalDuration);
 
-		// Act
-		int actualResult = firstTimeInterval.compareTo(secondTimeInterval);
+    // Act
+    int actualResult = firstTimeInterval.compareTo(secondTimeInterval);
 
-		// Assert
-		assertThat(actualResult).isLessThan(0);
-	}
-	
-	@Test
-	public void testCompareToShouldReturnPositiveValueWhenFirstTimeStartsAfterSecondTime() throws Exception {
-		// Arrange
-		ZonedDateTime firstTimeIntervalStart = ZonedDateTime.of(2019, 9, 1, 12, 40, 0, 0,
-				ZoneId.systemDefault());
-		ZonedDateTime firstTimeIntervalEnd = ZonedDateTime.of(2019, 9, 2, 3, 0, 0, 0,
-				ZoneId.systemDefault());
+    // Assert
+    assertThat(actualResult).isLessThan(0);
+  }
 
-		ZonedDateTime secondTimeIntervalStart = ZonedDateTime.of(2019, 9, 1, 12, 39, 59, 999999,
-				ZoneId.systemDefault());
+  @Test
+  public void testCompareToShouldReturnPositiveValueWhenFirstTimeStartsAfterSecondTime()
+      throws Exception {
+    // Arrange
+    ZonedDateTime firstTimeIntervalStart =
+        ZonedDateTime.of(2019, 9, 1, 12, 40, 0, 0, ZoneId.systemDefault());
+    ZonedDateTime firstTimeIntervalEnd =
+        ZonedDateTime.of(2019, 9, 2, 3, 0, 0, 0, ZoneId.systemDefault());
 
-		Duration secondTimeIntervalDuration = Duration.ofDays(2)
-				.plusHours(2)
-				.plusMinutes(14)
-				.plusSeconds(30);
+    ZonedDateTime secondTimeIntervalStart =
+        ZonedDateTime.of(2019, 9, 1, 12, 39, 59, 999999, ZoneId.systemDefault());
 
-		TimeInterval firstTimeInterval = new TimeInterval(firstTimeIntervalStart,
-				firstTimeIntervalEnd);
+    Duration secondTimeIntervalDuration =
+        Duration.ofDays(2).plusHours(2).plusMinutes(14).plusSeconds(30);
 
-		TimeInterval secondTimeInterval = new TimeInterval(secondTimeIntervalStart,
-				secondTimeIntervalDuration);
+    TimeInterval firstTimeInterval = new TimeInterval(firstTimeIntervalStart, firstTimeIntervalEnd);
 
-		// Act
-		int actualResult = firstTimeInterval.compareTo(secondTimeInterval);
+    TimeInterval secondTimeInterval =
+        new TimeInterval(secondTimeIntervalStart, secondTimeIntervalDuration);
 
-		// Assert
-		assertThat(actualResult).isGreaterThan(0);
-	}
-	
-	@Test
-	public void testCompareToShouldReturnZeroWhenFirstTimeStartsAtSameTimeThanSecondTime() throws Exception {
-		// Arrange
-		ZonedDateTime timeIntervalStart = ZonedDateTime.of(2019, 9, 1, 12, 40, 0, 0,
-				ZoneId.systemDefault());
-		ZonedDateTime firstTimeIntervalEnd = ZonedDateTime.of(2019, 9, 2, 3, 0, 0, 0,
-				ZoneId.systemDefault());
+    // Act
+    int actualResult = firstTimeInterval.compareTo(secondTimeInterval);
 
-		Duration secondTimeIntervalDuration = Duration.ofDays(2)
-				.plusHours(2)
-				.plusMinutes(14)
-				.plusSeconds(30);
+    // Assert
+    assertThat(actualResult).isGreaterThan(0);
+  }
 
-		TimeInterval firstTimeInterval = new TimeInterval(timeIntervalStart,
-				firstTimeIntervalEnd);
+  @Test
+  public void testCompareToShouldReturnZeroWhenFirstTimeStartsAtSameTimeThanSecondTime()
+      throws Exception {
+    // Arrange
+    ZonedDateTime timeIntervalStart =
+        ZonedDateTime.of(2019, 9, 1, 12, 40, 0, 0, ZoneId.systemDefault());
+    ZonedDateTime firstTimeIntervalEnd =
+        ZonedDateTime.of(2019, 9, 2, 3, 0, 0, 0, ZoneId.systemDefault());
 
-		TimeInterval secondTimeInterval = new TimeInterval(timeIntervalStart,
-				secondTimeIntervalDuration);
+    Duration secondTimeIntervalDuration =
+        Duration.ofDays(2).plusHours(2).plusMinutes(14).plusSeconds(30);
 
-		// Act
-		int actualResult = firstTimeInterval.compareTo(secondTimeInterval);
+    TimeInterval firstTimeInterval = new TimeInterval(timeIntervalStart, firstTimeIntervalEnd);
 
-		// Assert
-		assertThat(actualResult).isEqualTo(0);
-	}
+    TimeInterval secondTimeInterval =
+        new TimeInterval(timeIntervalStart, secondTimeIntervalDuration);
+
+    // Act
+    int actualResult = firstTimeInterval.compareTo(secondTimeInterval);
+
+    // Assert
+    assertThat(actualResult).isEqualTo(0);
+  }
 
 }

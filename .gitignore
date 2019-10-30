@@ -19,3 +19,6 @@ hs_err_pid*
 **/.factorypath
 **/target
 **/.settings
+
+# Eclipse Checkstyle plugin files
+**/.checkstyle
