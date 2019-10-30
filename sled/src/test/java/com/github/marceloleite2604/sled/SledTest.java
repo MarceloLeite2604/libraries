@@ -13,193 +13,176 @@ import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.agent.PowerMockAgent;
 import org.powermock.modules.junit4.rule.PowerMockRule;
 
-@PrepareForTest({ Sled.class, System.class })
+@PrepareForTest({Sled.class, System.class})
 public class SledTest {
 
-	public static final String CRYPTOGRAPHIC_ALGORITHM = "DESede";
+  public static final String CRYPTOGRAPHIC_ALGORITHM = "DESede";
 
-	public static final String INVALID_CRYPTOGRAPHIC_ALGORITHM = "InvalidCryptographicAlgorithm";
+  public static final String INVALID_CRYPTOGRAPHIC_ALGORITHM = "InvalidCryptographicAlgorithm";
 
-	public static final String FEEDBACK_MODE = "CBC";
+  public static final String FEEDBACK_MODE = "CBC";
 
-	public static final String PADDING_SCHEME = "PKCS5Padding";
+  public static final String PADDING_SCHEME = "PKCS5Padding";
 
-	public static final String KEY_ENVIRONMENT_VARIABLE_NAME = "keyEnvironmentVariableName";
+  public static final String KEY_ENVIRONMENT_VARIABLE_NAME = "keyEnvironmentVariableName";
 
-	public static final String KEY = "xNyryKQfcw5wZJ0shhAf9AdAueUmLKRk";
+  public static final String KEY = "xNyryKQfcw5wZJ0shhAf9AdAueUmLKRk";
 
-	public static final String TEXT = "This text must be encrypted.";
+  public static final String TEXT = "This text must be encrypted.";
 
-	public static final String ENCRYPTED_TEXT = "2HXoZJZuA72RgX9mImqOgK48po9ChdRAxsy+Sp3cKNA=";
+  public static final String ENCRYPTED_TEXT = "2HXoZJZuA72RgX9mImqOgK48po9ChdRAxsy+Sp3cKNA=";
 
-	public static final String TRANSFORMATION = CRYPTOGRAPHIC_ALGORITHM + "/" + FEEDBACK_MODE + "/"
-			+ PADDING_SCHEME;
+  public static final String TRANSFORMATION =
+      CRYPTOGRAPHIC_ALGORITHM + "/" + FEEDBACK_MODE + "/" + PADDING_SCHEME;
 
-	private Sled sled;
+  private Sled sled;
 
-	@Rule
-	public PowerMockRule rule = new PowerMockRule();
+  @Rule
+  public PowerMockRule rule = new PowerMockRule();
 
-	static {
-		PowerMockAgent.initializeIfNeeded();
-	}
+  static {
+    PowerMockAgent.initializeIfNeeded();
+  }
 
-	@Before
-	public void setUp() {
-		this.sled = Sled.builder()
-				.cryptographicAlgorithm(CRYPTOGRAPHIC_ALGORITHM)
-				.feedbackMode(FEEDBACK_MODE)
-				.paddingScheme(PADDING_SCHEME)
-				.keyEnvironmentVariableName(KEY_ENVIRONMENT_VARIABLE_NAME)
-				.build();
-	}
+  /**
+   * Instantiates a {@link Sled} object with default values.
+   */
+  @Before
+  public void setUp() {
+    sled = Sled.builder().cryptographicAlgorithm(CRYPTOGRAPHIC_ALGORITHM)
+        .feedbackMode(FEEDBACK_MODE).paddingScheme(PADDING_SCHEME)
+        .keyEnvironmentVariableName(KEY_ENVIRONMENT_VARIABLE_NAME).build();
+  }
 
-	@Test(expected = SledRuntimeException.class)
-	public void buildNullCryptographicAlgorithm() {
-		Sled.builder()
-				.cryptographicAlgorithm(null)
-				.feedbackMode(FEEDBACK_MODE)
-				.paddingScheme(PADDING_SCHEME)
-				.build();
-	}
+  @Test(expected = SledRuntimeException.class)
+  public void buildNullCryptographicAlgorithm() {
+    Sled.builder().cryptographicAlgorithm(null).feedbackMode(FEEDBACK_MODE)
+        .paddingScheme(PADDING_SCHEME).build();
+  }
 
-	@Test(expected = SledRuntimeException.class)
-	public void buildNullFeedbackMode() {
-		Sled.builder()
-				.cryptographicAlgorithm(CRYPTOGRAPHIC_ALGORITHM)
-				.feedbackMode(null)
-				.paddingScheme(PADDING_SCHEME)
-				.build();
-	}
+  @Test(expected = SledRuntimeException.class)
+  public void buildNullFeedbackMode() {
+    Sled.builder().cryptographicAlgorithm(CRYPTOGRAPHIC_ALGORITHM).feedbackMode(null)
+        .paddingScheme(PADDING_SCHEME).build();
+  }
 
-	@Test(expected = SledRuntimeException.class)
-	public void buildNullPaddingScheme() {
-		Sled.builder()
-				.cryptographicAlgorithm(CRYPTOGRAPHIC_ALGORITHM)
-				.feedbackMode(FEEDBACK_MODE)
-				.paddingScheme(null)
-				.build();
-	}
+  @Test(expected = SledRuntimeException.class)
+  public void buildNullPaddingScheme() {
+    Sled.builder().cryptographicAlgorithm(CRYPTOGRAPHIC_ALGORITHM).feedbackMode(FEEDBACK_MODE)
+        .paddingScheme(null).build();
+  }
 
-	@Test
-	public void testEncryptStringString() {
-		String expectedResult = ENCRYPTED_TEXT;
-		String actualResult = sled.encrypt(TEXT, KEY);
-		assertEquals(expectedResult, actualResult);
-	}
+  @Test
+  public void testEncryptStringString() {
+    String expectedResult = ENCRYPTED_TEXT;
+    String actualResult = sled.encrypt(TEXT, KEY);
+    assertEquals(expectedResult, actualResult);
+  }
 
-	@Test
-	public void testDecryptStringString() {
-		String expectedResult = TEXT;
-		String actualResult = sled.decrypt(ENCRYPTED_TEXT, KEY);
-		assertEquals(expectedResult, actualResult);
-	}
+  @Test
+  public void testDecryptStringString() {
+    String expectedResult = TEXT;
+    String actualResult = sled.decrypt(ENCRYPTED_TEXT, KEY);
+    assertEquals(expectedResult, actualResult);
+  }
 
-	@Test(expected = SledRuntimeException.class)
-	public void testDecryptStringStringShouldThrowSledRuntimeExceptionWhenNoSuchAlgorithmExceptionIsCaught() {
-		// Arrange
-		Sled sled = Sled.builder()
-				.cryptographicAlgorithm(INVALID_CRYPTOGRAPHIC_ALGORITHM)
-				.feedbackMode(FEEDBACK_MODE)
-				.paddingScheme(PADDING_SCHEME)
-				.build();
+  @Test(expected = SledRuntimeException.class)
+  public void testDecryptStringStringShouldThrowSledRuntimeExceptionWhenNoSuchAlgorithmExceptionIsCaught() {
+    // Arrange
+    Sled sled = Sled.builder().cryptographicAlgorithm(INVALID_CRYPTOGRAPHIC_ALGORITHM)
+        .feedbackMode(FEEDBACK_MODE).paddingScheme(PADDING_SCHEME).build();
 
-		// Act
-		sled.decrypt(TEXT, KEY);
+    // Act
+    sled.decrypt(TEXT, KEY);
 
-		// Assert
-		fail("Should have thrown an exception.");
-	}
+    // Assert
+    fail("Should have thrown an exception.");
+  }
 
-	@Test(expected = SledRuntimeException.class)
-	public void testDecryptStringShouldThrowSledRuntimeExceptionWhenNoKeyEnvironmentVariableWasInformed() {
-		// Arrange
-		Sled sled = Sled.builder()
-				.cryptographicAlgorithm(INVALID_CRYPTOGRAPHIC_ALGORITHM)
-				.feedbackMode(FEEDBACK_MODE)
-				.paddingScheme(PADDING_SCHEME)
-				.build();
+  @Test(expected = SledRuntimeException.class)
+  public void testDecryptStringShouldThrowSledRuntimeExceptionWhenNoKeyEnvironmentVariableWasInformed() {
+    // Arrange
+    Sled sled = Sled.builder().cryptographicAlgorithm(INVALID_CRYPTOGRAPHIC_ALGORITHM)
+        .feedbackMode(FEEDBACK_MODE).paddingScheme(PADDING_SCHEME).build();
 
-		// Act
-		sled.decrypt(TEXT);
+    // Act
+    sled.decrypt(TEXT);
 
-		// Assert
-		fail("Should have thrown an exception.");
-	}
+    // Assert
+    fail("Should have thrown an exception.");
+  }
 
-	@Test
-	public void testDecryptString() throws Exception {
-		// Arrange
-		String expectedDecryptedText = TEXT;
+  @Test
+  public void testDecryptString() throws Exception {
+    // Arrange
+    String expectedDecryptedText = TEXT;
 
-		mockStatic(System.class);
-		when(System.getenv(KEY_ENVIRONMENT_VARIABLE_NAME)).thenReturn(KEY);
+    mockStatic(System.class);
+    when(System.getenv(KEY_ENVIRONMENT_VARIABLE_NAME)).thenReturn(KEY);
 
-		// Act
-		String actualDecrypteddText = sled.decrypt(ENCRYPTED_TEXT);
+    // Act
+    String actualDecrypteddText = sled.decrypt(ENCRYPTED_TEXT);
 
-		// Assert
-		assertThat(actualDecrypteddText).isEqualTo(expectedDecryptedText);
-	}
+    // Assert
+    assertThat(actualDecrypteddText).isEqualTo(expectedDecryptedText);
+  }
 
-	@Test(expected = SledRuntimeException.class)
-	public void testDecryptStringShouldThrowSledRuntimeExceptionWhenEnvironmentVariableDoesNotExist()
-			throws Exception {
-		// Arrange
-		mockStatic(System.class);
-		when(System.getenv(KEY_ENVIRONMENT_VARIABLE_NAME)).thenReturn(null);
+  @Test(expected = SledRuntimeException.class)
+  public void testDecryptStringShouldThrowSledRuntimeExceptionWhenEnvironmentVariableDoesNotExist()
+      throws Exception {
+    // Arrange
+    mockStatic(System.class);
+    when(System.getenv(KEY_ENVIRONMENT_VARIABLE_NAME)).thenReturn(null);
 
-		// Act
-		sled.decrypt(ENCRYPTED_TEXT);
+    // Act
+    sled.decrypt(ENCRYPTED_TEXT);
 
-		// Assert
-		fail("Should have thrown an exception.");
-	}
-	
-	@Test(expected = SledRuntimeException.class)
-	public void testDecryptStringShouldThrowSledRuntimeExceptionWhenEnvironmentVariableIsEmpty()
-			throws Exception {
-		// Arrange
-		mockStatic(System.class);
-		when(System.getenv(KEY_ENVIRONMENT_VARIABLE_NAME)).thenReturn("");
+    // Assert
+    fail("Should have thrown an exception.");
+  }
 
-		// Act
-		sled.decrypt(ENCRYPTED_TEXT);
+  @Test(expected = SledRuntimeException.class)
+  public void testDecryptStringShouldThrowSledRuntimeExceptionWhenEnvironmentVariableIsEmpty()
+      throws Exception {
+    // Arrange
+    mockStatic(System.class);
+    when(System.getenv(KEY_ENVIRONMENT_VARIABLE_NAME)).thenReturn("");
 
-		// Assert
-		fail("Should have thrown an exception.");
-	}
+    // Act
+    sled.decrypt(ENCRYPTED_TEXT);
 
-	@Test
-	public void testEncryptString() throws Exception {
-		// Arrange
-		String expectedEncryptedText = ENCRYPTED_TEXT;
+    // Assert
+    fail("Should have thrown an exception.");
+  }
 
-		mockStatic(System.class);
-		when(System.getenv(KEY_ENVIRONMENT_VARIABLE_NAME)).thenReturn(KEY);
+  @Test
+  public void testEncryptString() throws Exception {
+    // Arrange
+    String expectedEncryptedText = ENCRYPTED_TEXT;
 
-		// Act
-		String actualEncryptedText = sled.encrypt(TEXT);
+    mockStatic(System.class);
+    when(System.getenv(KEY_ENVIRONMENT_VARIABLE_NAME)).thenReturn(KEY);
 
-		// Assert
-		assertThat(actualEncryptedText).isEqualTo(expectedEncryptedText);
-	}
+    // Act
+    String actualEncryptedText = sled.encrypt(TEXT);
 
-	@Test(expected = SledRuntimeException.class)
-	public void testEncryptStringStringShouldThrowSledRuntimeExceptionWhenNoSuchAlgorithmExceptionIsCaught()
-			throws Exception {
+    // Assert
+    assertThat(actualEncryptedText).isEqualTo(expectedEncryptedText);
+  }
 
-		// Arrange
-		Sled sled = Sled.builder()
-				.cryptographicAlgorithm(INVALID_CRYPTOGRAPHIC_ALGORITHM)
-				.feedbackMode(FEEDBACK_MODE)
-				.paddingScheme(PADDING_SCHEME)
-				.build();
+  @Test(expected = SledRuntimeException.class)
+  public void testEncryptStringStringShouldThrowSledRuntimeExceptionWhenNoSuchAlgorithmExceptionIsCaught()
+      throws Exception {
 
-		// Act
-		sled.encrypt(TEXT, KEY);
+    // Arrange
+    Sled sled = Sled.builder().cryptographicAlgorithm(INVALID_CRYPTOGRAPHIC_ALGORITHM)
+        .feedbackMode(FEEDBACK_MODE).paddingScheme(PADDING_SCHEME).build();
 
-		// Assert
-		fail("Should have thrown an exception.");
-	}
+    // Act
+    sled.encrypt(TEXT, KEY);
+
+    // Assert
+    fail("Should have thrown an exception.");
+  }
+
 }

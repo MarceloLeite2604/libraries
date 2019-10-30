@@ -25,436 +25,436 @@ import org.springframework.context.NoSuchMessageException;
 @RunWith(MockitoJUnitRunner.class)
 public class BlimpTest {
 
-	@Mock
-	private MessageSource messageSource;
+  @Mock
+  private MessageSource messageSource;
 
-	private Blimp blimp;
+  private Blimp blimp;
 
-	private static final Locale DEFAULT_LOCALE = Locale.getDefault();
+  private static final Locale DEFAULT_LOCALE = Locale.getDefault();
 
-	private static final Locale CUSTOMIZED_LOCALE = Locale.ENGLISH;
+  private static final Locale CUSTOMIZED_LOCALE = Locale.ENGLISH;
 
-	private static final String TEST_DIRECTORY = BlimpTest.class.getSimpleName();
+  private static final String TEST_DIRECTORY = BlimpTest.class.getSimpleName();
 
-	private static final String CUSTOMIZED_MESSAGES_FILE_PATH = "classpath:" + TEST_DIRECTORY
-			+ File.separator + "custom-messages-directory" + File.separator
-			+ "custom-messages-file";
+  private static final String CUSTOMIZED_MESSAGES_FILE_PATH = "classpath:" + TEST_DIRECTORY
+      + File.separator + "custom-messages-directory" + File.separator + "custom-messages-file";
 
-	private static final String CUSTOMIZED_SIMPLE_MESSAGE_CODE = "test.custom-simple-message";
+  private static final String CUSTOMIZED_SIMPLE_MESSAGE_CODE = "test.custom-simple-message";
 
-	private static final String SIMPLE_MESSAGE_CODE = "test.simple-message";
-
-	@BeforeClass
-	public static void setUpClass() {
-		Locale.setDefault(CUSTOMIZED_LOCALE);
-	}
+  private static final String SIMPLE_MESSAGE_CODE = "test.simple-message";
+
+  @BeforeClass
+  public static void setUpClass() {
+    Locale.setDefault(CUSTOMIZED_LOCALE);
+  }
 
-	@AfterClass
-	public static void tearDownClass() {
-		Locale.setDefault(DEFAULT_LOCALE);
-	}
+  @AfterClass
+  public static void tearDownClass() {
+    Locale.setDefault(DEFAULT_LOCALE);
+  }
 
-	@Before
-	public void setUp() {
-		this.blimp = new Blimp(messageSource);
-	}
+  @Before
+  public void setUp() {
+    this.blimp = new Blimp(messageSource);
+  }
 
-	@Test
-	public void testGetMessageMessageObjectArray() throws Exception {
+  @Test
+  public void testGetMessageMessageObjectArray() throws Exception {
 
-		// Arrange
-		int firstParameter = 2658;
-		String secondParameter = "drive";
-		Object[] parameters = { firstParameter, secondParameter };
-		Locale locale = Locale.getDefault();
-		String messageCode = "messageCode";
-		String expectedMessage = "This is a test message with parameters " + firstParameter
-				+ " and " + secondParameter + ".";
+    // Arrange
+    int firstParameter = 2658;
+    String secondParameter = "drive";
+    Object[] parameters = {firstParameter, secondParameter};
+    Locale locale = Locale.getDefault();
+    String messageCode = "messageCode";
+    String expectedMessage = "This is a test message with parameters " + firstParameter + " and "
+        + secondParameter + ".";
 
-		Message mockMessage = mock(Message.class);
+    Message mockMessage = mock(Message.class);
 
-		when(mockMessage.getCode()).thenReturn(messageCode);
-		when(messageSource.getMessage(eq(messageCode), eq(parameters), eq(locale)))
-				.thenReturn(expectedMessage);
+    when(mockMessage.getCode()).thenReturn(messageCode);
+    when(messageSource.getMessage(eq(messageCode), eq(parameters), eq(locale)))
+        .thenReturn(expectedMessage);
 
-		// Act
-		String actualMessage = blimp.getMessage(mockMessage, firstParameter, secondParameter);
-
-		// Assert
-		assertThat(actualMessage).isEqualTo(expectedMessage);
-	}
+    // Act
+    String actualMessage = blimp.getMessage(mockMessage, firstParameter, secondParameter);
+
+    // Assert
+    assertThat(actualMessage).isEqualTo(expectedMessage);
+  }
 
-	@Test
-	public void testGetMessageStringObjectArray() throws Exception {
-
-		// Arrange
-		int firstParameter = 2658;
-		String secondParameter = "drive";
-		Object[] parameters = { firstParameter, secondParameter };
-		Locale locale = Locale.getDefault();
-		String messageCode = "messageCode";
-		String expectedMessage = "This is a test message with parameters " + firstParameter
-				+ " and " + secondParameter + ".";
+  @Test
+  public void testGetMessageStringObjectArray() throws Exception {
 
-		when(messageSource.getMessage(eq(messageCode), eq(parameters), eq(locale)))
-				.thenReturn(expectedMessage);
+    // Arrange
+    int firstParameter = 2658;
+    String secondParameter = "drive";
+    Object[] parameters = {firstParameter, secondParameter};
+    Locale locale = Locale.getDefault();
+    String messageCode = "messageCode";
+    String expectedMessage = "This is a test message with parameters " + firstParameter + " and "
+        + secondParameter + ".";
 
-		// Act
-		String actualMessage = blimp.getMessage(messageCode, firstParameter, secondParameter);
+    when(messageSource.getMessage(eq(messageCode), eq(parameters), eq(locale)))
+        .thenReturn(expectedMessage);
 
-		// Assert
-		assertThat(actualMessage).isEqualTo(expectedMessage);
-	}
+    // Act
+    String actualMessage = blimp.getMessage(messageCode, firstParameter, secondParameter);
 
-	@Test(expected = BlimpRuntimeException.class)
-	public void testGetMessageStringObjectArrayShouldThrowBlimpRuntimeExceptionWhenAnExceptionIsCaught()
-			throws Exception {
+    // Assert
+    assertThat(actualMessage).isEqualTo(expectedMessage);
+  }
 
-		// Arrange
-		int firstParameter = 2658;
-		String secondParameter = "drive";
-		Object[] parameters = { firstParameter, secondParameter };
-		Locale locale = Locale.getDefault();
-		String messageCode = "messageCode";
+  @Test(expected = BlimpRuntimeException.class)
+  public void testGetMessageStringObjectArrayShouldThrowBlimpRuntimeExceptionWhenAnExceptionIsCaught()
+      throws Exception {
 
-		when(messageSource.getMessage(eq(messageCode), eq(parameters), eq(locale)))
-				.thenThrow(NoSuchMessageException.class);
+    // Arrange
+    int firstParameter = 2658;
+    String secondParameter = "drive";
+    Object[] parameters = {firstParameter, secondParameter};
+    Locale locale = Locale.getDefault();
+    String messageCode = "messageCode";
 
-		// Act
-		blimp.getMessage(messageCode, firstParameter, secondParameter);
+    when(messageSource.getMessage(eq(messageCode), eq(parameters), eq(locale)))
+        .thenThrow(NoSuchMessageException.class);
 
-		// Assert
-		fail("Should have thrown an exception.");
-	}
+    // Act
+    blimp.getMessage(messageCode, firstParameter, secondParameter);
 
-	@Test
-	public void testGetSingularOrPluralMessageBooleanStringShouldReturnSingularMessageWhenParameterSingularIsTrue()
-			throws Exception {
-		// Arrange
-		boolean singular = true;
+    // Assert
+    fail("Should have thrown an exception.");
+  }
 
-		int firstSingularMessageParameter = 2658;
-		String secondSingularMessageParameter = "drive";
-		List<Object> singularMessageParametersList = Arrays.asList(
-				(Object) firstSingularMessageParameter, (Object) secondSingularMessageParameter);
-		Object[] singularMessageParametersArray = singularMessageParametersList.toArray();
+  @Test
+  public void testGetSingularOrPluralMessageBooleanStringShouldReturnSingularMessageWhenParameterSingularIsTrue()
+      throws Exception {
+    // Arrange
+    boolean singular = true;
 
-		double firstPluralMessageParameter = 3.14;
-		long secondPluralMessageParameter = 1858206L;
-		List<Object> pluralMessageParametersList = Arrays.asList(firstPluralMessageParameter,
-				secondPluralMessageParameter);
+    int firstSingularMessageParameter = 2658;
+    String secondSingularMessageParameter = "drive";
+    List<Object> singularMessageParametersList = Arrays
+        .asList((Object) firstSingularMessageParameter, (Object) secondSingularMessageParameter);
+    Object[] singularMessageParametersArray = singularMessageParametersList.toArray();
 
-		Locale locale = Locale.getDefault();
+    double firstPluralMessageParameter = 3.14;
+    long secondPluralMessageParameter = 1858206L;
+    List<Object> pluralMessageParametersList =
+        Arrays.asList(firstPluralMessageParameter, secondPluralMessageParameter);
 
-		String messageCodePrefix = "messageCodePrefix";
-		String messageCodeSuffix = Blimp.SINGULAR_SUFFIX;
-		String completeMessageCode = messageCodePrefix + messageCodeSuffix;
+    Locale locale = Locale.getDefault();
 
-		String expectedMessage = "This is a test message with parameters "
-				+ firstSingularMessageParameter + " and " + secondSingularMessageParameter + ".";
+    String messageCodePrefix = "messageCodePrefix";
+    String messageCodeSuffix = Blimp.SINGULAR_SUFFIX;
+    String completeMessageCode = messageCodePrefix + messageCodeSuffix;
 
-		when(messageSource.getMessage(eq(completeMessageCode), eq(singularMessageParametersArray),
-				eq(locale))).thenReturn(expectedMessage);
+    String expectedMessage = "This is a test message with parameters "
+        + firstSingularMessageParameter + " and " + secondSingularMessageParameter + ".";
 
-		// Act
-		String actualMessage = blimp.getSingularOrPluralMessage(singular, messageCodePrefix,
-				singularMessageParametersList, pluralMessageParametersList);
+    when(messageSource.getMessage(eq(completeMessageCode), eq(singularMessageParametersArray),
+        eq(locale))).thenReturn(expectedMessage);
 
-		// Assert
-		assertThat(actualMessage).isEqualTo(expectedMessage);
-	}
+    // Act
+    String actualMessage = blimp.getSingularOrPluralMessage(singular, messageCodePrefix,
+        singularMessageParametersList, pluralMessageParametersList);
 
-	@Test
-	public void testGetSingularOrPluralMessageBooleanStringShouldReturnPluralMessageWhenParameterSingularIsFalse()
-			throws Exception {
-		// Arrange
-		boolean singular = false;
+    // Assert
+    assertThat(actualMessage).isEqualTo(expectedMessage);
+  }
 
-		int firstSingularMessageParameter = 2658;
-		String secondSingularMessageParameter = "drive";
-		List<Object> singularMessageParametersList = Arrays.asList(
-				(Object) firstSingularMessageParameter, (Object) secondSingularMessageParameter);
+  @Test
+  public void testGetSingularOrPluralMessageBooleanStringShouldReturnPluralMessageWhenParameterSingularIsFalse()
+      throws Exception {
+    // Arrange
+    boolean singular = false;
 
-		double firstPluralMessageParameter = 3.14;
-		long secondPluralMessageParameter = 1858206L;
-		List<Object> pluralMessageParametersList = Arrays.asList(firstPluralMessageParameter,
-				secondPluralMessageParameter);
-		Object[] pluralMessageParametersArray = pluralMessageParametersList.toArray();
+    int firstSingularMessageParameter = 2658;
+    String secondSingularMessageParameter = "drive";
+    List<Object> singularMessageParametersList = Arrays
+        .asList((Object) firstSingularMessageParameter, (Object) secondSingularMessageParameter);
 
-		Locale locale = Locale.getDefault();
+    double firstPluralMessageParameter = 3.14;
+    long secondPluralMessageParameter = 1858206L;
+    List<Object> pluralMessageParametersList =
+        Arrays.asList(firstPluralMessageParameter, secondPluralMessageParameter);
+    Object[] pluralMessageParametersArray = pluralMessageParametersList.toArray();
 
-		String messageCodePrefix = "messageCodePrefix";
-		String messageCodeSuffix = Blimp.PLURAL_SUFFIX;
-		String completeMessageCode = messageCodePrefix + messageCodeSuffix;
+    Locale locale = Locale.getDefault();
 
-		String expectedMessage = "This is a test message with parameters "
-				+ firstPluralMessageParameter + " and " + secondPluralMessageParameter + ".";
+    String messageCodePrefix = "messageCodePrefix";
+    String messageCodeSuffix = Blimp.PLURAL_SUFFIX;
+    String completeMessageCode = messageCodePrefix + messageCodeSuffix;
 
-		when(messageSource.getMessage(eq(completeMessageCode), eq(pluralMessageParametersArray),
-				eq(locale))).thenReturn(expectedMessage);
+    String expectedMessage = "This is a test message with parameters " + firstPluralMessageParameter
+        + " and " + secondPluralMessageParameter + ".";
 
-		// Act
-		String actualMessage = blimp.getSingularOrPluralMessage(singular, messageCodePrefix,
-				singularMessageParametersList, pluralMessageParametersList);
+    when(messageSource.getMessage(eq(completeMessageCode), eq(pluralMessageParametersArray),
+        eq(locale))).thenReturn(expectedMessage);
 
-		// Assert
-		assertThat(actualMessage).isEqualTo(expectedMessage);
-	}
+    // Act
+    String actualMessage = blimp.getSingularOrPluralMessage(singular, messageCodePrefix,
+        singularMessageParametersList, pluralMessageParametersList);
 
-	@Test
-	public void testGetSingularOrPluralMessageBooleanStringShouldReturnSingularMessageWhenSingularParameterIsTrue()
-			throws Exception {
+    // Assert
+    assertThat(actualMessage).isEqualTo(expectedMessage);
+  }
 
-		// Arrange
-		boolean singular = true;
+  @Test
+  public void testGetSingularOrPluralMessageBooleanStringShouldReturnSingularMessageWhenSingularParameterIsTrue()
+      throws Exception {
 
-		Object[] singularMessageParametersArray = null;
+    // Arrange
+    boolean singular = true;
 
-		Locale locale = Locale.getDefault();
+    Object[] singularMessageParametersArray = null;
 
-		String messageCodePrefix = "messageCodePrefix";
-		String messageCodeSuffix = Blimp.SINGULAR_SUFFIX;
-		String completeMessageCode = messageCodePrefix + messageCodeSuffix;
+    Locale locale = Locale.getDefault();
 
-		String expectedMessage = "This is a test message.";
+    String messageCodePrefix = "messageCodePrefix";
+    String messageCodeSuffix = Blimp.SINGULAR_SUFFIX;
+    String completeMessageCode = messageCodePrefix + messageCodeSuffix;
 
-		when(messageSource.getMessage(eq(completeMessageCode), eq(singularMessageParametersArray),
-				eq(locale))).thenReturn(expectedMessage);
+    String expectedMessage = "This is a test message.";
 
-		// Act
-		String actualMessage = blimp.getSingularOrPluralMessage(singular, messageCodePrefix);
+    when(messageSource.getMessage(eq(completeMessageCode), eq(singularMessageParametersArray),
+        eq(locale))).thenReturn(expectedMessage);
 
-		// Assert
-		assertThat(actualMessage).isEqualTo(expectedMessage);
-	}
+    // Act
+    String actualMessage = blimp.getSingularOrPluralMessage(singular, messageCodePrefix);
 
-	@Test
-	public void testGetSingularOrPluralMessageBooleanStringShouldReturnPluralMessageWhenSingularParameterIsFalse()
-			throws Exception {
+    // Assert
+    assertThat(actualMessage).isEqualTo(expectedMessage);
+  }
 
-		// Arrange
-		boolean singular = false;
+  @Test
+  public void testGetSingularOrPluralMessageBooleanStringShouldReturnPluralMessageWhenSingularParameterIsFalse()
+      throws Exception {
 
-		Object[] pluralMessageParametersArray = null;
+    // Arrange
+    boolean singular = false;
 
-		Locale locale = Locale.getDefault();
+    Object[] pluralMessageParametersArray = null;
 
-		String messageCodePrefix = "messageCodePrefix";
-		String messageCodeSuffix = Blimp.PLURAL_SUFFIX;
-		String completeMessageCode = messageCodePrefix + messageCodeSuffix;
+    Locale locale = Locale.getDefault();
 
-		String expectedMessage = "This is a test message.";
+    String messageCodePrefix = "messageCodePrefix";
+    String messageCodeSuffix = Blimp.PLURAL_SUFFIX;
+    String completeMessageCode = messageCodePrefix + messageCodeSuffix;
 
-		when(messageSource.getMessage(eq(completeMessageCode), eq(pluralMessageParametersArray),
-				eq(locale))).thenReturn(expectedMessage);
+    String expectedMessage = "This is a test message.";
 
-		// Act
-		String actualMessage = blimp.getSingularOrPluralMessage(singular, messageCodePrefix);
+    when(messageSource.getMessage(eq(completeMessageCode), eq(pluralMessageParametersArray),
+        eq(locale))).thenReturn(expectedMessage);
 
-		// Assert
-		assertThat(actualMessage).isEqualTo(expectedMessage);
-	}
+    // Act
+    String actualMessage = blimp.getSingularOrPluralMessage(singular, messageCodePrefix);
 
-	@Test
-	public void testGetSingularOrPluralMessageBooleanMessageShouldReturnSingularMessageWhenSingularParameterIsTrue()
-			throws Exception {
-		// Arrange
-		boolean singular = true;
+    // Assert
+    assertThat(actualMessage).isEqualTo(expectedMessage);
+  }
 
-		Object[] singularMessageParametersArray = null;
+  @Test
+  public void testGetSingularOrPluralMessageBooleanMessageShouldReturnSingularMessageWhenSingularParameterIsTrue()
+      throws Exception {
+    // Arrange
+    boolean singular = true;
 
-		Locale locale = Locale.getDefault();
+    Object[] singularMessageParametersArray = null;
 
-		String messageCodePrefix = "messageCodePrefix";
-		String messageCodeSuffix = Blimp.SINGULAR_SUFFIX;
-		String completeMessageCode = messageCodePrefix + messageCodeSuffix;
+    Locale locale = Locale.getDefault();
 
-		String expectedMessage = "This is a test message.";
+    String messageCodePrefix = "messageCodePrefix";
+    String messageCodeSuffix = Blimp.SINGULAR_SUFFIX;
+    String completeMessageCode = messageCodePrefix + messageCodeSuffix;
 
-		Message mockMessage = mock(Message.class);
+    String expectedMessage = "This is a test message.";
 
-		when(mockMessage.getCode()).thenReturn(messageCodePrefix);
-		when(messageSource.getMessage(eq(completeMessageCode), eq(singularMessageParametersArray),
-				eq(locale))).thenReturn(expectedMessage);
+    Message mockMessage = mock(Message.class);
 
-		// Act
-		String actualMessage = blimp.getSingularOrPluralMessage(singular, mockMessage);
+    when(mockMessage.getCode()).thenReturn(messageCodePrefix);
+    when(messageSource.getMessage(eq(completeMessageCode), eq(singularMessageParametersArray),
+        eq(locale))).thenReturn(expectedMessage);
 
-		// Assert
-		assertThat(actualMessage).isEqualTo(expectedMessage);
-	}
+    // Act
+    String actualMessage = blimp.getSingularOrPluralMessage(singular, mockMessage);
 
-	@Test
-	public void testGetSingularOrPluralMessageBooleanMessageShouldReturnPluralMessageWhenSingularParameterIsFalse()
-			throws Exception {
-		// Arrange
-		boolean singular = false;
+    // Assert
+    assertThat(actualMessage).isEqualTo(expectedMessage);
+  }
 
-		Object[] pluralMessageParametersArray = null;
+  @Test
+  public void testGetSingularOrPluralMessageBooleanMessageShouldReturnPluralMessageWhenSingularParameterIsFalse()
+      throws Exception {
+    // Arrange
+    boolean singular = false;
 
-		Locale locale = Locale.getDefault();
+    Object[] pluralMessageParametersArray = null;
 
-		String messageCodePrefix = "messageCodePrefix";
-		String messageCodeSuffix = Blimp.PLURAL_SUFFIX;
-		String completeMessageCode = messageCodePrefix + messageCodeSuffix;
+    Locale locale = Locale.getDefault();
 
-		String expectedMessage = "This is a test message.";
+    String messageCodePrefix = "messageCodePrefix";
+    String messageCodeSuffix = Blimp.PLURAL_SUFFIX;
+    String completeMessageCode = messageCodePrefix + messageCodeSuffix;
 
-		Message mockMessage = mock(Message.class);
+    String expectedMessage = "This is a test message.";
 
-		when(mockMessage.getCode()).thenReturn(messageCodePrefix);
-		when(messageSource.getMessage(eq(completeMessageCode), eq(pluralMessageParametersArray),
-				eq(locale))).thenReturn(expectedMessage);
+    Message mockMessage = mock(Message.class);
 
-		// Act
-		String actualMessage = blimp.getSingularOrPluralMessage(singular, mockMessage);
+    when(mockMessage.getCode()).thenReturn(messageCodePrefix);
+    when(messageSource.getMessage(eq(completeMessageCode), eq(pluralMessageParametersArray),
+        eq(locale))).thenReturn(expectedMessage);
 
-		// Assert
-		assertThat(actualMessage).isEqualTo(expectedMessage);
-	}
+    // Act
+    String actualMessage = blimp.getSingularOrPluralMessage(singular, mockMessage);
 
-	@Test
-	public void testGetSingularOrPluralMessageBooleanMessageObjectArrayObjectArrayShouldReturnSingularMessageWhenParameterSingularIsTrue()
-			throws Exception {
-		// Arrange
-		boolean singular = true;
+    // Assert
+    assertThat(actualMessage).isEqualTo(expectedMessage);
+  }
 
-		int firstSingularMessageParameter = 2658;
-		String secondSingularMessageParameter = "drive";
-		List<Object> singularMessageParametersList = Arrays.asList(
-				(Object) firstSingularMessageParameter, (Object) secondSingularMessageParameter);
-		Object[] singularMessageParametersArray = singularMessageParametersList.toArray();
+  @Test
+  public void testGetSingularOrPluralMessageBooleanMessageObjectArrayObjectArrayShouldReturnSingularMessageWhenParameterSingularIsTrue()
+      throws Exception {
+    // Arrange
+    boolean singular = true;
 
-		double firstPluralMessageParameter = 3.14;
-		long secondPluralMessageParameter = 1858206L;
-		List<Object> pluralMessageParametersList = Arrays.asList(firstPluralMessageParameter,
-				secondPluralMessageParameter);
+    int firstSingularMessageParameter = 2658;
+    String secondSingularMessageParameter = "drive";
+    List<Object> singularMessageParametersList = Arrays
+        .asList((Object) firstSingularMessageParameter, (Object) secondSingularMessageParameter);
+    Object[] singularMessageParametersArray = singularMessageParametersList.toArray();
 
-		Locale locale = Locale.getDefault();
+    double firstPluralMessageParameter = 3.14;
+    long secondPluralMessageParameter = 1858206L;
+    List<Object> pluralMessageParametersList =
+        Arrays.asList(firstPluralMessageParameter, secondPluralMessageParameter);
 
-		String messageCodePrefix = "messageCodePrefix";
-		String messageCodeSuffix = Blimp.SINGULAR_SUFFIX;
-		String completeMessageCode = messageCodePrefix + messageCodeSuffix;
+    Locale locale = Locale.getDefault();
 
-		String expectedMessage = "This is a test message with parameters "
-				+ firstSingularMessageParameter + " and " + secondSingularMessageParameter + ".";
-		Message mockMessage = mock(Message.class);
+    String messageCodePrefix = "messageCodePrefix";
+    String messageCodeSuffix = Blimp.SINGULAR_SUFFIX;
+    String completeMessageCode = messageCodePrefix + messageCodeSuffix;
 
-		when(mockMessage.getCode()).thenReturn(messageCodePrefix);
-		when(messageSource.getMessage(eq(completeMessageCode), eq(singularMessageParametersArray),
-				eq(locale))).thenReturn(expectedMessage);
+    String expectedMessage = "This is a test message with parameters "
+        + firstSingularMessageParameter + " and " + secondSingularMessageParameter + ".";
+    Message mockMessage = mock(Message.class);
 
-		// Act
-		String actualMessage = blimp.getSingularOrPluralMessage(singular, mockMessage,
-				singularMessageParametersList, pluralMessageParametersList);
+    when(mockMessage.getCode()).thenReturn(messageCodePrefix);
+    when(messageSource.getMessage(eq(completeMessageCode), eq(singularMessageParametersArray),
+        eq(locale))).thenReturn(expectedMessage);
 
-		// Assert
-		assertThat(actualMessage).isEqualTo(expectedMessage);
-	}
+    // Act
+    String actualMessage = blimp.getSingularOrPluralMessage(singular, mockMessage,
+        singularMessageParametersList, pluralMessageParametersList);
 
-	@Test
-	public void testGetSingularOrPluralMessageBooleanMessageObjectArrayObjectArrayShouldReturnPluralMessageWhenParameterSingularIsFalse()
-			throws Exception {
-		// Arrange
-		boolean singular = false;
+    // Assert
+    assertThat(actualMessage).isEqualTo(expectedMessage);
+  }
 
-		int firstSingularMessageParameter = 2658;
-		String secondSingularMessageParameter = "drive";
-		List<Object> singularMessageParametersList = Arrays.asList(
-				(Object) firstSingularMessageParameter, (Object) secondSingularMessageParameter);
+  @Test
+  public void testGetSingularOrPluralMessageBooleanMessageObjectArrayObjectArrayShouldReturnPluralMessageWhenParameterSingularIsFalse()
+      throws Exception {
+    // Arrange
+    boolean singular = false;
 
-		double firstPluralMessageParameter = 3.14;
-		long secondPluralMessageParameter = 1858206L;
-		List<Object> pluralMessageParametersList = Arrays.asList(firstPluralMessageParameter,
-				secondPluralMessageParameter);
-		Object[] pluralMessageParametersArray = pluralMessageParametersList.toArray();
+    int firstSingularMessageParameter = 2658;
+    String secondSingularMessageParameter = "drive";
+    List<Object> singularMessageParametersList = Arrays
+        .asList((Object) firstSingularMessageParameter, (Object) secondSingularMessageParameter);
 
-		Locale locale = Locale.getDefault();
+    double firstPluralMessageParameter = 3.14;
+    long secondPluralMessageParameter = 1858206L;
+    List<Object> pluralMessageParametersList =
+        Arrays.asList(firstPluralMessageParameter, secondPluralMessageParameter);
+    Object[] pluralMessageParametersArray = pluralMessageParametersList.toArray();
 
-		String messageCodePrefix = "messageCodePrefix";
-		String messageCodeSuffix = Blimp.PLURAL_SUFFIX;
-		String completeMessageCode = messageCodePrefix + messageCodeSuffix;
+    Locale locale = Locale.getDefault();
 
-		String expectedMessage = "This is a test message with parameters "
-				+ firstSingularMessageParameter + " and " + secondSingularMessageParameter + ".";
-		Message mockMessage = mock(Message.class);
+    String messageCodePrefix = "messageCodePrefix";
+    String messageCodeSuffix = Blimp.PLURAL_SUFFIX;
+    String completeMessageCode = messageCodePrefix + messageCodeSuffix;
 
-		when(mockMessage.getCode()).thenReturn(messageCodePrefix);
-		when(messageSource.getMessage(eq(completeMessageCode), eq(pluralMessageParametersArray),
-				eq(locale))).thenReturn(expectedMessage);
+    String expectedMessage = "This is a test message with parameters "
+        + firstSingularMessageParameter + " and " + secondSingularMessageParameter + ".";
+    Message mockMessage = mock(Message.class);
 
-		// Act
-		String actualMessage = blimp.getSingularOrPluralMessage(singular, mockMessage,
-				singularMessageParametersList, pluralMessageParametersList);
+    when(mockMessage.getCode()).thenReturn(messageCodePrefix);
+    when(messageSource.getMessage(eq(completeMessageCode), eq(pluralMessageParametersArray),
+        eq(locale))).thenReturn(expectedMessage);
 
-		// Assert
-		assertThat(actualMessage).isEqualTo(expectedMessage);
-	}
+    // Act
+    String actualMessage = blimp.getSingularOrPluralMessage(singular, mockMessage,
+        singularMessageParametersList, pluralMessageParametersList);
 
-	@Test
-	public void testBlimpLocaleStringArray() throws Exception {
-		// Arrange
-		Blimp blimp = new Blimp(CUSTOMIZED_LOCALE, CUSTOMIZED_MESSAGES_FILE_PATH);
-		String expectedMessage = "This is a simple customized message.";
+    // Assert
+    assertThat(actualMessage).isEqualTo(expectedMessage);
+  }
 
-		// Act
-		String actualMessage = blimp.getMessage(CUSTOMIZED_SIMPLE_MESSAGE_CODE);
+  @Test
+  public void testBlimpLocaleStringArray() throws Exception {
+    // Arrange
+    Blimp blimp = new Blimp(CUSTOMIZED_LOCALE, CUSTOMIZED_MESSAGES_FILE_PATH);
+    String expectedMessage = "This is a simple customized message.";
 
-		// Assert
-		assertThat(actualMessage).isEqualTo(expectedMessage);
+    // Act
+    String actualMessage = blimp.getMessage(CUSTOMIZED_SIMPLE_MESSAGE_CODE);
 
-	}
+    // Assert
+    assertThat(actualMessage).isEqualTo(expectedMessage);
 
-	@Test
-	public void testBlimpListString() throws Exception {
-		// Arrange
-		List<String> messagesFilePaths = Arrays.asList(CUSTOMIZED_MESSAGES_FILE_PATH);
-		Blimp blimp = new Blimp(messagesFilePaths);
-		String expectedMessage = "This is a simple customized message.";
+  }
 
-		// Act
-		String actualMessage = blimp.getMessage(CUSTOMIZED_SIMPLE_MESSAGE_CODE);
+  @Test
+  public void testBlimpListString() throws Exception {
+    // Arrange
+    List<String> messagesFilePaths = Arrays.asList(CUSTOMIZED_MESSAGES_FILE_PATH);
+    Blimp blimp = new Blimp(messagesFilePaths);
+    String expectedMessage = "This is a simple customized message.";
 
-		// Assert
-		assertThat(actualMessage).isEqualTo(expectedMessage);
-	}
+    // Act
+    String actualMessage = blimp.getMessage(CUSTOMIZED_SIMPLE_MESSAGE_CODE);
 
-	@Test(expected = BlimpRuntimeException.class)
-	public void testBlimpListStringShouldThrowBlimpRuntimeExceptionIfListStringParameterIsNull()
-			throws Exception {
-		// Arrange
-		List<String> messagesFilePaths = null;
+    // Assert
+    assertThat(actualMessage).isEqualTo(expectedMessage);
+  }
 
-		// Act
-		new Blimp(messagesFilePaths);
+  @Test(expected = BlimpRuntimeException.class)
+  public void testBlimpListStringShouldThrowBlimpRuntimeExceptionIfListStringParameterIsNull()
+      throws Exception {
+    // Arrange
+    List<String> messagesFilePaths = null;
 
-		// Assert
-		fail("Should have thrown an exception.");
-	}
+    // Act
+    new Blimp(messagesFilePaths);
 
-	@Test(expected = BlimpRuntimeException.class)
-	public void testBlimpListStringShouldThrowBlimpRuntimeExceptionIfListStringParameterIsEmpty()
-			throws Exception {
-		// Arrange
-		List<String> messagesFilePaths = new ArrayList<>();
+    // Assert
+    fail("Should have thrown an exception.");
+  }
 
-		// Act
-		new Blimp(messagesFilePaths);
+  @Test(expected = BlimpRuntimeException.class)
+  public void testBlimpListStringShouldThrowBlimpRuntimeExceptionIfListStringParameterIsEmpty()
+      throws Exception {
+    // Arrange
+    List<String> messagesFilePaths = new ArrayList<>();
 
-		// Assert
-		fail("Should have thrown an exception.");
-	}
+    // Act
+    new Blimp(messagesFilePaths);
 
-	@Test
-	public void testBlimp() throws Exception {
-		// Arrange
-		Blimp blimp = new Blimp();
-		String expectedMessage = "This is a simple message.";
+    // Assert
+    fail("Should have thrown an exception.");
+  }
 
-		// Act
-		String actualMessage = blimp.getMessage(SIMPLE_MESSAGE_CODE);
+  @Test
+  public void testBlimp() throws Exception {
+    // Arrange
+    Blimp blimp = new Blimp();
+    String expectedMessage = "This is a simple message.";
 
-		// Assert
-		assertThat(actualMessage).isEqualTo(expectedMessage);
-	}
+    // Act
+    String actualMessage = blimp.getMessage(SIMPLE_MESSAGE_CODE);
+
+    // Assert
+    assertThat(actualMessage).isEqualTo(expectedMessage);
+  }
+
 }
