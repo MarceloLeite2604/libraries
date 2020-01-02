@@ -1,5 +1,8 @@
 language: java
 dist: trusty
+env:
+  global:
+    -CODECOV_TOKEN=2444f1ed-df13-4323-b41e-7ce2bc11bf15
 jdk:
   - oraclejdk8
   - openjdk8
