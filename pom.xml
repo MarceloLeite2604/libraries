@@ -10,12 +10,13 @@
 	<packaging>pom</packaging>
 
 	<name>libraries</name>
-	<description>A handful of personal libies which helps me on my projects development.</description>
+	<description>A handful of personal libraries which helps me on my projects development.</description>
 	<url>https://github.com/MarceloLeite2064/libraries</url>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<javadoc.outputDirectory>${project.build.directory}/site/apidocs</javadoc.outputDirectory>
+		<jvm.options>--add-opens java.base/*=ALL-UNNAMED</jvm.options>
 	</properties>
 
 	<modules>
@@ -25,11 +26,39 @@
 		<module>util</module>
 	</modules>
 
+	<profiles>
+		<profile>
+			<id>java-9</id>
+			<activation>
+				<jdk>[1.9,)</jdk>
+			</activation>
+			<properties>
+				<surefire.argLine>-noverify -Djdk.attach.allowAttachSelf=true
+					--illegal-access=permit --add-opens
+					java.base/jdk.internal.loader=ALL-UNNAMED</surefire.argLine>
+			</properties>
+		</profile>
+		<profile>
+			<id>java-8</id>
+			<activation>
+				<jdk>1.8</jdk>
+			</activation>
+			<properties>
+				<surefire.argLine>-noverify</surefire.argLine>
+			</properties>
+		</profile>
+	</profiles>
+
 	<distributionManagement>
 		<site>
 			<id>github-pages</id>
 			<url>https://marceloleite2604.github.io/libraries/</url>
 		</site>
+		<repository>
+			<id>github</id>
+			<name>GitHub MarceloLeite2604 Apache Maven Packages</name>
+			<url>https://maven.pkg.github.com/MarceloLeite2604/libraries</url>
+		</repository>
 	</distributionManagement>
 
 	<dependencies>
@@ -100,6 +129,7 @@
 				</executions>
 				<configuration>
 					<outputDirectory>${javadoc.outputDirectory}</outputDirectory>
+					<source>8</source>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -134,26 +164,26 @@
 				</executions>
 			</plugin>
 			<plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-checkstyle-plugin</artifactId>
-                    <version>3.1.0</version>
-                    <configuration>
-                        <configLocation>google_checks.xml</configLocation>
-                        <encoding>UTF-8</encoding>
-                        <consoleOutput>true</consoleOutput>
-                        <failsOnError>true</failsOnError>
-                        <linkXRef>false</linkXRef>
-                    </configuration>
-                    <executions>
-                        <execution>
-                            <id>checkstyle-validate</id>
-                            <phase>validate</phase>
-                            <goals>
-                                <goal>check</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>3.1.0</version>
+				<configuration>
+					<configLocation>google_checks.xml</configLocation>
+					<encoding>UTF-8</encoding>
+					<consoleOutput>true</consoleOutput>
+					<failsOnError>true</failsOnError>
+					<linkXRef>false</linkXRef>
+				</configuration>
+				<executions>
+					<execution>
+						<id>checkstyle-validate</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 </project>

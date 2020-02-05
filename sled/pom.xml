@@ -22,17 +22,6 @@
 		<surefire.argLine>${surefire.argLine.default}</surefire.argLine>
 	</properties>
 
-	<profiles>
-		<profile>
-			<id>java-9</id>
-			<properties>
-				<surefire.argLine>${surefire.argLine.default}
-					--illegal-access=permit --add-opens
-					java.base/jdk.internal.loader=ALL-UNNAMED</surefire.argLine>
-			</properties>
-		</profile>
-	</profiles>
-
 	<dependencies>
 		<dependency>
 			<groupId>javax.xml.bind</groupId>
