@@ -13,6 +13,15 @@
 	<artifactId>util</artifactId>
 	<packaging>jar</packaging>
 
+	<developers>
+		<developer>
+			<name>Marcelo Leite</name>
+			<email>marceloleite2604@gmail.com</email>
+			<organization />
+			<organizationUrl />
+		</developer>
+	</developers>
+
 	<name>util</name>
 	<url>https://github.com/MarceloLeite2064/libraries</url>
 	<description>A series of useful classes and methods which helps on minor tasks.</description>

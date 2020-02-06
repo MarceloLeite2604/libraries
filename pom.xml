@@ -13,6 +13,15 @@
 	<description>A handful of personal libraries which helps me on my projects development.</description>
 	<url>https://github.com/MarceloLeite2064/libraries</url>
 
+	<developers>
+		<developer>
+			<name>Marcelo Leite</name>
+			<email>marceloleite2604@gmail.com</email>
+			<organization />
+			<organizationUrl />
+		</developer>
+	</developers>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<javadoc.outputDirectory>${project.build.directory}/site/apidocs</javadoc.outputDirectory>

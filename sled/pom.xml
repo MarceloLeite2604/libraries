@@ -17,6 +17,15 @@
 	<description>Sled stands for Simple Library for Encryption and Decryption. As the name says, it helps encrypt and decrypt both binary and text content.</description>
 	<url>https://github.com/MarceloLeite2064/libraries</url>
 
+	<developers>
+		<developer>
+			<name>Marcelo Leite</name>
+			<email>marceloleite2604@gmail.com</email>
+			<organization />
+			<organizationUrl />
+		</developer>
+	</developers>
+
 	<properties>
 		<surefire.argLine.default>-Djdk.attach.allowAttachSelf=true -noverify</surefire.argLine.default>
 		<surefire.argLine>${surefire.argLine.default}</surefire.argLine>
