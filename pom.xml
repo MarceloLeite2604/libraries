@@ -4,23 +4,14 @@
 
 	<modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.github.marceloleite2604</groupId>
+	<groupId>com.figtreelake</groupId>
 	<artifactId>libraries</artifactId>
 	<version>1.1</version>
 	<packaging>pom</packaging>
 
 	<name>libraries</name>
-	<description>A handful of personal libraries which helps me on my projects development.</description>
+	<description>A handful of personal libraries which helps on project development.</description>
 	<url>https://github.com/MarceloLeite2064/libraries</url>
-
-	<developers>
-		<developer>
-			<name>Marcelo Leite</name>
-			<email>marceloleite2604@gmail.com</email>
-			<organization />
-			<organizationUrl />
-		</developer>
-	</developers>
 
 	<licenses>
 		<license>
@@ -29,6 +20,21 @@
 			<distribution>repo</distribution>
 		</license>
 	</licenses>
+
+	<developers>
+		<developer>
+			<name>Marcelo Leite</name>
+			<email>marceloleite2604@gmail.com</email>
+			<organization>FigTreeLake</organization>
+			<organizationUrl>https://github.com/MarceloLeite2064/libraries</organizationUrl>
+		</developer>
+	</developers>
+
+	<scm>
+		<connection>scm:git:git://github.com/MarceloLeite2604/libraries.git</connection>
+		<developerConnection>scm:git:ssh://github.com:MarceloLeite2604/libraries.git</developerConnection>
+		<url>http://github.com/simpligility/ossrh-demo/tree/master</url>
+	</scm>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -197,6 +203,20 @@
 						<phase>validate</phase>
 						<goals>
 							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>1.6</version>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
 						</goals>
 					</execution>
 				</executions>
