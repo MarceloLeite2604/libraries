@@ -3,6 +3,16 @@ dist: trusty
 jdk:
   - oraclejdk8
   - openjdk8
+  - oraclejdk9
+  - openjdk9
+  - oraclejdk10
+  - openjdk10
+  - oraclejdk11
+  - openjdk11
+  - oraclejdk12
+  - openjdk12
+  - oraclejdk13
+  - openjdk13
 before_install:
   - openssl aes-256-cbc -K $encrypted_d894207b50dc_key -iv $encrypted_d894207b50dc_iv
     -in travis/libraries-key.asc.enc -out travis/libraries-key.asc -d
