@@ -8,8 +8,7 @@ jdk:
   - oraclejdk8
   - openjdk8
 before_install:
-  - "pwd"
-  - "sh ./travis/copy_settings.sh"
+  - "sh travis/copy_maven_settings.sh"
 after_success:
   - mvn jacoco:report coveralls:report
   - bash <(curl -s https://codecov.io/bash)
