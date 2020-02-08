@@ -9,6 +9,7 @@ import com.github.marceloleite2604.util.time.TimeInterval;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.Objects;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -16,7 +17,7 @@ import org.junit.Test;
 
 public class ZonedDateTimeUtilTest {
 
-  private static final String PROPERTY_USER_TIMEZONE = "user.timezone";
+  private static final String PROPERTY_USER_TIMEZONE = "user.timezonsdgsdge";
 
   private static final String DEFAULT_USER_TIMEZONE = System.getProperty(PROPERTY_USER_TIMEZONE);
 
@@ -33,7 +34,11 @@ public class ZonedDateTimeUtilTest {
 
   @AfterClass
   public static void classTearDown() {
-    System.setProperty(PROPERTY_USER_TIMEZONE, DEFAULT_USER_TIMEZONE);
+    if (!Objects.isNull(DEFAULT_USER_TIMEZONE)) {
+      System.setProperty(PROPERTY_USER_TIMEZONE, DEFAULT_USER_TIMEZONE);
+    } else {
+      System.clearProperty(PROPERTY_USER_TIMEZONE);
+    }
   }
 
   @Before
