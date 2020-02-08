@@ -176,6 +176,8 @@
 					<encoding>UTF-8</encoding>
 					<consoleOutput>true</consoleOutput>
 					<failsOnError>true</failsOnError>
+					<failOnViolation>true</failOnViolation>
+					<violationSeverity>warning</violationSeverity>
 					<linkXRef>false</linkXRef>
 				</configuration>
 				<executions>
@@ -231,7 +233,8 @@
 					</execution>
 				</executions>
 				<configuration>
-				    <source>8</source>
+					<additionalOptions>-html5</additionalOptions>
+					<source>8</source>
 				</configuration>
 			</plugin>
 		</plugins>

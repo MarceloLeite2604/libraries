@@ -111,6 +111,29 @@
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>3.1.0</version>
+				<configuration>
+					<configLocation>google_checks.xml</configLocation>
+					<encoding>UTF-8</encoding>
+					<consoleOutput>true</consoleOutput>
+					<failsOnError>true</failsOnError>
+					<failOnViolation>true</failOnViolation>
+					<violationSeverity>warning</violationSeverity>
+					<linkXRef>false</linkXRef>
+				</configuration>
+				<executions>
+					<execution>
+						<id>checkstyle-validate</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-gpg-plugin</artifactId>
 				<version>1.6</version>
 				<executions>
@@ -153,9 +176,10 @@
 						</goals>
 					</execution>
 				</executions>
-                <configuration>
-                    <source>8</source>
-                </configuration>
+				<configuration>
+                    <additionalOptions>-html5</additionalOptions>
+					<source>8</source>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
