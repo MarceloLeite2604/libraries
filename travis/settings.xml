@@ -27,7 +27,7 @@
       </activation>
       <properties>
         <gpg.executable>gpg</gpg.executable>
-        <gpg.passphrase>{o2ve/9qFxMoH8rMxWVNFMf+hnwhMrrDKMTzGYztxfuaG7pQuzmmuAJVN4G1MKij3}</gpg.passphrase>
+        <gpg.passphrase>${env.GPG_PASSPHRASE}</gpg.passphrase>
       </properties>
     </profile>
   </profiles>
