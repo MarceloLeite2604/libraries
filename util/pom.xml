@@ -1,46 +1,46 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	
+
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
 		<groupId>com.figtreelake</groupId>
 		<artifactId>libraries</artifactId>
 		<version>1.1</version>
-	</parent>	
+	</parent>
 
 	<artifactId>util</artifactId>
 	<packaging>jar</packaging>
 
-    <name>util</name>
-    <url>https://github.com/MarceloLeite2064/libraries</url>
-    <description>A series of useful classes and methods which helps on minor tasks.</description>
+	<name>util</name>
+	<url>https://github.com/MarceloLeite2064/libraries</url>
+	<description>A series of useful classes and methods which helps on minor tasks.</description>
 
 	<licenses>
-        <license>
-            <name>MIT License</name>
-            <url>http://www.opensource.org/licenses/mit-license.php</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
+		<license>
+			<name>MIT License</name>
+			<url>http://www.opensource.org/licenses/mit-license.php</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
 
-    <developers>
-        <developer>
-            <name>Marcelo Leite</name>
-            <email>marceloleite2604@gmail.com</email>
-            <organization>FigTreeLake</organization>
-            <organizationUrl>https://github.com/MarceloLeite2064/libraries</organizationUrl>
-        </developer>
-    </developers>
-    
-    <scm>
-        <connection>scm:git:git://github.com/MarceloLeite2604/libraries.git</connection>
-        <developerConnection>scm:git:ssh://github.com:MarceloLeite2604/libraries.git</developerConnection>
-        <url>http://github.com/simpligility/ossrh-demo/tree/master</url>
-    </scm>
+	<developers>
+		<developer>
+			<name>Marcelo Leite</name>
+			<email>marceloleite2604@gmail.com</email>
+			<organization>FigTreeLake</organization>
+			<organizationUrl>https://github.com/MarceloLeite2064/libraries</organizationUrl>
+		</developer>
+	</developers>
 
-    <dependencies>
+	<scm>
+		<connection>scm:git:git://github.com/MarceloLeite2604/libraries.git</connection>
+		<developerConnection>scm:git:ssh://github.com:MarceloLeite2604/libraries.git</developerConnection>
+		<url>http://github.com/simpligility/ossrh-demo/tree/master</url>
+	</scm>
+
+	<dependencies>
 
 		<dependency>
 			<groupId>commons-io</groupId>
@@ -118,6 +118,25 @@
 						</configuration>
 					</execution>
 				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>1.6</version>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<gpgArguments>
+						<arg>--batch</arg>
+					</gpgArguments>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
