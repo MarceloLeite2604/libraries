@@ -1,0 +1,42 @@
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0
+  http://maven.apache.org/xsd/settings-1.0.0.xsd">
+
+  <profiles>
+    <profile>
+      <id>github</id>
+      <repositories>
+        <repository>
+          <id>central</id>
+          <url>https://repo1.maven.org/maven2</url>
+          <releases><enabled>true</enabled></releases>
+          <snapshots><enabled>false</enabled></snapshots>
+        </repository>
+        <repository>
+          <id>github</id>
+          <name>GitHub MarceloLeite2604 Apache Maven Packages</name>
+          <url>https://maven.pkg.github.com/MarceloLeite2604/libraries</url>
+        </repository>
+      </repositories>
+    </profile>
+    <profile>
+      <id>ossrh</id>
+      <activation>
+        <activeByDefault>true</activeByDefault>
+      </activation>
+      <properties>
+        <gpg.executable>gpg</gpg.executable>
+        <gpg.passphrase>{3AIILpS6WQMHZ7nh5/UJvHLraQpcx5dprXu9OybvisCZ+zvrDKxGGlhYL/Cxp7LR}</gpg.passphrase>
+      </properties>
+    </profile>
+  </profiles>
+
+  <servers>
+    <server>
+      <id>github</id>
+      <username>MarceloLeite2604</username>
+      <password>466f7f7a0bdf9c27e6f3d752cdb6b06e8f4de381</password>
+    </server>
+  </servers>
+</settings>
