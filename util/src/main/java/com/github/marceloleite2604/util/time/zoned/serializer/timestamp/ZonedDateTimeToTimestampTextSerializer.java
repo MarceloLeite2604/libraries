@@ -7,13 +7,13 @@ import com.github.marceloleite2604.util.time.zoned.ZonedDateTimeUtil;
 import java.io.IOException;
 import java.time.ZonedDateTime;
 
-public class ZonedDateTimeToTimestampSerializer extends StdSerializer<ZonedDateTime> {
+public class ZonedDateTimeToTimestampTextSerializer extends StdSerializer<ZonedDateTime> {
 
   private static final long serialVersionUID = 1L;
 
   private final transient ZonedDateTimeUtil zonedDateTimeUtil;
 
-  public ZonedDateTimeToTimestampSerializer() {
+  public ZonedDateTimeToTimestampTextSerializer() {
     super(ZonedDateTime.class);
     this.zonedDateTimeUtil = new ZonedDateTimeUtil();
   }

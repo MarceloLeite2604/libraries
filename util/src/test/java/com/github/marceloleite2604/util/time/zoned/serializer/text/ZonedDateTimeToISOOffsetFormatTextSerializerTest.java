@@ -1,4 +1,4 @@
-package com.github.marceloleite2604.util.time.serializer;
+package com.github.marceloleite2604.util.time.zoned.serializer.text;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.times;
@@ -6,7 +6,6 @@ import static org.mockito.Mockito.verify;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import com.github.marceloleite2604.util.time.zoned.serializer.timestamp.ZonedDateTimeToTimestampTextSerializer;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -19,7 +18,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ZonedDateTimeToTimestampTest {
+public class ZonedDateTimeToISOOffsetFormatTextSerializerTest {
 
   @Mock
   private JsonGenerator jsonGenerator;
@@ -30,26 +29,26 @@ public class ZonedDateTimeToTimestampTest {
   @Captor
   private ArgumentCaptor<String> argumentCaptor;
 
-  private ZonedDateTimeToTimestampTextSerializer zonedDateTimeToTimestampSerializer;
+  private ZonedDateTimeToISOOffsetFormatTextSerializer zonedDateTimeSerializer;
 
   @Before
   public void setUp() {
-    this.zonedDateTimeToTimestampSerializer = new ZonedDateTimeToTimestampTextSerializer();
+    this.zonedDateTimeSerializer = new ZonedDateTimeToISOOffsetFormatTextSerializer();
   }
 
   @Test
   public void testSerialize() throws Exception {
     // Arrange
-    String expectedValue = "2018-09-26T08:40:06.738+0500";
-    ZonedDateTime zonedTime = ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 8, 40, 6, 738000000),
-        ZoneId.of("Etc/GMT-5"));
+    String exptectedText = "2018-09-26T08:40:06+05:00";
+    ZonedDateTime zonedTime =
+        ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 8, 40, 6, 0), ZoneId.of("Etc/GMT-5"));
 
     // Act
-    zonedDateTimeToTimestampSerializer.serialize(zonedTime, jsonGenerator, serializerProvider);
+    zonedDateTimeSerializer.serialize(zonedTime, jsonGenerator, serializerProvider);
 
     // Assert
     verify(jsonGenerator, times(1)).writeString(argumentCaptor.capture());
-    assertEquals(expectedValue, argumentCaptor.getValue());
+    assertEquals(exptectedText, argumentCaptor.getValue());
   }
 
 }

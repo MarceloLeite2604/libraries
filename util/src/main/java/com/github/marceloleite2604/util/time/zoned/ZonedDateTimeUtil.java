@@ -3,6 +3,7 @@ package com.github.marceloleite2604.util.time.zoned;
 import com.github.marceloleite2604.util.time.TimeInterval;
 import java.time.Instant;
 import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -22,17 +23,21 @@ public class ZonedDateTimeUtil {
       DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSZ");
 
   /**
-   * Default zone id used by this class.
+   * Returns current time on UTC.
+   * 
+   * @return Current time on UTC.
    */
-  public static final ZoneId DEFAULT_ZONE_ID = ZoneId.of("UTC");
+  public ZonedDateTime nowUTC() {
+    return ZonedDateTime.now(ZoneOffset.UTC);
+  }
 
   /**
-   * Returns current time on predefined {@link ZoneId}.
+   * Returns current time on system's default time zone.
    * 
-   * @return Current time on predefined {@link ZoneId}.
+   * @return Current time on system's default time zone.
    */
-  public ZonedDateTime now() {
-    return ZonedDateTime.now(DEFAULT_ZONE_ID);
+  public ZonedDateTime nowSystemDefaultTimeZone() {
+    return ZonedDateTime.now(ZoneId.systemDefault());
   }
 
   /**
@@ -61,22 +66,24 @@ public class ZonedDateTimeUtil {
   }
 
   /**
-   * Converts an epoch time to a {@link ZonedDateTime} object.
+   * Converts an epoch time to a {@link ZonedDateTime} object using UTC zone id.
    * 
    * @param epochTime The epoch time to be converted.
-   * @return A {@link ZonedDateTime} object with time specified on {@code epochTime} parameter.
+   * @return A {@link ZonedDateTime} object with time specified on {@code epochTime} parameter on
+   *         UTC zone offset.
    */
   public ZonedDateTime convertFromEpochTime(long epochTime) {
-    return ZonedDateTime.ofInstant(Instant.ofEpochSecond(epochTime), DEFAULT_ZONE_ID);
+    return ZonedDateTime.ofInstant(Instant.ofEpochSecond(epochTime), ZoneOffset.UTC);
   }
 
   /**
-   * Converts a {@link ZonedDateTime} object to a preformatted text.
+   * Converts a {@link ZonedDateTime} object to a text written according to ISO-8601 extended offset
+   * date-time format.
    * 
    * @param zonedDateTime Time to convert as text.
-   * @return The preformatted text elaborated from {@code zonedDateTime} parameter.
+   * @return A ISO-8601 formatted text elaborated from {@code zonedDateTime} parameter.
    */
-  public String toString(ZonedDateTime zonedDateTime) {
+  public String toStringAsISOOffsetDateTime(ZonedDateTime zonedDateTime) {
     return DATE_TIME_FORMATTER.format(zonedDateTime);
   }
 
@@ -86,7 +93,7 @@ public class ZonedDateTimeUtil {
    * @param text Text to be parsed.
    * @return A {@link ZonedDateTime} containing the date specified on the predefined text.
    */
-  public ZonedDateTime parse(String text) {
+  public ZonedDateTime parseFromISOOffsetFormat(String text) {
     return ZonedDateTime.parse(text, DATE_TIME_FORMATTER);
   }
 
@@ -106,7 +113,7 @@ public class ZonedDateTimeUtil {
    * 
    * @param zonedDateTime Time to be converted.
    * @return A {@link ZonedDateTime} object with time informed on {@code zonedDateTime} parameter
-   *         converted to system default zone id.
+   *         converted to system default zone offset.
    */
   public ZonedDateTime toSystemDefaultZoneId(ZonedDateTime zonedDateTime) {
     return zonedDateTime.withZoneSameInstant(ZoneId.systemDefault());
@@ -114,14 +121,14 @@ public class ZonedDateTimeUtil {
 
   /**
    * Converts a {@link ZonedDateTime} object to another {@link ZonedDateTime} object, but using the
-   * zone id specified on {@link ZonedDateTimeUtil#DEFAULT_ZONE_ID} constant.
+   * UTC zone id.
    * 
    * @param zonedDateTime Time to be converted.
    * @return A {@link ZonedDateTime} object with time informed on {@code zonedDateTime} parameter
-   *         converted to this class default zone id.
+   *         converted UTC zone offset.
    */
-  public ZonedDateTime toDefaultZoneId(ZonedDateTime zonedDateTime) {
-    return zonedDateTime.withZoneSameInstant(DEFAULT_ZONE_ID);
+  public ZonedDateTime toUTCZoneId(ZonedDateTime zonedDateTime) {
+    return zonedDateTime.withZoneSameInstant(ZoneOffset.UTC);
   }
 
   /**
@@ -140,10 +147,10 @@ public class ZonedDateTimeUtil {
    * @param text Text to be converted.
    * @return A {@link ZonedDateTime} object with the time specified on {@code text} parameter.
    */
-  public ZonedDateTime convertFromWrittenTimestamp(String text) {
+  public ZonedDateTime parseFromTimestamp(String text) {
     ZonedDateTime zonedDateTime = ZonedDateTime.parse(text, TIMESTAMP_FORMATTER);
     if (zonedDateTime.getZone().equals(ZoneId.of("Z"))) {
-      return toDefaultZoneId(zonedDateTime);
+      return toUTCZoneId(zonedDateTime);
     }
     return zonedDateTime;
   }

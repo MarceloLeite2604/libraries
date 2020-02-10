@@ -1,4 +1,4 @@
-package com.github.marceloleite2604.util.time.zoned.serializer.text;
+package com.github.marceloleite2604.util.time.zoned.serializer.timestamp;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -10,23 +10,23 @@ import java.time.ZonedDateTime;
 /**
  * <p>
  * A {@link StdDeserializer} extension which helps deserialization of {@link ZonedDateTime} objects
- * from a predefined text format.
+ * from timestamp values.
  * </p>
  * <p>
- * Its serialization equivalent can be found on {@link ZonedDateTimeSerializer} class.
+ * Its serialization equivalent can be found on {@link ZonedDateTimeToTimestampTextSerializer} class.
  * </p>
  *
  * @see <a href="http://www.github.com/MarceloLeite2604/libraries" target= "_top">GitHub project</a>
  * @author MarceloLeite2604
  *
  */
-public class ZonedDateTimeDeserializer extends StdDeserializer<ZonedDateTime> {
+public class ZonedDateTimeFromTimestampTextDeserializer extends StdDeserializer<ZonedDateTime> {
 
   private static final long serialVersionUID = 1L;
 
   private final transient ZonedDateTimeUtil zonedDateTimeUtil;
 
-  public ZonedDateTimeDeserializer() {
+  public ZonedDateTimeFromTimestampTextDeserializer() {
     super(ZonedDateTime.class);
     this.zonedDateTimeUtil = new ZonedDateTimeUtil();
   }
@@ -34,7 +34,7 @@ public class ZonedDateTimeDeserializer extends StdDeserializer<ZonedDateTime> {
   @Override
   public ZonedDateTime deserialize(JsonParser jsonParser, DeserializationContext context)
       throws IOException {
-    return zonedDateTimeUtil.parse(jsonParser.getText());
+    return zonedDateTimeUtil.parseFromTimestamp(jsonParser.getValueAsString());
   }
 
 }

@@ -13,20 +13,20 @@ import java.time.ZonedDateTime;
  * predefined text format.
  * </p>
  * <p>
- * Its deserialization equivalent can be found on {@link ZonedDateTimeDeserializer} class.
+ * Its deserialization equivalent can be found on {@link ZonedDateTimeFromISOOffsetFormatTextDeserializer} class.
  * </p>
  *
  * @see <a href="http://www.github.com/MarceloLeite2604/libraries" target= "_top">GitHub project</a>
  * @author MarceloLeite2604
  *
  */
-public class ZonedDateTimeSerializer extends StdSerializer<ZonedDateTime> {
+public class ZonedDateTimeToISOOffsetFormatTextSerializer extends StdSerializer<ZonedDateTime> {
 
   private static final long serialVersionUID = 1L;
 
   private final transient ZonedDateTimeUtil zonedDateTimeUtil;
 
-  public ZonedDateTimeSerializer() {
+  public ZonedDateTimeToISOOffsetFormatTextSerializer() {
     super(ZonedDateTime.class);
     this.zonedDateTimeUtil = new ZonedDateTimeUtil();
   }
@@ -34,7 +34,7 @@ public class ZonedDateTimeSerializer extends StdSerializer<ZonedDateTime> {
   @Override
   public void serialize(ZonedDateTime zonedDateTime, JsonGenerator generator,
       SerializerProvider provider) throws IOException {
-    generator.writeString(zonedDateTimeUtil.toString(zonedDateTime));
+    generator.writeString(zonedDateTimeUtil.toStringAsISOOffsetDateTime(zonedDateTime));
   }
 
 }

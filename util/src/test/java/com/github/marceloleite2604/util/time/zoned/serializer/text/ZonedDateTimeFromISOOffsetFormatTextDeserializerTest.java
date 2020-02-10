@@ -15,7 +15,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ZonedDateTimeDeserializerTest {
+public class ZonedDateTimeFromISOOffsetFormatTextDeserializerTest {
 
   @Mock
   private JsonParser jsonParser;
@@ -23,11 +23,12 @@ public class ZonedDateTimeDeserializerTest {
   @Mock
   private DeserializationContext deserializationContext;
 
-  private ZonedDateTimeDeserializer localTimeDeserializer;
+  private ZonedDateTimeFromISOOffsetFormatTextDeserializer zonedDateTimeFromISOOffsetFormatTextDeserializer;
 
   @Before
   public void setUp() {
-    this.localTimeDeserializer = new ZonedDateTimeDeserializer();
+    this.zonedDateTimeFromISOOffsetFormatTextDeserializer =
+        new ZonedDateTimeFromISOOffsetFormatTextDeserializer();
   }
 
   @Test
@@ -38,8 +39,8 @@ public class ZonedDateTimeDeserializerTest {
     when(jsonParser.getText()).thenReturn("2018-09-26T10:12:31-12:00");
 
     // Act
-    ZonedDateTime actualLocalTime =
-        localTimeDeserializer.deserialize(jsonParser, deserializationContext);
+    ZonedDateTime actualLocalTime = zonedDateTimeFromISOOffsetFormatTextDeserializer
+        .deserialize(jsonParser, deserializationContext);
 
     // Assert
     assertEquals(expectedLocalTime, actualLocalTime);

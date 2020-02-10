@@ -74,7 +74,8 @@ public class TimeInterval implements Comparable<TimeInterval> {
 
   @Override
   public String toString() {
-    return ZONED_DATE_TIME_UTIL.toString(start) + " to " + ZONED_DATE_TIME_UTIL.toString(end);
+    return ZONED_DATE_TIME_UTIL.toStringAsISOOffsetDateTime(start) + " to "
+        + ZONED_DATE_TIME_UTIL.toStringAsISOOffsetDateTime(end);
   }
 
   @Override
