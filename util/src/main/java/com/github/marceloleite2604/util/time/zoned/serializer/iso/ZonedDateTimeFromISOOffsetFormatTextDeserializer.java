@@ -1,4 +1,4 @@
-package com.github.marceloleite2604.util.time.zoned.serializer.text;
+package com.github.marceloleite2604.util.time.zoned.serializer.iso;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;

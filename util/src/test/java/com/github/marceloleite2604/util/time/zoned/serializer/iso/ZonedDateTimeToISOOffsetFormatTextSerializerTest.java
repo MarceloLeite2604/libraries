@@ -1,4 +1,4 @@
-package com.github.marceloleite2604.util.time.zoned.serializer.text;
+package com.github.marceloleite2604.util.time.zoned.serializer.iso;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.times;
@@ -6,6 +6,7 @@ import static org.mockito.Mockito.verify;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
+import com.github.marceloleite2604.util.time.zoned.serializer.iso.ZonedDateTimeToISOOffsetFormatTextSerializer;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;

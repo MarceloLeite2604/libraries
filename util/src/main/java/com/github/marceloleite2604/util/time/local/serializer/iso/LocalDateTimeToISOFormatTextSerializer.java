@@ -1,4 +1,4 @@
-package com.github.marceloleite2604.util.time.zoned.serializer.timestamp;
+package com.github.marceloleite2604.util.time.local.serializer.iso;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
@@ -9,24 +9,24 @@ import java.time.ZonedDateTime;
 
 /**
  * <p>
- * A {@link StdSerializer} extension which helps serialization of {@link ZonedDateTime} objects to
- * timestamp format.
+ * A {@link StdSerializer} extension which helps serialization of {@link ZonedDateTime} objects to a
+ * predefined text format.
  * </p>
  * <p>
- * Its deserialization equivalent can be found on {@link ZonedDateTimeFromTimestampTextDeserializer} class.
+ * Its deserialization equivalent can be found on {@link LocalDateTimeFromISOFormatTextDeserializer} class.
  * </p>
  *
  * @see <a href="http://www.github.com/MarceloLeite2604/libraries" target= "_top">GitHub project</a>
  * @author MarceloLeite2604
  *
  */
-public class ZonedDateTimeToTimestampTextSerializer extends StdSerializer<ZonedDateTime> {
+public class LocalDateTimeToISOFormatTextSerializer extends StdSerializer<ZonedDateTime> {
 
   private static final long serialVersionUID = 1L;
 
   private final transient ZonedDateTimeUtil zonedDateTimeUtil;
 
-  public ZonedDateTimeToTimestampTextSerializer() {
+  public LocalDateTimeToISOFormatTextSerializer() {
     super(ZonedDateTime.class);
     this.zonedDateTimeUtil = new ZonedDateTimeUtil();
   }
@@ -34,7 +34,7 @@ public class ZonedDateTimeToTimestampTextSerializer extends StdSerializer<ZonedD
   @Override
   public void serialize(ZonedDateTime zonedDateTime, JsonGenerator generator,
       SerializerProvider provider) throws IOException {
-    generator.writeString(zonedDateTimeUtil.toStringAsTimestamp(zonedDateTime));
+    generator.writeString(zonedDateTimeUtil.toStringAsISOOffsetDateTime(zonedDateTime));
   }
 
 }

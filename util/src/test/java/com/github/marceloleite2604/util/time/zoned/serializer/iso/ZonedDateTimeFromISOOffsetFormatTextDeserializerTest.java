@@ -1,10 +1,11 @@
-package com.github.marceloleite2604.util.time.zoned.serializer.text;
+package com.github.marceloleite2604.util.time.zoned.serializer.iso;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
+import com.github.marceloleite2604.util.time.zoned.serializer.iso.ZonedDateTimeFromISOOffsetFormatTextDeserializer;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
