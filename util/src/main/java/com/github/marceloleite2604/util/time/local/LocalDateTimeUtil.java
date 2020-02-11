@@ -16,12 +16,6 @@ import java.time.format.DateTimeFormatter;
  */
 public class LocalDateTimeUtil {
 
-  private static final DateTimeFormatter DATE_TIME_FORMATTER =
-      DateTimeFormatter.ISO_LOCAL_DATE_TIME;
-
-  private static final DateTimeFormatter TIMESTAMP_FORMATTER =
-      DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS");
-
   /**
    * Checks if specified date is between a time interval.
    * 
@@ -44,10 +38,7 @@ public class LocalDateTimeUtil {
    * @return {@code true} if date is inside the time interval specified, {@code false} otherwise.
    */
   public boolean isBetween(LocalDateTime date, TimeInterval timeInterval) {
-    LocalDateTime start =
-        timeInterval.getStart().withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime();
-    LocalDateTime end = timeInterval.getEnd().withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime();
-    return isBetween(date, start, end);
+    return isBetween(date, timeInterval.getStart(), timeInterval.getEnd());
   }
 
   /**
@@ -67,8 +58,8 @@ public class LocalDateTimeUtil {
    * @param localDateTime Time to convert as text.
    * @return A ISO-8601 formatted text elaborated from {@code localDateTime} parameter.
    */
-  public String toStringAsISODateTime(LocalDateTime localDateTime) {
-    return DATE_TIME_FORMATTER.format(localDateTime);
+  public String toStringAsISO8601(LocalDateTime localDateTime) {
+    return DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(localDateTime);
   }
 
   /**
@@ -77,8 +68,8 @@ public class LocalDateTimeUtil {
    * @param text Text to be parsed.
    * @return A {@link LocalDateTime} containing the date and time specified on text.
    */
-  public LocalDateTime parseFromISOFormat(String text) {
-    return LocalDateTime.parse(text, DATE_TIME_FORMATTER);
+  public LocalDateTime parseFromISO8601(String text) {
+    return LocalDateTime.parse(text, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
   }
 
   /**
@@ -102,25 +93,4 @@ public class LocalDateTimeUtil {
     ZoneOffset systemDefaultZoneOffset = systemZone.getRules().getOffset(Instant.now());
     return localDateTime.toEpochSecond(systemDefaultZoneOffset);
   }
-
-  /**
-   * Converts a {@link LocalDateTime} object to a preformatted timestamp text.
-   * 
-   * @param localDateTime Time to convert as timestamp text.
-   * @return The preformatted timestamp text elaborated from {@code localDateTime} parameter.
-   */
-  public String toStringAsTimestamp(LocalDateTime localDateTime) {
-    return TIMESTAMP_FORMATTER.format(localDateTime);
-  }
-
-  /**
-   * Converts a preformatted timestamp text to a {@link LocalDateTime} object.
-   * 
-   * @param text Text to be converted.
-   * @return A {@link LocalDateTime} object with the time specified on {@code text} parameter.
-   */
-  public LocalDateTime parseFromTimestamp(String text) {
-    return LocalDateTime.parse(text, TIMESTAMP_FORMATTER);
-  }
-
 }

@@ -1,4 +1,4 @@
-package com.github.marceloleite2604.util.time.zoned.serializer.timestamp;
+package com.github.marceloleite2604.util.time.zoned.serializer.epoch;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -9,24 +9,23 @@ import java.time.ZonedDateTime;
 
 /**
  * <p>
- * A {@link StdDeserializer} extension which helps deserialization of {@link ZonedDateTime} objects
- * from timestamp values.
+ * A {@link StdDeserializer} deserializes epoch time on UTC zone offset to {@link ZonedDateTime} a
+ * object.
  * </p>
  * <p>
- * Its serialization equivalent can be found on {@link ZonedDateTimeToTimestampTextSerializer} class.
+ * Its serialization equivalent can be found on {@link ZonedDateTimeToEpochUTCSerializer} class.
  * </p>
  *
- * @see <a href="http://www.github.com/MarceloLeite2604/libraries" target= "_top">GitHub project</a>
  * @author MarceloLeite2604
  *
  */
-public class ZonedDateTimeFromTimestampTextDeserializer extends StdDeserializer<ZonedDateTime> {
+public class ZonedDateTimeFromEpochUTCDeserializer extends StdDeserializer<ZonedDateTime> {
 
   private static final long serialVersionUID = 1L;
 
   private final transient ZonedDateTimeUtil zonedDateTimeUtil;
 
-  public ZonedDateTimeFromTimestampTextDeserializer() {
+  public ZonedDateTimeFromEpochUTCDeserializer() {
     super(ZonedDateTime.class);
     this.zonedDateTimeUtil = new ZonedDateTimeUtil();
   }
@@ -34,7 +33,7 @@ public class ZonedDateTimeFromTimestampTextDeserializer extends StdDeserializer<
   @Override
   public ZonedDateTime deserialize(JsonParser jsonParser, DeserializationContext context)
       throws IOException {
-    return zonedDateTimeUtil.parseFromTimestamp(jsonParser.getValueAsString());
+    return zonedDateTimeUtil.convertFromEpochTimeToUTFOffset(jsonParser.getValueAsLong());
   }
 
 }

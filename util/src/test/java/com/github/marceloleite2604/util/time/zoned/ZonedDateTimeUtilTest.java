@@ -10,37 +10,24 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
-import java.util.Objects;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
+import org.junit.Rule;
 import org.junit.Test;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.rule.PowerMockRule;
 
+@PrepareForTest({ZoneId.class, ZonedDateTimeUtil.class})
 public class ZonedDateTimeUtilTest {
 
-  private static final String PROPERTY_USER_TIMEZONE = "user.timezone";
+  private static final String CUSTOM_USER_TIMEZONE_PROPERTY = "Etc/GMT-3";
 
-  private static final String DEFAULT_USER_TIMEZONE = System.getProperty(PROPERTY_USER_TIMEZONE);
-
-  private static final String CUSTOM_USER_TIMEZONE = "Etc/GMT-3";
-
-  private static final ZoneId CUSTOM_ZONE_ID = ZoneId.of(CUSTOM_USER_TIMEZONE);
+  private static final ZoneId CUSTOM_USER_TIMEZONE = ZoneId.of(CUSTOM_USER_TIMEZONE_PROPERTY);
 
   private ZonedDateTimeUtil zonedDateTimeUtil;
 
-  @BeforeClass
-  public static void classSetUp() {
-    System.setProperty(PROPERTY_USER_TIMEZONE, CUSTOM_USER_TIMEZONE);
-  }
-
-  @AfterClass
-  public static void classTearDown() {
-    if (!Objects.isNull(DEFAULT_USER_TIMEZONE)) {
-      System.setProperty(PROPERTY_USER_TIMEZONE, DEFAULT_USER_TIMEZONE);
-    } else {
-      System.clearProperty(PROPERTY_USER_TIMEZONE);
-    }
-  }
+  @Rule
+  public PowerMockRule rule = new PowerMockRule();
 
   @Before
   public void setUp() {
@@ -48,13 +35,13 @@ public class ZonedDateTimeUtilTest {
   }
 
   @Test
-  public void testNowUTC() throws Exception {
+  public void testNowUTCOffset() throws Exception {
 
     // Arrange
     ZoneId expectedZoneId = ZoneOffset.UTC;
     // Act
 
-    ZonedDateTime actualResult = zonedDateTimeUtil.nowUTC();
+    ZonedDateTime actualResult = zonedDateTimeUtil.nowUTCOffset();
 
     // Assert
     assertThat(actualResult).isNotNull();
@@ -62,13 +49,13 @@ public class ZonedDateTimeUtilTest {
   }
 
   @Test
-  public void testNowSystemDefaultTimeZone() throws Exception {
+  public void testNowSystemDefaultTimeZoneId() throws Exception {
 
     // Arrange
     ZoneId expectedZoneId = ZoneId.systemDefault();
     // Act
 
-    ZonedDateTime actualResult = zonedDateTimeUtil.nowSystemDefaultTimeZone();
+    ZonedDateTime actualResult = zonedDateTimeUtil.nowSystemDefaultZoneId();
 
     // Assert
     assertThat(actualResult).isNotNull();
@@ -79,11 +66,11 @@ public class ZonedDateTimeUtilTest {
   public void testIsBetweenZonedDateTimeInsideBounds() throws Exception {
     // Arrange
     ZonedDateTime lowerLimit =
-        ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 10, 13), ZoneIds.GMT_PLUS_3);
+        ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 10, 13), ZoneOffsets.PLUS_3);
     ZonedDateTime upperLimit =
-        ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 12, 13), ZoneIds.GMT_PLUS_3);
+        ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 12, 13), ZoneOffsets.PLUS_3);
     ZonedDateTime zonedDateTime =
-        ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 10, 13), ZoneIds.GMT_PLUS_FOUR);
+        ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 10, 13), ZoneOffsets.PLUS_FOUR);
 
     // Act and assert
     assertTrue(zonedDateTimeUtil.isBetween(zonedDateTime, lowerLimit, upperLimit));
@@ -92,11 +79,12 @@ public class ZonedDateTimeUtilTest {
   @Test
   public void testIsBetweenZonedDateTimeOutsideBounds() throws Exception {
     // Arrange
-    ZonedDateTime lowerLimit = ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 10, 13), ZoneIds.GMT);
+    ZonedDateTime lowerLimit =
+        ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 10, 13), ZoneOffsets.GMT);
     ZonedDateTime upperLimit =
-        ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 12, 13), ZoneIds.GMT_PLUS_ONE);
+        ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 12, 13), ZoneOffsets.PLUS_ONE);
     ZonedDateTime zonedDateTime =
-        ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 10, 13), ZoneIds.GMT_PLUS_FOUR);
+        ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 10, 13), ZoneOffsets.PLUS_FOUR);
 
     // Act and assert
     assertFalse(zonedDateTimeUtil.isBetween(zonedDateTime, lowerLimit, upperLimit));
@@ -106,11 +94,11 @@ public class ZonedDateTimeUtilTest {
   public void testIsBetweenZonedDateTimeLowerLimitInclusive() throws Exception {
     // Arrange
     ZonedDateTime lowerLimit =
-        ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 10, 13), ZoneIds.GMT_MINUS_TWO);
+        ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 10, 13), ZoneOffsets.MINUS_TWO);
     ZonedDateTime upperLimit =
-        ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 12, 13), ZoneIds.GMT_PLUS_3);
+        ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 12, 13), ZoneOffsets.PLUS_3);
     ZonedDateTime zonedDateTime =
-        ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 12, 13), ZoneIds.GMT);
+        ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 12, 13), ZoneOffsets.GMT);
 
     // Act and assert
     assertTrue(zonedDateTimeUtil.isBetween(zonedDateTime, lowerLimit, upperLimit));
@@ -120,11 +108,11 @@ public class ZonedDateTimeUtilTest {
   public void testIsBetweenZonedDateTimeUpperLimitExclusive() throws Exception {
     // Arrange
     ZonedDateTime lowerLimit =
-        ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 10, 13), ZoneIds.GMT_MINUS_TWO);
+        ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 10, 13), ZoneOffsets.MINUS_TWO);
     ZonedDateTime upperLimit =
-        ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 12, 13), ZoneIds.GMT_PLUS_3);
+        ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 12, 13), ZoneOffsets.PLUS_3);
     ZonedDateTime zonedDateTime =
-        ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 15, 13), ZoneIds.GMT);
+        ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 15, 13), ZoneOffsets.GMT);
 
     // Act and assert
     assertFalse(zonedDateTimeUtil.isBetween(zonedDateTime, lowerLimit, upperLimit));
@@ -133,27 +121,46 @@ public class ZonedDateTimeUtilTest {
   @Test
   public void testIsBetweenWithTimeInterval() throws Exception {
     // Arrange
-    ZonedDateTime start =
-        ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 10, 13), ZoneIds.GMT_PLUS_3);
-    ZonedDateTime end = ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 12, 13), ZoneIds.GMT_PLUS_3);
+    LocalDateTime start = LocalDateTime.of(2018, 9, 26, 10, 13);
+    LocalDateTime end = LocalDateTime.of(2018, 9, 26, 12, 13);
     TimeInterval timeInterval = new TimeInterval(start, end);
 
     ZonedDateTime zonedDateTime =
-        ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 10, 13), ZoneIds.GMT_PLUS_FOUR);
+        ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 10, 13), ZoneOffsets.PLUS_FOUR);
 
     // Act and assert
     assertTrue(zonedDateTimeUtil.isBetween(zonedDateTime, timeInterval));
   }
 
   @Test
-  public void testConvertFromEpochTime() throws Exception {
+  public void testConvertFromEpochTimeToUTFOffset() throws Exception {
     // Arrange
     long epochTime = 1537976456L;
     ZonedDateTime expectedZonedDateTime =
         ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 15, 40, 56), ZoneOffset.UTC);
 
     // Act
-    ZonedDateTime actualZonedDateTime = zonedDateTimeUtil.convertFromEpochTime(epochTime);
+    ZonedDateTime actualZonedDateTime =
+        zonedDateTimeUtil.convertFromEpochTimeToUTFOffset(epochTime);
+
+    // Assert
+    assertEquals(expectedZonedDateTime, actualZonedDateTime);
+  }
+
+  @Test
+  public void testConvertFromEpochTimeToSystemDefaultZoneId() throws Exception {
+    // Arrange
+    PowerMockito.mockStatic(ZoneId.class);
+
+    PowerMockito.when(ZoneId.systemDefault()).thenReturn(CUSTOM_USER_TIMEZONE);
+
+    long epochTime = 1581480132L;
+    ZonedDateTime expectedZonedDateTime =
+        ZonedDateTime.of(LocalDateTime.of(2020, 2, 12, 7, 2, 12), CUSTOM_USER_TIMEZONE);
+
+    // Act
+    ZonedDateTime actualZonedDateTime =
+        zonedDateTimeUtil.convertFromEpochTimeToSystemDefaultZoneId(epochTime);
 
     // Assert
     assertEquals(expectedZonedDateTime, actualZonedDateTime);
@@ -164,7 +171,7 @@ public class ZonedDateTimeUtilTest {
     // Arrange
     String expectedFormattedZonedDateTime = "2018-09-26T15:52:59-03:00";
     ZonedDateTime zonedDateTime = ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 15, 52, 59),
-        ZoneIds.GMT_PLUS_3.normalized());
+        ZoneOffsets.PLUS_3.normalized());
 
     // Act
     String actualFormattedZonedDateTime =
@@ -178,8 +185,8 @@ public class ZonedDateTimeUtilTest {
   public void testParseFromISOOffsetFormat() throws Exception {
     // Arrange
     String textDate = "2018-09-26T15:52:59-03:00";
-    ZonedDateTime expectedZonedDateTime = ZonedDateTime
-        .of(LocalDateTime.of(2018, 9, 26, 15, 52, 59), ZoneIds.GMT_PLUS_3.normalized());
+    ZonedDateTime expectedZonedDateTime =
+        ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 15, 52, 59), ZoneOffsets.PLUS_3);
 
     // Act
     ZonedDateTime actualZonedDateTime = zonedDateTimeUtil.parseFromISOOffsetFormat(textDate);
@@ -191,9 +198,9 @@ public class ZonedDateTimeUtilTest {
   @Test
   public void testConvertAsEpochTime() throws Exception {
     // Arrange
-    long expectedEpochTime = 1537945457L;
+    long expectedEpochTime = 1538010257L;
     ZonedDateTime zonedDateTime =
-        ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 16, 4, 17), ZoneIds.GMT_PLUS_NINE);
+        ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 16, 4, 17), ZoneOffsets.PLUS_NINE);
 
     // Act
     long actualEpochTime = zonedDateTimeUtil.convertAsEpochTime(zonedDateTime);
@@ -202,75 +209,39 @@ public class ZonedDateTimeUtilTest {
     assertEquals(expectedEpochTime, actualEpochTime);
   }
 
-  @Test
-  public void testToUTCZoneId() throws Exception {
-    // Arrange
-    ZonedDateTime zonedDateTime =
-        ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 16, 4, 17), ZoneIds.GMT_PLUS_NINE);
-    ZonedDateTime expectedZonedDateTime =
-        ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 7, 4, 17), ZoneOffset.UTC);
+  /*
+   * @Test public void testParseFromTimestamp() throws Exception { // Arrange String textDate =
+   * "2018-09-26T15:52:59.612-0300"; ZonedDateTime expectedZoneDateTime = ZonedDateTime
+   * .of(LocalDateTime.of(2018, 9, 26, 15, 52, 59, 612000000), ZoneIds.GMT_PLUS_3.normalized());
+   * 
+   * // Act ZonedDateTime actualZonedDateTime = zonedDateTimeUtil.parseFromTimestamp(textDate);
+   * 
+   * // Assert assertEquals(expectedZoneDateTime, actualZonedDateTime); }
+   */
 
-    // Act
-    ZonedDateTime actualZonedDateTime = zonedDateTimeUtil.toUTCZoneId(zonedDateTime);
+  /*
+   * @Test public void testToSystemDefaultZoneId() throws Exception { // Arrange ZonedDateTime
+   * zonedDateTime = ZonedDateTime.of(2019, 8, 30, 10, 26, 7, 0, ZoneIds.GMT_PLUS_ONE);
+   * ZonedDateTime expectedResult = ZonedDateTime.of(2019, 8, 30, 14, 26, 7, 0, CUSTOM_ZONE_ID);
+   * 
+   * // Act ZonedDateTime actualResult = zonedDateTimeUtil.toSystemDefaultZoneId(zonedDateTime);
+   * 
+   * // Assert assertThat(actualResult).isEqualTo(expectedResult); }
+   */
 
-    // Assert
-    assertEquals(expectedZonedDateTime, actualZonedDateTime);
-  }
+  private static final class ZoneOffsets {
 
-  @Test
-  public void testToStringAsTimestamp() throws Exception {
-    // Arrange
-    String expectedTextDate = "2018-09-26T15:52:59.612-0300";
-    ZonedDateTime zoneDateTime = ZonedDateTime
-        .of(LocalDateTime.of(2018, 9, 26, 15, 52, 59, 612000000), ZoneIds.GMT_PLUS_3.normalized());
+    private static final ZoneOffset PLUS_NINE = ZoneOffset.ofHours(-9);
 
-    // Act
-    String actualTextDate = zonedDateTimeUtil.toStringAsTimestamp(zoneDateTime);
+    private static final ZoneOffset MINUS_TWO = ZoneOffset.ofHours(2);
 
-    // Assert
-    assertEquals(expectedTextDate, actualTextDate);
-  }
+    private static final ZoneOffset GMT = ZoneOffset.ofHours(0);
 
-  @Test
-  public void testParseFromTimestamp() throws Exception {
-    // Arrange
-    String textDate = "2018-09-26T15:52:59.612-0300";
-    ZonedDateTime expectedZoneDateTime = ZonedDateTime
-        .of(LocalDateTime.of(2018, 9, 26, 15, 52, 59, 612000000), ZoneIds.GMT_PLUS_3.normalized());
+    private static final ZoneOffset PLUS_ONE = ZoneOffset.ofHours(-1);
 
-    // Act
-    ZonedDateTime actualZonedDateTime = zonedDateTimeUtil.parseFromTimestamp(textDate);
+    private static final ZoneOffset PLUS_3 = ZoneOffset.ofHours(-3);
 
-    // Assert
-    assertEquals(expectedZoneDateTime, actualZonedDateTime);
-  }
-
-  @Test
-  public void testToSystemDefaultZoneId() throws Exception {
-    // Arrange
-    ZonedDateTime zonedDateTime = ZonedDateTime.of(2019, 8, 30, 10, 26, 7, 0, ZoneIds.GMT_PLUS_ONE);
-    ZonedDateTime expectedResult = ZonedDateTime.of(2019, 8, 30, 14, 26, 7, 0, CUSTOM_ZONE_ID);
-
-    // Act
-    ZonedDateTime actualResult = zonedDateTimeUtil.toSystemDefaultZoneId(zonedDateTime);
-
-    // Assert
-    assertThat(actualResult).isEqualTo(expectedResult);
-  }
-
-  private static final class ZoneIds {
-
-    private static final ZoneId GMT_PLUS_NINE = ZoneId.of("Etc/GMT-9");
-
-    private static final ZoneId GMT_MINUS_TWO = ZoneId.of("Etc/GMT-2");
-
-    private static final ZoneId GMT = ZoneId.of("Etc/GMT0");
-
-    private static final ZoneId GMT_PLUS_ONE = ZoneId.of("Etc/GMT+1");
-
-    private static final ZoneId GMT_PLUS_3 = ZoneId.of("Etc/GMT+3");
-
-    private static final ZoneId GMT_PLUS_FOUR = ZoneId.of("Etc/GMT+4");
+    private static final ZoneOffset PLUS_FOUR = ZoneOffset.ofHours(-4);
 
   }
 

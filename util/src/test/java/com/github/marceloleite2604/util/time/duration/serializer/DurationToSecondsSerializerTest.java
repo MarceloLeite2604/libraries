@@ -1,4 +1,4 @@
-package com.github.marceloleite2604.util.time.zoned.serializer.epoch;
+package com.github.marceloleite2604.util.time.duration.serializer;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.times;
@@ -6,9 +6,7 @@ import static org.mockito.Mockito.verify;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.ZonedDateTime;
+import java.time.Duration;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,7 +16,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ZonedDateTimeToEpochSerializerTest {
+public class DurationToSecondsSerializerTest {
 
   @Mock
   private JsonGenerator jsonGenerator;
@@ -27,28 +25,27 @@ public class ZonedDateTimeToEpochSerializerTest {
   private SerializerProvider serializerProvider;
 
   @Captor
-  private ArgumentCaptor<Long> argumentCaptor;
+  private ArgumentCaptor<Double> argumentCaptor;
 
-  private ZonedDateTimeToEpochSerializer zonedDateTimeToEpochSerializer;
+  private DurationToSecondsSerializer durationSerializer;
 
   @Before
   public void setUp() {
-    this.zonedDateTimeToEpochSerializer = new ZonedDateTimeToEpochSerializer();
+    this.durationSerializer = new DurationToSecondsSerializer();
   }
 
   @Test
   public void testSerialize() throws Exception {
     // Arrange
-    long expectedValue = 1537933206L;
-    ZonedDateTime zonedTime =
-        ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 8, 40, 6, 0), ZoneId.of("Etc/GMT-5"));
+    double expectedSeconds = 3600.0;
+    Duration duration = Duration.ofSeconds(3600L);
 
     // Act
-    zonedDateTimeToEpochSerializer.serialize(zonedTime, jsonGenerator, serializerProvider);
+    durationSerializer.serialize(duration, jsonGenerator, serializerProvider);
 
     // Assert
     verify(jsonGenerator, times(1)).writeNumber(argumentCaptor.capture());
-    assertEquals(expectedValue, argumentCaptor.getValue().longValue());
+    assertEquals(expectedSeconds, argumentCaptor.getValue().doubleValue(), 0.1);
   }
 
 }

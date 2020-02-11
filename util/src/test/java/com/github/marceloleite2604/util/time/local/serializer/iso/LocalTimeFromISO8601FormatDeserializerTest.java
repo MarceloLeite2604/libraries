@@ -1,10 +1,11 @@
-package com.github.marceloleite2604.util.time.local.serializer;
+package com.github.marceloleite2604.util.time.local.serializer.iso;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
+import com.github.marceloleite2604.util.time.local.serializer.iso.LocalTimeFromISO8601FormatDeserializer;
 import java.time.LocalTime;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,7 +14,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class LocalTimeDeserializerTest {
+public class LocalTimeFromISO8601FormatDeserializerTest {
 
   @Mock
   private JsonParser jsonParser;
@@ -21,11 +22,11 @@ public class LocalTimeDeserializerTest {
   @Mock
   private DeserializationContext deserializationContext;
 
-  private LocalTimeDeserializer localTimeDeserializer;
+  private LocalTimeFromISO8601FormatDeserializer localTimeDeserializer;
 
   @Before
   public void setUp() {
-    this.localTimeDeserializer = new LocalTimeDeserializer();
+    this.localTimeDeserializer = new LocalTimeFromISO8601FormatDeserializer();
   }
 
   @Test

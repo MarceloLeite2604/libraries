@@ -13,7 +13,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class DurationDeserializerTest {
+public class DurationFromSecondsDeserializerTest {
 
   @Mock
   private JsonParser jsonParser;
@@ -21,11 +21,11 @@ public class DurationDeserializerTest {
   @Mock
   private DeserializationContext deserializationContext;
 
-  private DurationDeserializer durationDeserializer;
+  private DurationFromSecondsDeserializer durationDeserializer;
 
   @Before
   public void setUp() {
-    this.durationDeserializer = new DurationDeserializer();
+    this.durationDeserializer = new DurationFromSecondsDeserializer();
   }
 
   @Test

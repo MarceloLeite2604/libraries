@@ -1,4 +1,4 @@
-package com.github.marceloleite2604.util.time.local.serializer;
+package com.github.marceloleite2604.util.time.local.serializer.iso;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
@@ -9,24 +9,23 @@ import java.time.LocalTime;
 
 /**
  * <p>
- * A {@link StdDeserializer} extension which helps deserialization of {@link LocalTime} objects from
- * a predefined text format.
+ * A {@link StdDeserializer} deserializes {@link LocalTime} objects from ISO-8601 formated date
+ * text.
  * </p>
  * <p>
- * Its serialization equivalent can be found on {@link LocalTimeSerializer} class.
+ * Its serialization equivalent can be found on {@link LocalTimeToISO8601FormatSerializer} class.
  * </p>
  *
- * @see <a href="http://www.github.com/MarceloLeite2604/libraries" target= "_top">GitHub project</a>
  * @author MarceloLeite2604
  *
  */
-public class LocalTimeDeserializer extends StdDeserializer<LocalTime> {
+public class LocalTimeFromISO8601FormatDeserializer extends StdDeserializer<LocalTime> {
 
   private static final long serialVersionUID = 1L;
 
   private final transient LocalTimeUtil localTimeUtil;
 
-  public LocalTimeDeserializer() {
+  public LocalTimeFromISO8601FormatDeserializer() {
     super(LocalTime.class);
     this.localTimeUtil = new LocalTimeUtil();
   }
@@ -34,7 +33,7 @@ public class LocalTimeDeserializer extends StdDeserializer<LocalTime> {
   @Override
   public LocalTime deserialize(JsonParser jsonParser, DeserializationContext context)
       throws IOException {
-    return localTimeUtil.parse(jsonParser.getText());
+    return localTimeUtil.parseFromISO8601Format(jsonParser.getText());
   }
 
 }

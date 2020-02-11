@@ -9,24 +9,23 @@ import java.time.Duration;
 
 /**
  * <p>
- * A {@link StdSerializer} extension which helps serialization of {@link Duration} objects to a
- * predefined text format.
+ * A {@link StdSerializer} extension to serializes {@link Duration} objects to its amount of
+ * seconds.
  * </p>
  * <p>
- * Its deserialization equivalent can be found on {@link DurationDeserializer} class.
+ * Its deserialization equivalent can be found on {@link DurationFromSecondsDeserializer} class.
  * </p>
  *
- * @see <a href="http://www.github.com/MarceloLeite2604/libraries" target= "_top">GitHub project</a>
  * @author MarceloLeite2604
  *
  */
-public class DurationSerializer extends StdSerializer<Duration> {
+public class DurationToSecondsSerializer extends StdSerializer<Duration> {
 
   private static final long serialVersionUID = 1L;
 
   private final transient DurationUtil durationUtil;
 
-  public DurationSerializer() {
+  public DurationToSecondsSerializer() {
     super(Duration.class);
     this.durationUtil = new DurationUtil();
   }

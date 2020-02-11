@@ -9,14 +9,13 @@ import java.time.LocalDateTime;
 
 /**
  * <p>
- * A {@link StdDeserializer} extension which helps deserialization of {@link LocalDateTime} objects
- * from epoch time values.
+ * A {@link StdDeserializer} extension to deserialize {@link LocalDateTime} objects from epoch time
+ * values.
  * </p>
  * <p>
  * Its serialization equivalent can be found on {@link LocalDateTimeToEpochSerializer} class.
  * </p>
  *
- * @see <a href="http://www.github.com/MarceloLeite2604/libraries" target= "_top">GitHub project</a>
  * @author MarceloLeite2604
  *
  */

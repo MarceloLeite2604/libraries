@@ -9,14 +9,14 @@ import java.time.ZonedDateTime;
 
 /**
  * <p>
- * A {@link StdSerializer} extension which helps serialization of {@link ZonedDateTime} objects to a
- * predefined text format.
+ * A {@link StdSerializer} serializes a {@link ZonedDateTime} object to aa ISO-8601 formatted date
+ * text.
  * </p>
  * <p>
- * Its deserialization equivalent can be found on {@link ZonedDateTimeFromISOOffsetFormatTextDeserializer} class.
+ * Its deserialization equivalent can be found on {@link ZonedDateTimeFromISO8601FormatDeserializer}
+ * class.
  * </p>
  *
- * @see <a href="http://www.github.com/MarceloLeite2604/libraries" target= "_top">GitHub project</a>
  * @author MarceloLeite2604
  *
  */

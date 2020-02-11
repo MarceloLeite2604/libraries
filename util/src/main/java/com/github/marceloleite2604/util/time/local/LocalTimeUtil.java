@@ -15,11 +15,6 @@ public class LocalTimeUtil {
 
   public static final int SECONDS_IN_A_DAY = 86400;
 
-  public static final String DATE_FORMAT = "HH:mm:ss";
-
-  private static final DateTimeFormatter DATE_TIME_FORMATTER =
-      DateTimeFormatter.ofPattern(DATE_FORMAT);
-
   /**
    * Checks if time informed is between a start time and a duration.
    * 
@@ -42,23 +37,12 @@ public class LocalTimeUtil {
   }
 
   /**
-   * Converts a text to a {@link LocalTime} object.
+   * Parses a ISO-8601 text date to a {@link LocalTime} object.
    * 
-   * @param text Text to be parsed.
-   * @return A {@link LocalTime} object with the value parsed from {@code parameter}.
+   * @param text ISO-8601 text date to be parsed.
+   * @return A {@link LocalTime} object with the value parsed from {@code text}.
    */
-  public LocalTime parse(String text) {
-    return LocalTime.parse(text, DATE_TIME_FORMATTER);
+  public LocalTime parseFromISO8601Format(String text) {
+    return LocalTime.parse(text, DateTimeFormatter.ISO_TIME);
   }
-
-  /**
-   * Writes a {@link LocalTime} object as a preformatted text.
-   * 
-   * @param localTime time to be written.
-   * @return A preformatted text with the content of the {@code localTime} parameter.
-   */
-  public String toString(LocalTime localTime) {
-    return DATE_TIME_FORMATTER.format(localTime);
-  }
-
 }

@@ -1,8 +1,7 @@
 package com.github.marceloleite2604.util.time;
 
-import com.github.marceloleite2604.util.time.zoned.ZonedDateTimeUtil;
 import java.time.Duration;
-import java.time.ZonedDateTime;
+import java.time.LocalDateTime;
 
 /**
  * Contains a time interval which contains its start time, end time and duration.
@@ -13,11 +12,9 @@ import java.time.ZonedDateTime;
  */
 public class TimeInterval implements Comparable<TimeInterval> {
 
-  private static final ZonedDateTimeUtil ZONED_DATE_TIME_UTIL = new ZonedDateTimeUtil();
+  private LocalDateTime start;
 
-  private ZonedDateTime start;
-
-  private ZonedDateTime end;
+  private LocalDateTime end;
 
   private Duration duration;
 
@@ -27,7 +24,7 @@ public class TimeInterval implements Comparable<TimeInterval> {
    * @param start time interval start time.
    * @param end time interval end time.
    */
-  public TimeInterval(ZonedDateTime start, ZonedDateTime end) {
+  public TimeInterval(LocalDateTime start, LocalDateTime end) {
     super();
     this.start = start;
     this.end = end;
@@ -40,7 +37,7 @@ public class TimeInterval implements Comparable<TimeInterval> {
    * @param start time interval start time.
    * @param duration time interval duration.
    */
-  public TimeInterval(ZonedDateTime start, Duration duration) {
+  public TimeInterval(LocalDateTime start, Duration duration) {
     super();
     this.start = start;
     this.duration = duration;
@@ -53,18 +50,18 @@ public class TimeInterval implements Comparable<TimeInterval> {
    * @param duration time interval duration.
    * @param end time interval end time.
    */
-  public TimeInterval(Duration duration, ZonedDateTime end) {
+  public TimeInterval(Duration duration, LocalDateTime end) {
     super();
     this.duration = duration;
     this.end = end;
     this.start = end.minus(duration);
   }
 
-  public ZonedDateTime getStart() {
+  public LocalDateTime getStart() {
     return start;
   }
 
-  public ZonedDateTime getEnd() {
+  public LocalDateTime getEnd() {
     return end;
   }
 
@@ -74,8 +71,7 @@ public class TimeInterval implements Comparable<TimeInterval> {
 
   @Override
   public String toString() {
-    return ZONED_DATE_TIME_UTIL.toStringAsISOOffsetDateTime(start) + " to "
-        + ZONED_DATE_TIME_UTIL.toStringAsISOOffsetDateTime(end);
+    return start + " to " + end + "(" + duration + ")";
   }
 
   @Override

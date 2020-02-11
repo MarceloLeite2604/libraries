@@ -1,3 +1,4 @@
+
 package com.github.marceloleite2604.util.time.duration.serializer;
 
 import static org.junit.Assert.assertEquals;
@@ -16,7 +17,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class DurationSerializerTest {
+public class DurationToISO8601FormatSerializerTest {
 
   @Mock
   private JsonGenerator jsonGenerator;
@@ -25,27 +26,27 @@ public class DurationSerializerTest {
   private SerializerProvider serializerProvider;
 
   @Captor
-  private ArgumentCaptor<Double> argumentCaptor;
+  private ArgumentCaptor<String> argumentCaptor;
 
-  private DurationSerializer durationSerializer;
+  private DurationToISO8601FormatSerializer durationToISO8601FormatSerializer;
 
   @Before
   public void setUp() {
-    this.durationSerializer = new DurationSerializer();
+    this.durationToISO8601FormatSerializer = new DurationToISO8601FormatSerializer();
   }
 
   @Test
   public void testSerialize() throws Exception {
     // Arrange
-    double expectedSeconds = 3600.0;
+    String expectedText = "PT1H";
     Duration duration = Duration.ofSeconds(3600L);
 
     // Act
-    durationSerializer.serialize(duration, jsonGenerator, serializerProvider);
+    durationToISO8601FormatSerializer.serialize(duration, jsonGenerator, serializerProvider);
 
     // Assert
-    verify(jsonGenerator, times(1)).writeNumber(argumentCaptor.capture());
-    assertEquals(expectedSeconds, argumentCaptor.getValue().doubleValue(), 0.1);
+    verify(jsonGenerator, times(1)).writeString(argumentCaptor.capture());
+    assertEquals(expectedText, argumentCaptor.getValue());
   }
 
 }

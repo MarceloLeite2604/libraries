@@ -30,22 +30,24 @@ public class ZonedDateTimeToISOOffsetFormatTextSerializerTest {
   @Captor
   private ArgumentCaptor<String> argumentCaptor;
 
-  private ZonedDateTimeToISOOffsetFormatTextSerializer zonedDateTimeSerializer;
+  private ZonedDateTimeToISOOffsetFormatTextSerializer zonedDateTimeToISOOffsetFormatTextSerializer;
 
   @Before
   public void setUp() {
-    this.zonedDateTimeSerializer = new ZonedDateTimeToISOOffsetFormatTextSerializer();
+    this.zonedDateTimeToISOOffsetFormatTextSerializer =
+        new ZonedDateTimeToISOOffsetFormatTextSerializer();
   }
 
   @Test
   public void testSerialize() throws Exception {
     // Arrange
-    String exptectedText = "2018-09-26T08:40:06+05:00";
+    String exptectedText = "2018-09-26T08:40:06+05:00[Etc/GMT-5]";
     ZonedDateTime zonedTime =
         ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 8, 40, 6, 0), ZoneId.of("Etc/GMT-5"));
 
     // Act
-    zonedDateTimeSerializer.serialize(zonedTime, jsonGenerator, serializerProvider);
+    zonedDateTimeToISOOffsetFormatTextSerializer.serialize(zonedTime, jsonGenerator,
+        serializerProvider);
 
     // Assert
     verify(jsonGenerator, times(1)).writeString(argumentCaptor.capture());

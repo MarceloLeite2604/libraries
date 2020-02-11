@@ -117,5 +117,4 @@ public class DurationUtil {
     long nanoseconds = (long) ((seconds - floorSeconds) * NANOS_IN_A_SECOND);
     return Duration.ofSeconds(floorSeconds).plusNanos(nanoseconds);
   }
-
 }

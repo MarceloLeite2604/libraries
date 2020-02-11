@@ -1,5 +1,4 @@
-
-package com.github.marceloleite2604.util.time.zoned.serializer.timestamp;
+package com.github.marceloleite2604.util.time.zoned.serializer.epoch;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.times;
@@ -19,7 +18,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ZonedDateTimeToTimestampTextSerializerTest {
+public class ZonedDateTimeToEpochUTCSerializerTest {
 
   @Mock
   private JsonGenerator jsonGenerator;
@@ -28,27 +27,28 @@ public class ZonedDateTimeToTimestampTextSerializerTest {
   private SerializerProvider serializerProvider;
 
   @Captor
-  private ArgumentCaptor<String> argumentCaptor;
+  private ArgumentCaptor<Long> argumentCaptor;
 
-  private ZonedDateTimeToTimestampTextSerializer zonedDateTimeToTimestampTextSerializer;
+  private ZonedDateTimeToEpochUTCSerializer zonedDateTimeToEpochUTCSerializer;
 
   @Before
   public void setUp() {
-    this.zonedDateTimeToTimestampTextSerializer = new ZonedDateTimeToTimestampTextSerializer();
+    this.zonedDateTimeToEpochUTCSerializer = new ZonedDateTimeToEpochUTCSerializer();
   }
 
   @Test
   public void testSerialize() throws Exception {
     // Arrange
-    String exptectedText = "2018-09-26T08:40:06.240+0500";
-    ZonedDateTime zonedTime = ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 8, 40, 6, 240000000),
-        ZoneId.of("Etc/GMT-5"));
+    long expectedValue = 1537933206L;
+    ZonedDateTime zonedDateTime =
+        ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 8, 40, 6, 0), ZoneId.of("Etc/GMT-5"));
 
     // Act
-    zonedDateTimeToTimestampTextSerializer.serialize(zonedTime, jsonGenerator, serializerProvider);
+    zonedDateTimeToEpochUTCSerializer.serialize(zonedDateTime, jsonGenerator, serializerProvider);
 
     // Assert
-    verify(jsonGenerator, times(1)).writeString(argumentCaptor.capture());
-    assertEquals(exptectedText, argumentCaptor.getValue());
+    verify(jsonGenerator, times(1)).writeNumber(argumentCaptor.capture());
+    assertEquals(expectedValue, argumentCaptor.getValue().longValue());
   }
+
 }
