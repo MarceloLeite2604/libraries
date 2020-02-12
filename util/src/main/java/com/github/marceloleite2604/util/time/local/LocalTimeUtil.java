@@ -42,7 +42,7 @@ public class LocalTimeUtil {
    * @param text ISO-8601 text date to be parsed.
    * @return A {@link LocalTime} object with the value parsed from {@code text}.
    */
-  public LocalTime parseFromISO8601Format(String text) {
+  public LocalTime parseFromIso8601Format(String text) {
     return LocalTime.parse(text, DateTimeFormatter.ISO_TIME);
   }
 }

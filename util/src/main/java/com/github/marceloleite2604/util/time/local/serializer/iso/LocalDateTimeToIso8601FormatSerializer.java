@@ -13,17 +13,17 @@ import java.time.LocalDateTime;
  * </p>
  * <p>
  * Its deserialization equivalent can be found on
- * {@link LocalDateTimeFromISO8601FormatDeserializer} class.
+ * {@link LocalDateTimeFromIso8601FormatDeserializer} class.
  * </p>
  *
  * @author MarceloLeite2604
  *
  */
-public class LocalDateTimeToISO8601FormatSerializer extends StdSerializer<LocalDateTime> {
+public class LocalDateTimeToIso8601FormatSerializer extends StdSerializer<LocalDateTime> {
 
   private static final long serialVersionUID = 1L;
 
-  public LocalDateTimeToISO8601FormatSerializer() {
+  public LocalDateTimeToIso8601FormatSerializer() {
     super(LocalDateTime.class);
   }
 

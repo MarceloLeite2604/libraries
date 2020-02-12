@@ -35,18 +35,18 @@ public class ZonedDateTimeUtilTest {
   }
 
   @Test
-  public void testNowUTCOffset() throws Exception {
-
-    // Arrange
-    ZoneId expectedZoneId = ZoneOffset.UTC;
-    // Act
-
-    ZonedDateTime actualResult = zonedDateTimeUtil.nowUTCOffset();
-
-    // Assert
-    assertThat(actualResult).isNotNull();
-    assertThat(actualResult.getZone()).isEqualTo(expectedZoneId);
-  }
+    public void testNowUtcOffset() throws Exception {
+  
+      // Arrange
+      ZoneId expectedZoneId = ZoneOffset.UTC;
+      // Act
+  
+      ZonedDateTime actualResult = zonedDateTimeUtil.nowUtcOffset();
+  
+      // Assert
+      assertThat(actualResult).isNotNull();
+      assertThat(actualResult.getZone()).isEqualTo(expectedZoneId);
+    }
 
   @Test
   public void testNowSystemDefaultTimeZoneId() throws Exception {
@@ -133,19 +133,19 @@ public class ZonedDateTimeUtilTest {
   }
 
   @Test
-  public void testConvertFromEpochTimeToUTFOffset() throws Exception {
-    // Arrange
-    long epochTime = 1537976456L;
-    ZonedDateTime expectedZonedDateTime =
-        ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 15, 40, 56), ZoneOffset.UTC);
-
-    // Act
-    ZonedDateTime actualZonedDateTime =
-        zonedDateTimeUtil.convertFromEpochTimeToUTFOffset(epochTime);
-
-    // Assert
-    assertEquals(expectedZonedDateTime, actualZonedDateTime);
-  }
+      public void testConvertFromEpochTimeToUtcOffset() throws Exception {
+        // Arrange
+        long epochTime = 1537976456L;
+        ZonedDateTime expectedZonedDateTime =
+            ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 15, 40, 56), ZoneOffset.UTC);
+    
+        // Act
+        ZonedDateTime actualZonedDateTime =
+            zonedDateTimeUtil.convertFromEpochTimeToUtcOffset(epochTime);
+    
+        // Assert
+        assertEquals(expectedZonedDateTime, actualZonedDateTime);
+      }
 
   @Test
   public void testConvertFromEpochTimeToSystemDefaultZoneId() throws Exception {
@@ -167,33 +167,33 @@ public class ZonedDateTimeUtilTest {
   }
 
   @Test
-  public void testToStringAsISOOffsetDateTime() throws Exception {
-    // Arrange
-    String expectedFormattedZonedDateTime = "2018-09-26T15:52:59-03:00";
-    ZonedDateTime zonedDateTime = ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 15, 52, 59),
-        ZoneOffsets.PLUS_3.normalized());
-
-    // Act
-    String actualFormattedZonedDateTime =
-        zonedDateTimeUtil.toStringAsISOOffsetDateTime(zonedDateTime);
-
-    // Assert
-    assertEquals(expectedFormattedZonedDateTime, actualFormattedZonedDateTime);
-  }
+    public void testToStringAsIsoOffsetDateTime() throws Exception {
+      // Arrange
+      String expectedFormattedZonedDateTime = "2018-09-26T15:52:59-03:00";
+      ZonedDateTime zonedDateTime = ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 15, 52, 59),
+          ZoneOffsets.PLUS_3.normalized());
+  
+      // Act
+      String actualFormattedZonedDateTime =
+          zonedDateTimeUtil.toStringAsIsoOffsetDateTime(zonedDateTime);
+  
+      // Assert
+      assertEquals(expectedFormattedZonedDateTime, actualFormattedZonedDateTime);
+    }
 
   @Test
-  public void testParseFromISOOffsetFormat() throws Exception {
-    // Arrange
-    String textDate = "2018-09-26T15:52:59-03:00";
-    ZonedDateTime expectedZonedDateTime =
-        ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 15, 52, 59), ZoneOffsets.PLUS_3);
-
-    // Act
-    ZonedDateTime actualZonedDateTime = zonedDateTimeUtil.parseFromISOOffsetFormat(textDate);
-
-    // Assert
-    assertEquals(expectedZonedDateTime, actualZonedDateTime);
-  }
+    public void testParseFromIsoOffsetFormat() throws Exception {
+      // Arrange
+      String textDate = "2018-09-26T15:52:59-03:00";
+      ZonedDateTime expectedZonedDateTime =
+          ZonedDateTime.of(LocalDateTime.of(2018, 9, 26, 15, 52, 59), ZoneOffsets.PLUS_3);
+  
+      // Act
+      ZonedDateTime actualZonedDateTime = zonedDateTimeUtil.parseFromIsoOffsetFormat(textDate);
+  
+      // Assert
+      assertEquals(expectedZonedDateTime, actualZonedDateTime);
+    }
 
   @Test
   public void testConvertAsEpochTime() throws Exception {

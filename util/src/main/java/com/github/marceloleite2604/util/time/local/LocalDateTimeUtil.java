@@ -58,7 +58,7 @@ public class LocalDateTimeUtil {
    * @param localDateTime Time to convert as text.
    * @return A ISO-8601 formatted text elaborated from {@code localDateTime} parameter.
    */
-  public String toStringAsISO8601(LocalDateTime localDateTime) {
+  public String toStringAsIso8601(LocalDateTime localDateTime) {
     return DateTimeFormatter.ISO_LOCAL_DATE_TIME.format(localDateTime);
   }
 
@@ -68,7 +68,7 @@ public class LocalDateTimeUtil {
    * @param text Text to be parsed.
    * @return A {@link LocalDateTime} containing the date and time specified on text.
    */
-  public LocalDateTime parseFromISO8601(String text) {
+  public LocalDateTime parseFromIso8601(String text) {
     return LocalDateTime.parse(text, DateTimeFormatter.ISO_LOCAL_DATE_TIME);
   }
 
@@ -78,7 +78,7 @@ public class LocalDateTimeUtil {
    * @param localDateTime Time to be converted
    * @return The epoch time retrieved from the {@code localDateTime} parameter.
    */
-  public long convertAsEpochTimeOnUTCZoneOffset(LocalDateTime localDateTime) {
+  public long convertAsEpochTimeOnUtcZoneOffset(LocalDateTime localDateTime) {
     return localDateTime.toEpochSecond(ZoneOffset.UTC);
   }
 

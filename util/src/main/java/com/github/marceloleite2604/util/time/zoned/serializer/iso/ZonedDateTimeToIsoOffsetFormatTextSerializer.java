@@ -1,4 +1,4 @@
-package com.github.marceloleite2604.util.time.zoned.serializer.epoch;
+package com.github.marceloleite2604.util.time.zoned.serializer.iso;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
@@ -9,23 +9,24 @@ import java.time.ZonedDateTime;
 
 /**
  * <p>
- * A {@link StdSerializer} serializes {@link ZonedDateTime} objects to epoch time on UTC offset.
+ * A {@link StdSerializer} serializes a {@link ZonedDateTime} object to aa ISO-8601 formatted date
+ * text.
  * </p>
  * <p>
- * Its deserialization equivalent can be found on {@link ZonedDateTimeFromEpochUTCDeserializer}
+ * Its deserialization equivalent can be found on {@link ZonedDateTimeFromIso8601FormatDeserializer}
  * class.
  * </p>
  *
  * @author MarceloLeite2604
  *
  */
-public class ZonedDateTimeToEpochUTCSerializer extends StdSerializer<ZonedDateTime> {
+public class ZonedDateTimeToIsoOffsetFormatTextSerializer extends StdSerializer<ZonedDateTime> {
 
   private static final long serialVersionUID = 1L;
 
   private final transient ZonedDateTimeUtil zonedDateTimeUtil;
 
-  public ZonedDateTimeToEpochUTCSerializer() {
+  public ZonedDateTimeToIsoOffsetFormatTextSerializer() {
     super(ZonedDateTime.class);
     this.zonedDateTimeUtil = new ZonedDateTimeUtil();
   }
@@ -33,7 +34,7 @@ public class ZonedDateTimeToEpochUTCSerializer extends StdSerializer<ZonedDateTi
   @Override
   public void serialize(ZonedDateTime zonedDateTime, JsonGenerator generator,
       SerializerProvider provider) throws IOException {
-    generator.writeNumber(zonedDateTimeUtil.convertAsEpochTime(zonedDateTime));
+    generator.writeString(zonedDateTimeUtil.toStringAsIsoOffsetDateTime(zonedDateTime));
   }
 
 }

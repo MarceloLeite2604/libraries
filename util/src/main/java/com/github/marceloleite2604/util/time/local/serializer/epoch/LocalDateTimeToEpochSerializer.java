@@ -34,7 +34,7 @@ public class LocalDateTimeToEpochSerializer extends StdSerializer<LocalDateTime>
   @Override
   public void serialize(LocalDateTime localDateTime, JsonGenerator generator,
       SerializerProvider provider) throws IOException {
-    generator.writeNumber(localDateTimeUtil.convertAsEpochTimeOnUTCZoneOffset(localDateTime));
+    generator.writeNumber(localDateTimeUtil.convertAsEpochTimeOnUtcZoneOffset(localDateTime));
   }
 
 }

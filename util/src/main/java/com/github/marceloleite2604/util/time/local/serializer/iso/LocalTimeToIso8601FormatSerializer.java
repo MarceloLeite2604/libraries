@@ -12,7 +12,7 @@ import java.time.LocalTime;
  * predefined text format.
  * </p>
  * <p>
- * Its deserialization equivalent can be found on {@link LocalTimeFromISO8601FormatDeserializer}
+ * Its deserialization equivalent can be found on {@link LocalTimeFromIso8601FormatDeserializer}
  * class.
  * </p>
  *
@@ -20,11 +20,11 @@ import java.time.LocalTime;
  * @author MarceloLeite2604
  *
  */
-public class LocalTimeToISO8601FormatSerializer extends StdSerializer<LocalTime> {
+public class LocalTimeToIso8601FormatSerializer extends StdSerializer<LocalTime> {
 
   private static final long serialVersionUID = 1L;
 
-  public LocalTimeToISO8601FormatSerializer() {
+  public LocalTimeToIso8601FormatSerializer() {
     super(LocalTime.class);
   }
 

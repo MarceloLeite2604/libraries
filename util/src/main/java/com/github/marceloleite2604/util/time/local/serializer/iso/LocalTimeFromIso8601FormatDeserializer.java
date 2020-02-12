@@ -13,19 +13,19 @@ import java.time.LocalTime;
  * text.
  * </p>
  * <p>
- * Its serialization equivalent can be found on {@link LocalTimeToISO8601FormatSerializer} class.
+ * Its serialization equivalent can be found on {@link LocalTimeToIso8601FormatSerializer} class.
  * </p>
  *
  * @author MarceloLeite2604
  *
  */
-public class LocalTimeFromISO8601FormatDeserializer extends StdDeserializer<LocalTime> {
+public class LocalTimeFromIso8601FormatDeserializer extends StdDeserializer<LocalTime> {
 
   private static final long serialVersionUID = 1L;
 
   private final transient LocalTimeUtil localTimeUtil;
 
-  public LocalTimeFromISO8601FormatDeserializer() {
+  public LocalTimeFromIso8601FormatDeserializer() {
     super(LocalTime.class);
     this.localTimeUtil = new LocalTimeUtil();
   }
@@ -33,7 +33,7 @@ public class LocalTimeFromISO8601FormatDeserializer extends StdDeserializer<Loca
   @Override
   public LocalTime deserialize(JsonParser jsonParser, DeserializationContext context)
       throws IOException {
-    return localTimeUtil.parseFromISO8601Format(jsonParser.getText());
+    return localTimeUtil.parseFromIso8601Format(jsonParser.getText());
   }
 
 }

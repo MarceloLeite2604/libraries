@@ -6,7 +6,7 @@ import static org.mockito.Mockito.verify;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import com.github.marceloleite2604.util.time.local.serializer.iso.LocalTimeToISO8601FormatSerializer;
+import com.github.marceloleite2604.util.time.local.serializer.iso.LocalTimeToIso8601FormatSerializer;
 import java.time.LocalTime;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,7 +17,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class LocalTimeToISO8601FormatSerializerTest {
+public class LocalTimeToIso8601FormatSerializerTest {
 
   @Mock
   private JsonGenerator jsonGenerator;
@@ -28,11 +28,11 @@ public class LocalTimeToISO8601FormatSerializerTest {
   @Captor
   private ArgumentCaptor<String> argumentCaptor;
 
-  private LocalTimeToISO8601FormatSerializer localTimeSerializer;
+  private LocalTimeToIso8601FormatSerializer localTimeSerializer;
 
   @Before
   public void setUp() {
-    this.localTimeSerializer = new LocalTimeToISO8601FormatSerializer();
+    this.localTimeSerializer = new LocalTimeToIso8601FormatSerializer();
   }
 
   @Test

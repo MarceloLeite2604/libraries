@@ -12,18 +12,18 @@ import java.time.Duration;
  * text.
  * </p>
  * <p>
- * Its deserialization equivalent can be found on {@link DurationFromISO8601FormatDeserializer}
+ * Its deserialization equivalent can be found on {@link DurationFromIso8601FormatDeserializer}
  * class.
  * </p>
  *
  * @author MarceloLeite2604
  *
  */
-public class DurationToISO8601FormatSerializer extends StdSerializer<Duration> {
+public class DurationToIso8601FormatSerializer extends StdSerializer<Duration> {
 
   private static final long serialVersionUID = 1L;
 
-  public DurationToISO8601FormatSerializer() {
+  public DurationToIso8601FormatSerializer() {
     super(Duration.class);
   }
 

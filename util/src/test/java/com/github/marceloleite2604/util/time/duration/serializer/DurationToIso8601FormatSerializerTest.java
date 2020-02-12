@@ -1,5 +1,5 @@
 
-package com.github.marceloleite2604.util.time.local.serializer.iso;
+package com.github.marceloleite2604.util.time.duration.serializer;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.times;
@@ -7,7 +7,7 @@ import static org.mockito.Mockito.verify;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import java.time.LocalDateTime;
+import java.time.Duration;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,7 +17,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class LocalDateTimeToISO8601FormatSerializerTest {
+public class DurationToIso8601FormatSerializerTest {
 
   @Mock
   private JsonGenerator jsonGenerator;
@@ -28,25 +28,25 @@ public class LocalDateTimeToISO8601FormatSerializerTest {
   @Captor
   private ArgumentCaptor<String> argumentCaptor;
 
-  private LocalDateTimeToISO8601FormatSerializer localDateTimeToISO8601FormatSerializer;
+  private DurationToIso8601FormatSerializer durationToISO8601FormatSerializer;
 
   @Before
   public void setUp() {
-    this.localDateTimeToISO8601FormatSerializer = new LocalDateTimeToISO8601FormatSerializer();
+    this.durationToISO8601FormatSerializer = new DurationToIso8601FormatSerializer();
   }
 
   @Test
   public void testSerialize() throws Exception {
     // Arrange
-    String exptectedText = "2018-09-26T08:40:06";
-    LocalDateTime zonedTime = LocalDateTime.of(2018, 9, 26, 8, 40, 6, 0);
+    String expectedText = "PT1H";
+    Duration duration = Duration.ofSeconds(3600L);
 
     // Act
-    localDateTimeToISO8601FormatSerializer.serialize(zonedTime, jsonGenerator, serializerProvider);
+    durationToISO8601FormatSerializer.serialize(duration, jsonGenerator, serializerProvider);
 
     // Assert
     verify(jsonGenerator, times(1)).writeString(argumentCaptor.capture());
-    assertEquals(exptectedText, argumentCaptor.getValue());
+    assertEquals(expectedText, argumentCaptor.getValue());
   }
 
 }

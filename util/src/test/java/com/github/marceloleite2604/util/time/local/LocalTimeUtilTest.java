@@ -63,15 +63,15 @@ public class LocalTimeUtilTest {
   }
 
   @Test
-  public void testParseFromISO8601Format() throws Exception {
-    // Arrange
-    String timeText = "17:58:00";
-    LocalTime expectedLocalTime = LocalTime.of(17, 58);
-
-    // Act
-    LocalTime actualLocalTime = localTimeUtil.parseFromISO8601Format(timeText);
-
-    // Assert
-    assertEquals(expectedLocalTime, actualLocalTime);
-  }
+    public void testParseFromIso8601Format() throws Exception {
+      // Arrange
+      String timeText = "17:58:00";
+      LocalTime expectedLocalTime = LocalTime.of(17, 58);
+  
+      // Act
+      LocalTime actualLocalTime = localTimeUtil.parseFromIso8601Format(timeText);
+  
+      // Assert
+      assertEquals(expectedLocalTime, actualLocalTime);
+    }
 }

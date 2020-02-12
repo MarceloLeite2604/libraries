@@ -1,3 +1,4 @@
+
 package com.github.marceloleite2604.util.time.local.serializer.iso;
 
 import static org.junit.Assert.assertEquals;
@@ -5,8 +6,7 @@ import static org.mockito.Mockito.when;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
-import com.github.marceloleite2604.util.time.local.serializer.iso.LocalTimeFromISO8601FormatDeserializer;
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,7 +14,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class LocalTimeFromISO8601FormatDeserializerTest {
+public class LocalDateTimeFromIso8601FormatDeserializerTest {
 
   @Mock
   private JsonParser jsonParser;
@@ -22,25 +22,26 @@ public class LocalTimeFromISO8601FormatDeserializerTest {
   @Mock
   private DeserializationContext deserializationContext;
 
-  private LocalTimeFromISO8601FormatDeserializer localTimeDeserializer;
+  private LocalDateTimeFromIso8601FormatDeserializer localDateTimeFromISO8601FormatDeserializer;
 
   @Before
   public void setUp() {
-    this.localTimeDeserializer = new LocalTimeFromISO8601FormatDeserializer();
+    this.localDateTimeFromISO8601FormatDeserializer =
+        new LocalDateTimeFromIso8601FormatDeserializer();
   }
 
   @Test
   public void testDeserialize() throws Exception {
     // Arrange
-    LocalTime expectedLocalTime = LocalTime.of(12, 40, 28);
-    when(jsonParser.getText()).thenReturn("12:40:28");
+    LocalDateTime expectedLocalDateTime = LocalDateTime.of(2018, 9, 26, 10, 12, 31);
+    when(jsonParser.getText()).thenReturn("2018-09-26T10:12:31");
 
     // Act
-    LocalTime actualLocalTime =
-        localTimeDeserializer.deserialize(jsonParser, deserializationContext);
+    LocalDateTime actualLocalDateTime =
+        localDateTimeFromISO8601FormatDeserializer.deserialize(jsonParser, deserializationContext);
 
     // Assert
-    assertEquals(expectedLocalTime, actualLocalTime);
+    assertEquals(expectedLocalDateTime, actualLocalDateTime);
   }
 
 }

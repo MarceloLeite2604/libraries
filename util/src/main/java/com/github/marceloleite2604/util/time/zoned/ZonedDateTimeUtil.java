@@ -21,7 +21,7 @@ public class ZonedDateTimeUtil {
    * 
    * @return Current time on UTC.
    */
-  public ZonedDateTime nowUTCOffset() {
+  public ZonedDateTime nowUtcOffset() {
     return ZonedDateTime.now(ZoneOffset.UTC);
   }
 
@@ -67,7 +67,7 @@ public class ZonedDateTimeUtil {
    * @return A {@link ZonedDateTime} object with time specified on {@code epochTime} parameter on
    *         UTC zone offset.
    */
-  public ZonedDateTime convertFromEpochTimeToUTFOffset(long epochTime) {
+  public ZonedDateTime convertFromEpochTimeToUtcOffset(long epochTime) {
     return ZonedDateTime.ofInstant(Instant.ofEpochSecond(epochTime), ZoneOffset.UTC);
   }
 
@@ -89,7 +89,7 @@ public class ZonedDateTimeUtil {
    * @param zonedDateTime Time to convert as text.
    * @return A ISO-8601 formatted text elaborated from {@code zonedDateTime} parameter.
    */
-  public String toStringAsISOOffsetDateTime(ZonedDateTime zonedDateTime) {
+  public String toStringAsIsoOffsetDateTime(ZonedDateTime zonedDateTime) {
     return DateTimeFormatter.ISO_ZONED_DATE_TIME.format(zonedDateTime);
   }
 
@@ -99,7 +99,7 @@ public class ZonedDateTimeUtil {
    * @param text Text to be parsed.
    * @return A {@link ZonedDateTime} containing the date specified on the predefined text.
    */
-  public ZonedDateTime parseFromISOOffsetFormat(String text) {
+  public ZonedDateTime parseFromIsoOffsetFormat(String text) {
     return ZonedDateTime.parse(text, DateTimeFormatter.ISO_ZONED_DATE_TIME);
   }
 

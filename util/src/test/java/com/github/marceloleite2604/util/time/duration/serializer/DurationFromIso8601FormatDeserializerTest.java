@@ -14,7 +14,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class DurationFromISO8601FormatDeserializerTest {
+public class DurationFromIso8601FormatDeserializerTest {
 
   @Mock
   private JsonParser jsonParser;
@@ -22,11 +22,11 @@ public class DurationFromISO8601FormatDeserializerTest {
   @Mock
   private DeserializationContext deserializationContext;
 
-  private DurationFromISO8601FormatDeserializer durationFromISO8601FormatDeserializer;
+  private DurationFromIso8601FormatDeserializer durationFromIso8601FormatDeserializer;
 
   @Before
   public void setUp() {
-    this.durationFromISO8601FormatDeserializer = new DurationFromISO8601FormatDeserializer();
+    this.durationFromIso8601FormatDeserializer = new DurationFromIso8601FormatDeserializer();
   }
 
   @Test
@@ -38,7 +38,7 @@ public class DurationFromISO8601FormatDeserializerTest {
 
     // Act
     Duration actualDuration =
-        durationFromISO8601FormatDeserializer.deserialize(jsonParser, deserializationContext);
+        durationFromIso8601FormatDeserializer.deserialize(jsonParser, deserializationContext);
 
     // Assert
     assertEquals(expectedDuration, actualDuration);

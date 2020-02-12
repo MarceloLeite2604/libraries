@@ -101,52 +101,53 @@ public class LocalDateTimeUtilTest {
   }
 
   @Test
-  public void testToStringAsISO8601() throws Exception {
-    // Arrange
-    String expectedFormattedLocalDateTime = "2018-09-26T15:52:59";
-    LocalDateTime localDateTime = LocalDateTime.of(2018, 9, 26, 15, 52, 59);
-
-    // Act
-    String actualFormattedLocalDateTime = localDateTimeUtil.toStringAsISO8601(localDateTime);
-
-    // Assert
-    assertEquals(expectedFormattedLocalDateTime, actualFormattedLocalDateTime);
-  }
-
-  @Test
-  public void testParseFromISO8601() throws Exception {
-    // Arrange
-    String textDate = "2018-09-26T15:52:59";
-    LocalDateTime expectedLocalDateTime = LocalDateTime.of(2018, 9, 26, 15, 52, 59);
-
-    // Act
-    LocalDateTime actualLocalDateTime = localDateTimeUtil.parseFromISO8601(textDate);
-
-    // Assert
-    assertEquals(expectedLocalDateTime, actualLocalDateTime);
-  }
+    public void testToStringAsIso8601() throws Exception {
+      // Arrange
+      String expectedFormattedLocalDateTime = "2018-09-26T15:52:59";
+      LocalDateTime localDateTime = LocalDateTime.of(2018, 9, 26, 15, 52, 59);
+  
+      // Act
+      String actualFormattedLocalDateTime = localDateTimeUtil.toStringAsIso8601(localDateTime);
+  
+      // Assert
+      assertEquals(expectedFormattedLocalDateTime, actualFormattedLocalDateTime);
+    }
 
   @Test
-  public void testConvertAsEpochTimeOnUTCZoneOffset() throws Exception {
-    // Arrange
-    long expectedEpochTime = 1537977857L;
-    LocalDateTime localDateTime = LocalDateTime.of(2018, 9, 26, 16, 4, 17);
+    public void testParseFromIso8601() throws Exception {
+      // Arrange
+      String textDate = "2018-09-26T15:52:59";
+      LocalDateTime expectedLocalDateTime = LocalDateTime.of(2018, 9, 26, 15, 52, 59);
+  
+      // Act
+      LocalDateTime actualLocalDateTime = localDateTimeUtil.parseFromIso8601(textDate);
+  
+      // Assert
+      assertEquals(expectedLocalDateTime, actualLocalDateTime);
+    }
 
-    // Act
-    long actualEpochTime = localDateTimeUtil.convertAsEpochTimeOnUTCZoneOffset(localDateTime);
-
-    // Assert
-    assertEquals(expectedEpochTime, actualEpochTime);
-  }
+  @Test
+    public void testConvertAsEpochTimeOnUtcZoneOffset() throws Exception {
+      // Arrange
+      long expectedEpochTime = 1537977857L;
+      LocalDateTime localDateTime = LocalDateTime.of(2018, 9, 26, 16, 4, 17);
+  
+      // Act
+      long actualEpochTime = localDateTimeUtil.convertAsEpochTimeOnUtcZoneOffset(localDateTime);
+  
+      // Assert
+      assertEquals(expectedEpochTime, actualEpochTime);
+    }
 
   @Test
   public void testConvertAsEpochTimeOnSystemDefaultZonedOffset() throws Exception {
- // Arrange
+    // Arrange
     long expectedEpochTime = 1581453426L;
     LocalDateTime localDateTime = LocalDateTime.of(2020, 2, 11, 17, 37, 6);
 
     // Act
-    long actualEpochTime = localDateTimeUtil.convertAsEpochTimeOnSystemDefaultZonedOffset(localDateTime);
+    long actualEpochTime =
+        localDateTimeUtil.convertAsEpochTimeOnSystemDefaultZonedOffset(localDateTime);
 
     // Assert
     assertEquals(expectedEpochTime, actualEpochTime);

@@ -5,7 +5,7 @@ import static org.mockito.Mockito.when;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
-import com.github.marceloleite2604.util.time.zoned.serializer.epoch.ZonedDateTimeFromEpochUTCDeserializer;
+import com.github.marceloleite2604.util.time.zoned.serializer.epoch.ZonedDateTimeFromEpochUtcDeserializer;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
@@ -16,7 +16,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ZonedDateTimeFromEpochUTCDeserializerTest {
+public class ZonedDateTimeFromEpochUtcDeserializerTest {
 
   @Mock
   private JsonParser jsonParser;
@@ -24,11 +24,11 @@ public class ZonedDateTimeFromEpochUTCDeserializerTest {
   @Mock
   private DeserializationContext deserializationContext;
 
-  private ZonedDateTimeFromEpochUTCDeserializer zonedDateTimeFromEpochUTCDeserializer;
+  private ZonedDateTimeFromEpochUtcDeserializer zonedDateTimeFromEpochUTCDeserializer;
 
   @Before
   public void setUp() {
-    this.zonedDateTimeFromEpochUTCDeserializer = new ZonedDateTimeFromEpochUTCDeserializer();
+    this.zonedDateTimeFromEpochUTCDeserializer = new ZonedDateTimeFromEpochUtcDeserializer();
   }
 
   @Test

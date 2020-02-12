@@ -1,5 +1,5 @@
 
-package com.github.marceloleite2604.util.time.duration.serializer;
+package com.github.marceloleite2604.util.time.local.serializer.iso;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.times;
@@ -7,7 +7,7 @@ import static org.mockito.Mockito.verify;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import java.time.Duration;
+import java.time.LocalDateTime;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,7 +17,7 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class DurationToISO8601FormatSerializerTest {
+public class LocalDateTimeToIso8601FormatSerializerTest {
 
   @Mock
   private JsonGenerator jsonGenerator;
@@ -28,25 +28,25 @@ public class DurationToISO8601FormatSerializerTest {
   @Captor
   private ArgumentCaptor<String> argumentCaptor;
 
-  private DurationToISO8601FormatSerializer durationToISO8601FormatSerializer;
+  private LocalDateTimeToIso8601FormatSerializer localDateTimeToISO8601FormatSerializer;
 
   @Before
   public void setUp() {
-    this.durationToISO8601FormatSerializer = new DurationToISO8601FormatSerializer();
+    this.localDateTimeToISO8601FormatSerializer = new LocalDateTimeToIso8601FormatSerializer();
   }
 
   @Test
   public void testSerialize() throws Exception {
     // Arrange
-    String expectedText = "PT1H";
-    Duration duration = Duration.ofSeconds(3600L);
+    String exptectedText = "2018-09-26T08:40:06";
+    LocalDateTime zonedTime = LocalDateTime.of(2018, 9, 26, 8, 40, 6, 0);
 
     // Act
-    durationToISO8601FormatSerializer.serialize(duration, jsonGenerator, serializerProvider);
+    localDateTimeToISO8601FormatSerializer.serialize(zonedTime, jsonGenerator, serializerProvider);
 
     // Assert
     verify(jsonGenerator, times(1)).writeString(argumentCaptor.capture());
-    assertEquals(expectedText, argumentCaptor.getValue());
+    assertEquals(exptectedText, argumentCaptor.getValue());
   }
 
 }
