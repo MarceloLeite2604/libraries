@@ -19,9 +19,10 @@ before_install:
   - sh travis/copy_maven_settings.sh
 jobs:
   include:
+    - stage: coveralls
+      install: skip
+      script: travis/coveralls.sh
+      jdk: openjdk8    
     - stage: deploy
       script: travis/deploy.sh
-      jdk: openjdk8
-    - stage: coveralls
-      script: travis/coveralls.sh
       jdk: openjdk8

@@ -1,3 +1,8 @@
 #!/bin/bash
 
-mvn jacoco:report-aggregate coveralls:report
+set -x;
+mvn verify jacoco:report-aggregate coveralls:report
+result=${?};
+set +x;
+
+return ${result};
