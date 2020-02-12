@@ -89,7 +89,7 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>2.22.2</version>
 				<configuration>
-					<argLine>${surefire.argLine}</argLine>
+					<argLine>${jacoco.surefire.argLine} ${surefire.argLine}</argLine>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -177,9 +177,30 @@
 					</execution>
 				</executions>
 				<configuration>
-                    <additionalOptions>-html5</additionalOptions>
+					<additionalOptions>-html5</additionalOptions>
 					<source>8</source>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.4</version>
+				<configuration>
+					<excludes>
+						<exclude>**/*Exception.*</exclude>
+					</excludes>
+				</configuration>
+				<executions>
+					<execution>
+						<id>prepare-agent</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+						<configuration>
+							<propertyName>jacoco.surefire.argLine</propertyName>
+						</configuration>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
