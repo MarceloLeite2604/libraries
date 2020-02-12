@@ -151,7 +151,7 @@
 					</execution>
 				</executions>
 				<configuration>
-					<additionalOptions>-html5</additionalOptions>
+					<additionalOptions>${javadoc.additionalOptions}</additionalOptions>
 					<source>8</source>
 				</configuration>
 			</plugin>
