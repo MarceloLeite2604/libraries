@@ -27,7 +27,7 @@ public class ZonedDateTimeUtilTest {
   private ZonedDateTimeUtil zonedDateTimeUtil;
 
   @Rule
-  public PowerMockRule rule = new PowerMockRule();
+  public PowerMockRule powerMockRule = new PowerMockRule();
 
   @Before
   public void setUp() {

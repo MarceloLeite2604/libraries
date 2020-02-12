@@ -51,7 +51,7 @@ public class LocalTimeUtil {
   }
 
   /**
-   * Check if a time is between a time interval
+   * Check if a time is between a time interval.
    * 
    * @param time Time to check
    * @param timeInterval Interval to check if {@code time} is between

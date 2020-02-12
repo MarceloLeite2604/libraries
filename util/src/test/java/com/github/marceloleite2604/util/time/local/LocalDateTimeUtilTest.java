@@ -7,12 +7,25 @@ import static org.junit.Assert.assertTrue;
 
 import com.github.marceloleite2604.util.time.TimeInterval;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.powermock.api.mockito.PowerMockito;
+import org.powermock.core.classloader.annotations.PrepareForTest;
+import org.powermock.modules.junit4.rule.PowerMockRule;
 
+@PrepareForTest({ZoneId.class, LocalDateTimeUtil.class})
 public class LocalDateTimeUtilTest {
 
+  private static final String CUSTOM_USER_TIMEZONE_PROPERTY = "Etc/GMT+9";
+
+  private static final ZoneId CUSTOM_USER_TIMEZONE = ZoneId.of(CUSTOM_USER_TIMEZONE_PROPERTY);
+
   private LocalDateTimeUtil localDateTimeUtil;
+
+  @Rule
+  public PowerMockRule powerMockRule = new PowerMockRule();
 
   @Before
   public void setUp() {
@@ -101,49 +114,53 @@ public class LocalDateTimeUtilTest {
   }
 
   @Test
-    public void testToStringAsIso8601() throws Exception {
-      // Arrange
-      String expectedFormattedLocalDateTime = "2018-09-26T15:52:59";
-      LocalDateTime localDateTime = LocalDateTime.of(2018, 9, 26, 15, 52, 59);
-  
-      // Act
-      String actualFormattedLocalDateTime = localDateTimeUtil.toStringAsIso8601(localDateTime);
-  
-      // Assert
-      assertEquals(expectedFormattedLocalDateTime, actualFormattedLocalDateTime);
-    }
+  public void testToStringAsIso8601() throws Exception {
+    // Arrange
+    String expectedFormattedLocalDateTime = "2018-09-26T15:52:59";
+    LocalDateTime localDateTime = LocalDateTime.of(2018, 9, 26, 15, 52, 59);
+
+    // Act
+    String actualFormattedLocalDateTime = localDateTimeUtil.toStringAsIso8601(localDateTime);
+
+    // Assert
+    assertEquals(expectedFormattedLocalDateTime, actualFormattedLocalDateTime);
+  }
 
   @Test
-    public void testParseFromIso8601() throws Exception {
-      // Arrange
-      String textDate = "2018-09-26T15:52:59";
-      LocalDateTime expectedLocalDateTime = LocalDateTime.of(2018, 9, 26, 15, 52, 59);
-  
-      // Act
-      LocalDateTime actualLocalDateTime = localDateTimeUtil.parseFromIso8601(textDate);
-  
-      // Assert
-      assertEquals(expectedLocalDateTime, actualLocalDateTime);
-    }
+  public void testParseFromIso8601() throws Exception {
+    // Arrange
+    String textDate = "2018-09-26T15:52:59";
+    LocalDateTime expectedLocalDateTime = LocalDateTime.of(2018, 9, 26, 15, 52, 59);
+
+    // Act
+    LocalDateTime actualLocalDateTime = localDateTimeUtil.parseFromIso8601(textDate);
+
+    // Assert
+    assertEquals(expectedLocalDateTime, actualLocalDateTime);
+  }
 
   @Test
-    public void testConvertAsEpochTimeOnUtcZoneOffset() throws Exception {
-      // Arrange
-      long expectedEpochTime = 1537977857L;
-      LocalDateTime localDateTime = LocalDateTime.of(2018, 9, 26, 16, 4, 17);
-  
-      // Act
-      long actualEpochTime = localDateTimeUtil.convertAsEpochTimeOnUtcZoneOffset(localDateTime);
-  
-      // Assert
-      assertEquals(expectedEpochTime, actualEpochTime);
-    }
+  public void testConvertAsEpochTimeOnUtcZoneOffset() throws Exception {
+    // Arrange
+    long expectedEpochTime = 1537977857L;
+    LocalDateTime localDateTime = LocalDateTime.of(2018, 9, 26, 16, 4, 17);
+
+    // Act
+    long actualEpochTime = localDateTimeUtil.convertAsEpochTimeOnUtcZoneOffset(localDateTime);
+
+    // Assert
+    assertEquals(expectedEpochTime, actualEpochTime);
+  }
 
   @Test
   public void testConvertAsEpochTimeOnSystemDefaultZonedOffset() throws Exception {
     // Arrange
-    long expectedEpochTime = 1581453426L;
+    long expectedEpochTime = 1581475026L;
     LocalDateTime localDateTime = LocalDateTime.of(2020, 2, 11, 17, 37, 6);
+    
+    PowerMockito.mockStatic(ZoneId.class);
+
+    PowerMockito.when(ZoneId.systemDefault()).thenReturn(CUSTOM_USER_TIMEZONE);
 
     // Act
     long actualEpochTime =
