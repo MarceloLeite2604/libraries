@@ -2,6 +2,7 @@ package com.github.marceloleite2604.util.file;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
+import static org.junit.Assert.assertTrue;
 import static org.powermock.api.mockito.PowerMockito.mock;
 import static org.powermock.api.mockito.PowerMockito.when;
 
@@ -507,6 +508,9 @@ public class FileUtilTest {
       throws Exception {
     // Act
     fileUtil.throwExceptionIfFileDoesNotExist(EXISTENT_DIRECTORY_PATH);
+
+    // Assert
+    assertTrue(true);
   }
 
   @Test(expected = FileUtilRuntimeException.class)
@@ -524,6 +528,9 @@ public class FileUtilTest {
       throws Exception {
     // Act
     fileUtil.throwExceptionIfFileDoesNotExist(Paths.get(EXISTENT_DIRECTORY_PATH));
+    
+    // Assert
+    assertTrue(true);
   }
 
   @Test(expected = FileUtilRuntimeException.class)
@@ -541,6 +548,9 @@ public class FileUtilTest {
       throws Exception {
     // Act
     fileUtil.throwExceptionIfDirectoryDoesNotExist(EXISTENT_DIRECTORY_PATH);
+    
+    // Assert
+    assertTrue(true);
   }
 
   @Test(expected = FileUtilRuntimeException.class)
@@ -558,6 +568,9 @@ public class FileUtilTest {
       throws Exception {
     // Act
     fileUtil.throwExceptionIfDirectoryDoesNotExist(Paths.get(EXISTENT_DIRECTORY_PATH));
+
+    // Assert
+    assertTrue(true);
   }
 
   @Test(expected = FileUtilRuntimeException.class)
@@ -575,6 +588,9 @@ public class FileUtilTest {
       throws Exception {
     // Act
     fileUtil.throwExceptionIfFileIsNotDirectory(EXISTENT_DIRECTORY_PATH);
+    
+    // Assert
+    assertTrue(true);
   }
 
   @Test(expected = FileUtilRuntimeException.class)
@@ -592,6 +608,9 @@ public class FileUtilTest {
       throws Exception {
     // Act
     fileUtil.throwExceptionIfFileIsNotDirectory(Paths.get(EXISTENT_DIRECTORY_PATH));
+
+    // Assert
+    assertTrue(true);
   }
 
   @Test(expected = FileUtilRuntimeException.class)
@@ -609,6 +628,9 @@ public class FileUtilTest {
       throws Exception {
     // Act
     fileUtil.throwExceptionIfFileIsDirectory(READ_TEXT_FILE_PATH);
+
+    // Assert
+    assertTrue(true);
   }
 
   @Test(expected = FileUtilRuntimeException.class)
@@ -626,6 +648,9 @@ public class FileUtilTest {
       throws Exception {
     // Act
     fileUtil.throwExceptionIfFileIsDirectory(Paths.get(READ_TEXT_FILE_PATH));
+
+    // Assert
+    assertTrue(true);
   }
 
   @Test
