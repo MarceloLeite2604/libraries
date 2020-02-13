@@ -19,7 +19,7 @@ before_install:
   - sh travis/copy_maven_settings.sh
 jobs:
   include:
-    - stage: coveralls
+    - stage: "Reporting tests for Coveralls"
       install: skip
       script: travis/coveralls.sh
       jdk: openjdk8    
@@ -27,6 +27,7 @@ deploy:
   - provider: script
     script: travis/deploy.sh
     on:
+      condition: $TRAVIS_BRANCH =~ ^(develop|master)$
       condition: ./travis/check_deploy_version.sh
       branch: develop 
       jdk: openjdk8
