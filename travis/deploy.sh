@@ -1,4 +1,5 @@
-#!/bin/sh
+#!/bin/bash
+
 set -x;
 echo mvn deploy -Dmaven.test.skip=true
 result=${?};
