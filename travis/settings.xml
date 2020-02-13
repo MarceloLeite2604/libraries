@@ -34,9 +34,9 @@
 
   <servers>
     <server>
-      <id>ossrh-snapshot</id>
+      <id>ossrh</id>
       <username>marceloleite2604</username>
-      <password>{noVDLkcro3UHTXKkg5b/cKYguvgKKG8LbOYgMxXS4c7q4+2/ok6Miyo2vGDSbzJd}</password>
+      <password>${env.OSSRH_PASSWORD}</password>
     </server>
   </servers>
 </settings>

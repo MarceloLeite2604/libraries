@@ -76,7 +76,7 @@
 
 	<distributionManagement>
 		<snapshotRepository>
-			<id>ossrh-snapshot</id>
+			<id>ossrh</id>
 			<name>OSSRH Snapshot Repository</name>
 			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
 		</snapshotRepository>
