@@ -23,11 +23,8 @@ jobs:
       install: skip
       script: travis/coveralls.sh
       jdk: openjdk8    
-deploy:
-  - provider: script
-    script: travis/deploy.sh
-    on:
-      condition: $TRAVIS_BRANCH =~ ^(develop|master)$
-      condition: ./travis/check_deploy_version.sh
-      branch: develop 
+    - stage: "Deploying"
+      if: ./travis/check_deploy_version.sh
+      install: skip
+      script: travis/deploy.sh
       jdk: openjdk8
