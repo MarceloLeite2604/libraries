@@ -21,27 +21,27 @@ retrieve_git_branch() {
 is_release_branch() {
   if [[ $(retrieve_git_branch) == ${release_branch} ]];
   then
-    return 0;
+    echo 0;
   else
-    return 1;
+    echo 1;
   fi;
 }
 
 is_snapshot_branch() {
   if [[ $(retrieve_git_branch) == ${snapshot_branch} ]];
   then
-    return 0;
+    echo 0;
   else
-    return 1;
+    echo 1;
   fi;
 }
 
 is_snapshot_version() {
   if [[ $(retrieve_project_version) =~ ${regex_check_snapshot} ]];
   then
-    return 0;
+    echo 0;
   else
-    return 1;
+    echo 1;
   fi;
 }
 

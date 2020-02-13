@@ -12,22 +12,27 @@ jdk:
   - openjdk12
   - oraclejdk13
   - openjdk13
+branches:
+  only:
+    - master
+    - develop
 before_install:
   - sh travis/import_gpg_key.sh
   - sh travis/copy_maven_settings.sh
 jobs:
   include:
     - stage: "Coveralls report"
+      if: NOT type = pull_request
       install: skip
       script: travis/coveralls.sh
       jdk: openjdk8    
     - stage: "Snapshot deploy"
-      if: branch = develop
+      if: branch = develop AND NOT type = pull_request
       install: skip
       script: travis/deploy/deploy_snapshot.sh
       jdk: openjdk8
     - stage: "Release deploy"
-      if: branch = master
+      if: branch = master AND NOT type = pull_request
       install: skip
       script: travis/deploy/deploy_release.sh
       jdk: openjdk8
