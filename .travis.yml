@@ -12,6 +12,10 @@ jdk:
   - openjdk12
   - oraclejdk13
   - openjdk13
+branches:
+  only:
+    - master
+    - develop
 before_install:
   - sh travis/import_gpg_key.sh
   - sh travis/copy_maven_settings.sh
