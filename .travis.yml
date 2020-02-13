@@ -27,6 +27,6 @@ deploy:
   - provider: script
     script: travis/deploy.sh
     on:
-      # branch: master
+      condition: ./travis/check_deploy_version.sh
       branch: develop 
       jdk: openjdk8
