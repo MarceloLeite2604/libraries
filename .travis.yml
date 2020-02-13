@@ -26,10 +26,10 @@ jobs:
     - stage: "Snapshot deploy"
       if: branch = develop
       install: skip
-      script: travis/deploy.sh
+      script: travis/deploy/deploy_snapshot.sh
       jdk: openjdk8
     - stage: "Release deploy"
       if: branch = master
       install: skip
-      script: travis/deploy.sh
+      script: travis/deploy/deploy_release.sh
       jdk: openjdk8
