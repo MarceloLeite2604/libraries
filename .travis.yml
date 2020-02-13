@@ -19,16 +19,16 @@ before_install:
   - sh travis/copy_maven_settings.sh
 jobs:
   include:
-    - stage: "Reporting tests for Coveralls"
+    - stage: "Coveralls report"
       install: skip
       script: travis/coveralls.sh
       jdk: openjdk8    
-    - stage: "Deploying snapshot"
+    - stage: "Snapshot deploy"
       if: branch = develop
       install: skip
       script: travis/deploy.sh
       jdk: openjdk8
-    - stage: "Deploying release"
+    - stage: "Release deploy"
       if: branch = master
       install: skip
       script: travis/deploy.sh

@@ -4,7 +4,7 @@ regex_check_snapshot="-SNAPSHOT$";
 snapshot_branch="develop";
 release_branch="master";
 project_version=$(mvn help:evaluate -Dexpression=project.version -q -DforceStdout);
-git_branch=$(git rev-parse --abbrev-ref HEAD);
+git_branch=${TRAVIS_BRANCH:-$(git rev-parse --abbrev-ref HEAD)};
 
 echo "Project version is ${project_version}.";
 echo "Git branch is ${git_branch}.";
