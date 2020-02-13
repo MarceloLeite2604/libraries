@@ -2,16 +2,16 @@ language: java
 dist: trusty
 jdk:
   - oraclejdk8
-    # - openjdk8
-    # - oraclejdk9
-    # - openjdk9
-    # - openjdk10
-    # - oraclejdk11
-    # - openjdk11
-    # - oraclejdk12
-    # - openjdk12
-    # - oraclejdk13
-    # - openjdk13
+  - openjdk8
+  - oraclejdk9
+  - openjdk9
+  - openjdk10
+  - oraclejdk11
+  - openjdk11
+  - oraclejdk12
+  - openjdk12
+  - oraclejdk13
+  - openjdk13
 before_install:
   - sh travis/import_gpg_key.sh
   - sh travis/copy_maven_settings.sh
