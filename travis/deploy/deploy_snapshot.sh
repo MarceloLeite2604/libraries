@@ -16,5 +16,5 @@ then
   exit 1;
 fi;
 
-echo mvn deploy -Dmaven.test.skip=true
+mvn deploy -Dmaven.test.skip=true
 exit ${?};
