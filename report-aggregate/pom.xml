@@ -25,14 +25,14 @@
 	</licenses>
 
 	<developers>
-        <developer>
-            <name>Marcelo Leite</name>
-            <email>marceloleite2604@gmail.com</email>
-            <url>https://github.com/MarceloLeite2604</url>
-            <organization>FigtreeLake</organization>
-            <organizationUrl>http://figtreelake.com</organizationUrl>
-        </developer>
-    </developers>
+		<developer>
+			<name>Marcelo Leite</name>
+			<email>marceloleite2604@gmail.com</email>
+			<url>https://github.com/MarceloLeite2604</url>
+			<organization>FigtreeLake</organization>
+			<organizationUrl>http://figtreelake.com</organizationUrl>
+		</developer>
+	</developers>
 
 	<scm>
 		<connection>scm:git:git://github.com/MarceloLeite2604/libraries.git</connection>
@@ -103,15 +103,15 @@
 				<configuration>
 					<skip>true</skip>
 				</configuration>
-				<plugin>
-					<groupId>org.sonatype.plugins</groupId>
-					<artifactId>nexus-staging-maven-plugin</artifactId>
-					<version>1.6.8</version>
-					<extensions>true</extensions>
-					<configuration>
-						<skip>true</skip>
-					</configuration>
-				</plugin>
+			</plugin>
+			<plugin>
+				<groupId>org.sonatype.plugins</groupId>
+				<artifactId>nexus-staging-maven-plugin</artifactId>
+				<version>1.6.8</version>
+				<extensions>true</extensions>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
