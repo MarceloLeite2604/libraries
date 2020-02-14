@@ -14,7 +14,7 @@
 	<packaging>pom</packaging>
 
 	<name>JaCoCo Report Aggregate</name>
-	<url>https://github.com/MarceloLeite2064/libraries</url>
+	<url>https://github.com/MarceloLeite2604/libraries</url>
 
 	<licenses>
 		<license>
@@ -28,15 +28,16 @@
 		<developer>
 			<name>Marcelo Leite</name>
 			<email>marceloleite2604@gmail.com</email>
-			<organization>FigTreeLake</organization>
-			<organizationUrl>https://github.com/MarceloLeite2064/libraries</organizationUrl>
+			<url>https://github.com/MarceloLeite2604</url>
+			<organization>FigtreeLake</organization>
+			<organizationUrl>http://figtreelake.com</organizationUrl>
 		</developer>
 	</developers>
 
 	<scm>
 		<connection>scm:git:git://github.com/MarceloLeite2604/libraries.git</connection>
 		<developerConnection>scm:git:ssh://github.com:MarceloLeite2604/libraries.git</developerConnection>
-		<url>http://github.com/simpligility/ossrh-demo/tree/master</url>
+		<url>https://github.com/MarceloLeite2604/libraries</url>
 	</scm>
 
 	<dependencies>
@@ -102,15 +103,15 @@
 				<configuration>
 					<skip>true</skip>
 				</configuration>
-				<plugin>
-					<groupId>org.sonatype.plugins</groupId>
-					<artifactId>nexus-staging-maven-plugin</artifactId>
-					<version>1.6.8</version>
-					<extensions>true</extensions>
-					<configuration>
-						<skip>true</skip>
-					</configuration>
-				</plugin>
+			</plugin>
+			<plugin>
+				<groupId>org.sonatype.plugins</groupId>
+				<artifactId>nexus-staging-maven-plugin</artifactId>
+				<version>1.6.8</version>
+				<extensions>true</extensions>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

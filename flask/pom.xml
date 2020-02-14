@@ -15,7 +15,7 @@
 
 	<name>flask</name>
 	<description>The file loader assistent kit (Flask) helps read text files from classpath.</description>
-	<url>https://github.com/MarceloLeite2064/libraries</url>
+	<url>https://github.com/MarceloLeite2604/libraries</url>
 
 	<licenses>
 		<license>
@@ -26,18 +26,19 @@
 	</licenses>
 
 	<developers>
-		<developer>
-			<name>Marcelo Leite</name>
-			<email>marceloleite2604@gmail.com</email>
-			<organization>FigtreeLake</organization>
-			<organizationUrl>https://github.com/MarceloLeite2064/libraries</organizationUrl>
-		</developer>
-	</developers>
+        <developer>
+            <name>Marcelo Leite</name>
+            <email>marceloleite2604@gmail.com</email>
+            <url>https://github.com/MarceloLeite2604</url>
+            <organization>FigtreeLake</organization>
+            <organizationUrl>http://figtreelake.com</organizationUrl>
+        </developer>
+    </developers>
 
 	<scm>
 		<connection>scm:git:git://github.com/MarceloLeite2604/libraries.git</connection>
 		<developerConnection>scm:git:ssh://github.com:MarceloLeite2604/libraries.git</developerConnection>
-		<url>http://github.com/simpligility/ossrh-demo/tree/master</url>
+		<url>https://github.com/MarceloLeite2604/libraries/tree/master/flask</url>
 	</scm>
 
 	<dependencies>
