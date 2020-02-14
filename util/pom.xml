@@ -37,7 +37,7 @@
 	<scm>
 		<connection>scm:git:git://github.com/MarceloLeite2604/libraries.git</connection>
 		<developerConnection>scm:git:ssh://github.com:MarceloLeite2604/libraries.git</developerConnection>
-		<url>http://github.com/simpligility/ossrh-demo/tree/master</url>
+		<url>https://github.com/MarceloLeite2604/libraries/tree/master/util</url>
 	</scm>
 
 	<dependencies>
