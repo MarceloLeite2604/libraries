@@ -14,4 +14,4 @@ A handful of personal libraries which helps me on my projects development.
 
 ## Documentation
 
-Please check `README.md` file of each library for more information. For more technical information please check the [API documentation](https://marceloleite2604.github.io/libraries/apidocs/).
+Please check `README.md` file of each library for more information. For more technical information please check the [API documentation](https://www.javadoc.io/doc/com.figtreelake).
