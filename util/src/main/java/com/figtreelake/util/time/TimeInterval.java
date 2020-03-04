@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
  * @author MarceloLeite2604
  *
  */
-public class TimeInterval implements Comparable<TimeInterval> {
+public class TimeInterval {
 
   private LocalDateTime start;
 
@@ -71,7 +71,7 @@ public class TimeInterval implements Comparable<TimeInterval> {
 
   @Override
   public String toString() {
-    return start + " to " + end + "(" + duration + ")";
+    return start + " to " + end + " (" + duration + ")";
   }
 
   @Override
@@ -110,17 +110,6 @@ public class TimeInterval implements Comparable<TimeInterval> {
       return false;
     }
     return true;
-  }
-
-  @Override
-  public int compareTo(TimeInterval other) {
-    if (start.isBefore(other.getStart())) {
-      return -1;
-    } else if (start.isAfter(other.getStart())) {
-      return 1;
-    } else {
-      return 0;
-    }
   }
 
 }

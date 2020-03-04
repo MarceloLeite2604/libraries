@@ -65,73 +65,21 @@ public class TimeIntervalTest {
   }
 
   @Test
-  public void testCompareToShouldReturnNegativeValueWhenFirstTimeStartsBeforeSecondTime()
-      throws Exception {
+  public void testToString() throws Exception {
     // Arrange
-    LocalDateTime firstTimeIntervalStart = LocalDateTime.of(2019, 9, 1, 12, 40, 0, 0);
-    LocalDateTime firstTimeIntervalEnd = LocalDateTime.of(2019, 9, 2, 3, 0, 0, 0);
+    LocalDateTime start = LocalDateTime.of(2020, 3, 2, 12, 4, 14, 6295712);
+    LocalDateTime end = LocalDateTime.of(2020, 3, 2, 18, 7, 51, 45792468);
 
-    LocalDateTime secondTimeIntervalStart = LocalDateTime.of(2019, 9, 1, 12, 40, 0, 100);
+    TimeInterval timeInterval = new TimeInterval(start, end);
 
-    Duration secondTimeIntervalDuration =
-        Duration.ofDays(2).plusHours(2).plusMinutes(14).plusSeconds(30);
-
-    TimeInterval firstTimeInterval = new TimeInterval(firstTimeIntervalStart, firstTimeIntervalEnd);
-
-    TimeInterval secondTimeInterval =
-        new TimeInterval(secondTimeIntervalStart, secondTimeIntervalDuration);
+    String expectedString =
+        "2020-03-02T12:04:14.006295712 to 2020-03-02T18:07:51.045792468 (PT6H3M37.039496756S)";
 
     // Act
-    int actualResult = firstTimeInterval.compareTo(secondTimeInterval);
+    String actualString = timeInterval.toString();
 
     // Assert
-    assertThat(actualResult).isLessThan(0);
-  }
-
-  @Test
-  public void testCompareToShouldReturnPositiveValueWhenFirstTimeStartsAfterSecondTime()
-      throws Exception {
-    // Arrange
-    LocalDateTime firstTimeIntervalStart = LocalDateTime.of(2019, 9, 1, 12, 40, 0, 0);
-    LocalDateTime firstTimeIntervalEnd = LocalDateTime.of(2019, 9, 2, 3, 0, 0, 0);
-
-    LocalDateTime secondTimeIntervalStart = LocalDateTime.of(2019, 9, 1, 12, 39, 59, 999999);
-
-    Duration secondTimeIntervalDuration =
-        Duration.ofDays(2).plusHours(2).plusMinutes(14).plusSeconds(30);
-
-    TimeInterval firstTimeInterval = new TimeInterval(firstTimeIntervalStart, firstTimeIntervalEnd);
-
-    TimeInterval secondTimeInterval =
-        new TimeInterval(secondTimeIntervalStart, secondTimeIntervalDuration);
-
-    // Act
-    int actualResult = firstTimeInterval.compareTo(secondTimeInterval);
-
-    // Assert
-    assertThat(actualResult).isGreaterThan(0);
-  }
-
-  @Test
-  public void testCompareToShouldReturnZeroWhenFirstTimeStartsAtSameTimeThanSecondTime()
-      throws Exception {
-    // Arrange
-    LocalDateTime timeIntervalStart = LocalDateTime.of(2019, 9, 1, 12, 40, 0, 0);
-    LocalDateTime firstTimeIntervalEnd = LocalDateTime.of(2019, 9, 2, 3, 0, 0, 0);
-
-    Duration secondTimeIntervalDuration =
-        Duration.ofDays(2).plusHours(2).plusMinutes(14).plusSeconds(30);
-
-    TimeInterval firstTimeInterval = new TimeInterval(timeIntervalStart, firstTimeIntervalEnd);
-
-    TimeInterval secondTimeInterval =
-        new TimeInterval(timeIntervalStart, secondTimeIntervalDuration);
-
-    // Act
-    int actualResult = firstTimeInterval.compareTo(secondTimeInterval);
-
-    // Assert
-    assertThat(actualResult).isEqualTo(0);
+    assertThat(actualString).isEqualTo(expectedString);
   }
 
 }
