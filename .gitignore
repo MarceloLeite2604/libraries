@@ -22,3 +22,7 @@ hs_err_pid*
 
 # Eclipse Checkstyle plugin files
 **/.checkstyle
+
+# InteliJ files
+**/*.iml
+**/.idea
